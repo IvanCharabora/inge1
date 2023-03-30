@@ -11,6 +11,10 @@ DenotativeObject subclass: #I
 I class
 	instanceVariableNames: 'next'!
 
+!I class methodsFor: 'private auxiliary operations' stamp: 'ic 3/30/2023 19:43:14'!
+askIfDividerIsHigherOrReturnOne: aNaturalNumber
+	(aNaturalNumber > self) ifTrue: [self error: self canNotDivideByBiggerNumberErrorDescription ] ifFalse: [^self]! !
+
 !I class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 13:24:33'!
 isLowerThan:aNaturalNumber
 "devuelve true porque el mensaje isLowerThan no puede ser llamado por el objeto I, entonces aNaturalNumber no es I"
@@ -55,12 +59,12 @@ negativeNumbersNotSupportedErrorDescription
 - aNaturalNumber
 self error: self negativeNumbersNotSupportedErrorDescription! !
 
-!I class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:24:56'!
+!I class methodsFor: 'arithmetic operations' stamp: 'ic 3/30/2023 19:43:41'!
 / aNaturalNumber
-(aNaturalNumber > self) ifTrue: [self error: self canNotDivideByBiggerNumberErrorDescription ] ifFalse: [^I]! !
+^self askIfDividerIsHigherOrReturnOne: aNaturalNumber! !
 
 
-!I class methodsFor: '--** private fileout/in **--' stamp: 'ic 3/30/2023 17:19:18'!
+!I class methodsFor: '--** private fileout/in **--' stamp: 'ic 3/30/2023 20:27:42'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -98,13 +102,21 @@ II class
 - aNaturalNumber
 	^aNaturalNumber subtractFrom: self.! !
 
-!II class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:27:45'!
+!II class methodsFor: 'arithmetic operations' stamp: 'ic 3/30/2023 20:01:39'!
 / aNaturalNumber
-(aNaturalNumber > self) 
-ifTrue: [self error: self canNotDivideByBiggerNumberErrorDescription ] 
-ifFalse: [(aNaturalNumber = self) ifTrue: [^I] ifFalse:  [^I+(self-aNaturalNumber / aNaturalNumber )]]
+^self askIfDividerIsHigherOrDivide: aNaturalNumber 
 ! !
 
+
+!II class methodsFor: 'private auxiliary operations' stamp: 'ic 3/30/2023 20:19:26'!
+askIfDividerIsHigherOrDivide: aNaturalNumber
+(aNaturalNumber > self) 
+ifTrue: [self error: self canNotDivideByBiggerNumberErrorDescription ] 
+ifFalse: [^self ifDividerIsEqualToSelfReturnOneElseDivide: aNaturalNumber]! !
+
+!II class methodsFor: 'private auxiliary operations' stamp: 'ic 3/30/2023 20:19:26'!
+ifDividerIsEqualToSelfReturnOneElseDivide: aNaturalNumber 
+	(aNaturalNumber = self) ifTrue: [^I] ifFalse:  [^I+(self-aNaturalNumber / aNaturalNumber )]! !
 
 !II class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:58:32'!
 isLowerThan: aNaturalNumber
@@ -140,7 +152,7 @@ negativeNumbersNotSupportedErrorDescription
 ^'El objeto no es representable (es negativo)'! !
 
 
-!II class methodsFor: '--** private fileout/in **--' stamp: 'ic 3/30/2023 17:19:18'!
+!II class methodsFor: '--** private fileout/in **--' stamp: 'ic 3/30/2023 20:27:42'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
