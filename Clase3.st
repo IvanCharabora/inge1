@@ -11,10 +11,6 @@ DenotativeObject subclass: #I
 I class
 	instanceVariableNames: 'next'!
 
-!I class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:36:42'!
-divideFrom: aNaturalNumber
-	^aNaturalNumber ! !
-
 !I class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 10:15:01'!
 multiplyFrom:aNaturalNumber
 ^aNaturalNumber ! !
@@ -63,7 +59,7 @@ self error: self negativeNumbersNotSupportedErrorDescription! !
 (aNaturalNumber > self) ifTrue: [self error: self canNotDivideByBiggerNumberErrorDescription ] ifFalse: [^I]! !
 
 
-!I class methodsFor: '--** private fileout/in **--' stamp: 'IC 3/30/2023 11:55:01'!
+!I class methodsFor: '--** private fileout/in **--' stamp: 'IC 3/30/2023 12:28:12'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -101,17 +97,13 @@ II class
 - aNaturalNumber
 	^aNaturalNumber subtractFrom: self.! !
 
-!II class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:51:49'!
+!II class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:27:45'!
 / aNaturalNumber
 (aNaturalNumber > self) 
 ifTrue: [self error: self canNotDivideByBiggerNumberErrorDescription ] 
-ifFalse: [^aNaturalNumber divideFrom: self]
+ifFalse: [(aNaturalNumber = self) ifTrue: [^I] ifFalse:  [^I+(self-aNaturalNumber / aNaturalNumber )]]
 ! !
 
-
-!II class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:49:19'!
-divideFrom: aNaturalNumber
-(aNaturalNumber = self) ifTrue: [^I] ifFalse:  [^I+((aNaturalNumber-self) / self)]! !
 
 !II class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 10:19:21'!
 multiplyFrom:aNaturalNumber
@@ -147,7 +139,7 @@ negativeNumbersNotSupportedErrorDescription
 ^'El objeto no es representable (es negativo)'! !
 
 
-!II class methodsFor: '--** private fileout/in **--' stamp: 'IC 3/30/2023 11:55:01'!
+!II class methodsFor: '--** private fileout/in **--' stamp: 'IC 3/30/2023 12:28:12'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -168,41 +160,37 @@ DenotativeObject subclass: #III
 III class
 	instanceVariableNames: 'next previous'!
 
-!III class methodsFor: 'logic operations' stamp: 'IC 3/30/2023 11:53:56'!
+!III class methodsFor: 'logic operations' stamp: 'IC 3/30/2023 12:28:03'!
 >aNaturalNumber
 (aNaturalNumber = I) ifTrue: [^true] ifFalse: [^self previous > aNaturalNumber previous] 
 ! !
 
 
-!III class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:28:03'!
 * aNaturalNumber
    ^aNaturalNumber multiplyFrom: self! !
 
-!III class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:28:03'!
 + aNaturalNumber
 ^self previous + aNaturalNumber next! !
 
-!III class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:28:04'!
 - aNaturalNumber
 	^aNaturalNumber subtractFrom: self.! !
 
-!III class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:28:04'!
 / aNaturalNumber
 (aNaturalNumber > self) 
 ifTrue: [self error: self canNotDivideByBiggerNumberErrorDescription ] 
-ifFalse: [^aNaturalNumber divideFrom: self]
+ifFalse: [(aNaturalNumber = self) ifTrue: [^I] ifFalse:  [^I+(self-aNaturalNumber / aNaturalNumber )]]
 ! !
 
 
-!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:57'!
-divideFrom: aNaturalNumber
-(aNaturalNumber = self) ifTrue: [^I] ifFalse:  [^I+((aNaturalNumber-self) / self)]! !
-
-!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:04'!
 multiplyFrom:aNaturalNumber
 ^ (self) + (self * aNaturalNumber previous)! !
 
-!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:04'!
 next
 next ifNil: [
 	next:=self cloneNamed: (self name, 'I').
@@ -210,29 +198,29 @@ next ifNil: [
 	].
 ^next! !
 
-!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:04'!
 previous
 ^previous! !
 
-!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:04'!
 previous:aNaturalNumber
 previous:=aNaturalNumber ! !
 
-!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:04'!
 subtractFrom: aNaturalNumber
 	^aNaturalNumber previous - self previous.! !
 
 
-!III class methodsFor: 'errors descriptions' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'errors descriptions' stamp: 'IC 3/30/2023 12:28:04'!
 canNotDivideByBiggerNumberErrorDescription
 ^'No se puede dividir por un numero mayor'! !
 
-!III class methodsFor: 'errors descriptions' stamp: 'IC 3/30/2023 11:53:57'!
+!III class methodsFor: 'errors descriptions' stamp: 'IC 3/30/2023 12:28:04'!
 negativeNumbersNotSupportedErrorDescription
 ^'El objeto no es representable (es negativo)'! !
 
 
-!III class methodsFor: '--** private fileout/in **--' stamp: 'IC 3/30/2023 11:55:01'!
+!III class methodsFor: '--** private fileout/in **--' stamp: 'IC 3/30/2023 12:28:12'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -253,41 +241,37 @@ DenotativeObject subclass: #IIII
 IIII class
 	instanceVariableNames: 'next previous'!
 
-!IIII class methodsFor: 'logic operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'logic operations' stamp: 'IC 3/30/2023 12:28:04'!
 >aNaturalNumber
 (aNaturalNumber = I) ifTrue: [^true] ifFalse: [^self previous > aNaturalNumber previous] 
 ! !
 
 
-!IIII class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:28:04'!
 * aNaturalNumber
    ^aNaturalNumber multiplyFrom: self! !
 
-!IIII class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:28:04'!
 + aNaturalNumber
 ^self previous + aNaturalNumber next! !
 
-!IIII class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:28:05'!
 - aNaturalNumber
 	^aNaturalNumber subtractFrom: self.! !
 
-!IIII class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'arithmetic operations' stamp: 'IC 3/30/2023 12:28:05'!
 / aNaturalNumber
 (aNaturalNumber > self) 
 ifTrue: [self error: self canNotDivideByBiggerNumberErrorDescription ] 
-ifFalse: [^aNaturalNumber divideFrom: self]
+ifFalse: [(aNaturalNumber = self) ifTrue: [^I] ifFalse:  [^I+(self-aNaturalNumber / aNaturalNumber )]]
 ! !
 
 
-!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:58'!
-divideFrom: aNaturalNumber
-(aNaturalNumber = self) ifTrue: [^I] ifFalse:  [^I+((aNaturalNumber-self) / self)]! !
-
-!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:05'!
 multiplyFrom:aNaturalNumber
 ^ (self) + (self * aNaturalNumber previous)! !
 
-!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:05'!
 next
 next ifNil: [
 	next:=self cloneNamed: (self name, 'I').
@@ -295,29 +279,29 @@ next ifNil: [
 	].
 ^next! !
 
-!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:05'!
 previous
 ^previous! !
 
-!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:05'!
 previous:aNaturalNumber
 previous:=aNaturalNumber ! !
 
-!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 11:53:58'!
+!IIII class methodsFor: 'private auxiliary operations' stamp: 'IC 3/30/2023 12:28:05'!
 subtractFrom: aNaturalNumber
 	^aNaturalNumber previous - self previous.! !
 
 
-!IIII class methodsFor: 'errors descriptions' stamp: 'IC 3/30/2023 11:53:59'!
+!IIII class methodsFor: 'errors descriptions' stamp: 'IC 3/30/2023 12:28:05'!
 canNotDivideByBiggerNumberErrorDescription
 ^'No se puede dividir por un numero mayor'! !
 
-!IIII class methodsFor: 'errors descriptions' stamp: 'IC 3/30/2023 11:53:59'!
+!IIII class methodsFor: 'errors descriptions' stamp: 'IC 3/30/2023 12:28:05'!
 negativeNumbersNotSupportedErrorDescription
 ^'El objeto no es representable (es negativo)'! !
 
 
-!IIII class methodsFor: '--** private fileout/in **--' stamp: 'IC 3/30/2023 11:55:01'!
+!IIII class methodsFor: '--** private fileout/in **--' stamp: 'IC 3/30/2023 12:28:12'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
