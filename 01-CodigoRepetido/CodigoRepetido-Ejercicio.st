@@ -167,7 +167,7 @@ addAndSuspendNewCustomer: customerToAddAndSuspend
 	self addCustomerNamed: customerToAddAndSuspend.
 	self suspendCustomerNamed: customerToAddAndSuspend.! !
 
-!CustomerBook methodsFor: 'testing' stamp: 'NR 4/3/2019 10:14:26'!
+!CustomerBook methodsFor: 'testing' stamp: 'VW 4/12/2023 20:21:10'!
 includesCustomerNamed: aName
 
 	^(active includes: aName) or: [ suspended includes: aName ]! !
@@ -184,12 +184,12 @@ initialize
 	suspended:= OrderedCollection new.! !
 
 
-!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 18:21:48'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 20:21:59'!
 addCustomerNamed: aName
 	
 	aName isEmpty ifTrue: [ self signalCustomerNameCannotBeEmpty ].
 	
-	((active includes: aName) or: [suspended includes: aName]) ifTrue: [ self signalCustomerAlreadyExists ].
+	(self includesCustomerNamed:aName) ifTrue: [ self signalCustomerAlreadyExists ].
 	
 	active add: aName ! !
 
@@ -222,11 +222,12 @@ numberOfSuspendedCustomers
 	
 	^suspended size! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 19:00:29'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 20:25:20'!
 removeCustomerNamed: aName
+	|findInSuspendedOrNotFound|
 	
-	
-	^self findAndRemove: aName withStatus: active ifNotFound: [ self findAndRemove: aName withStatus: suspended  ifNotFound: [^ NotFound signal] ]
+	findInSuspendedOrNotFound := [ self findAndRemove: aName withStatus: suspended  ifNotFound: [^ NotFound signal] ].
+	^self findAndRemove: aName withStatus: active ifNotFound: findInSuspendedOrNotFound
 
 ! !
 
