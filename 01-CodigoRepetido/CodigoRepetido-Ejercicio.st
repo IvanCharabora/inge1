@@ -178,77 +178,73 @@ isEmpty
 	^active isEmpty and: [ suspended isEmpty ]! !
 
 
-!CustomerBook methodsFor: 'initialization' stamp: 'NR 9/17/2020 07:23:04'!
+!CustomerBook methodsFor: 'initialization' stamp: 'VW 4/12/2023 18:20:56'!
 initialize
-
 	active := OrderedCollection new.
 	suspended:= OrderedCollection new.! !
 
 
-!CustomerBook methodsFor: 'customer management' stamp: 'NR 4/3/2019 10:14:26'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 18:21:48'!
 addCustomerNamed: aName
-
+	
 	aName isEmpty ifTrue: [ self signalCustomerNameCannotBeEmpty ].
+	
 	((active includes: aName) or: [suspended includes: aName]) ifTrue: [ self signalCustomerAlreadyExists ].
 	
 	active add: aName ! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'NR 4/3/2019 10:14:26'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 19:00:55'!
+findAndRemove: aCustomerName withStatus: aCustomerStatus ifNotFound: aBlockIfCustomerNotFound
+
+1 to: aCustomerStatus size do:
+	[ :index |
+		aCustomerName = (aCustomerStatus at: index)
+			ifTrue: [
+				aCustomerStatus removeAt: index.
+				^ aCustomerName 
+			]
+	].
+
+^aBlockIfCustomerNotFound value! !
+
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 18:22:03'!
 numberOfActiveCustomers
-	
+
 	^active size! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'NR 4/3/2019 10:14:26'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 18:23:57'!
 numberOfCustomers
-	
-	^active size + suspended size! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'NR 9/19/2018 17:36:09'!
+	^self numberOfActiveCustomers  + self numberOfSuspendedCustomers ! !
+
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 18:23:04'!
 numberOfSuspendedCustomers
 	
 	^suspended size! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'NR 4/3/2019 10:14:26'!
-removeCustomerNamed: aName 
- 
-	1 to: active size do: 
-	[ :index |
-		aName = (active at: index)
-			ifTrue: [
-				active removeAt: index.
-				^ aName 
-			] 
-	].
-
-	1 to: suspended size do: 	
-	[ :index |
-		aName = (suspended at: index)
-			ifTrue: [
-				suspended removeAt: index.
-				^ aName 
-			] 
-	].
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 19:00:29'!
+removeCustomerNamed: aName
 	
-	^ NotFound signal.
+	
+	^self findAndRemove: aName withStatus: active ifNotFound: [ self findAndRemove: aName withStatus: suspended  ifNotFound: [^ NotFound signal] ]
+
 ! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'HernanWilkinson 7/6/2011 17:52'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 19:01:42'!
 signalCustomerAlreadyExists 
 
 	self error: self class customerAlreadyExistsErrorMessage! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'HernanWilkinson 7/6/2011 17:51'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 19:02:01'!
 signalCustomerNameCannotBeEmpty 
 
 	self error: self class customerCanNotBeEmptyErrorMessage ! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'NR 4/3/2019 10:14:26'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VW 4/12/2023 19:02:17'!
 suspendCustomerNamed: aName 
-	
+
 	(active includes: aName) ifFalse: [^CantSuspend signal].
-	
 	active remove: aName.
-	
 	suspended add: aName
 ! !
 
