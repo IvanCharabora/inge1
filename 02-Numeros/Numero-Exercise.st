@@ -294,25 +294,30 @@ Object subclass: #Numero
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:48'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'VW 4/19/2023 17:56:23'!
 * aMultiplier
 
-	self subclassResponsibility ! !
+	^self subclassResponsibility ! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:49'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'VW 4/19/2023 17:56:28'!
 + anAdder
 
-	self subclassResponsibility ! !
+	^self subclassResponsibility ! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 22:21:28'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'VW 4/19/2023 17:56:32'!
 - aSubtrahend
 
-	self subclassResponsibility ! !
+	^self subclassResponsibility ! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:49'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'VW 4/19/2023 17:56:35'!
 / aDivisor
 
-	self subclassResponsibility ! !
+	^self subclassResponsibility ! !
+
+!Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:48'!
+invalidNumberType
+
+	self error: self class invalidNumberTypeErrorDescription! !
 
 !Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 23:37:13'!
 negated
@@ -320,20 +325,25 @@ negated
 	^self * (Entero with: -1)! !
 
 
-!Numero methodsFor: 'testing' stamp: 'NR 9/23/2018 23:36:49'!
+!Numero methodsFor: 'testing' stamp: 'VW 4/19/2023 17:55:48'!
 isNegative
 
-	self subclassResponsibility ! !
+	^self subclassResponsibility ! !
 
-!Numero methodsFor: 'testing' stamp: 'HernanWilkinson 5/7/2016 22:49'!
+!Numero methodsFor: 'testing' stamp: 'VW 4/19/2023 17:55:53'!
 isOne
 
-	self subclassResponsibility ! !
+	^self subclassResponsibility ! !
 
-!Numero methodsFor: 'testing' stamp: 'HernanWilkinson 5/7/2016 22:49'!
+!Numero methodsFor: 'testing' stamp: 'VW 4/19/2023 17:55:57'!
 isZero
 
-	self subclassResponsibility ! !
+	^self subclassResponsibility ! !
+
+
+!Numero methodsFor: 'error handling' stamp: 'N 4/17/2023 19:42:04'!
+TypeNotSupportedError
+	self error: 'Type not supported'! !
 
 
 !Numero methodsFor: 'private arithmetic operations' stamp: 'VW 4/18/2023 13:12:34'!
@@ -564,16 +574,19 @@ Entero subclass: #Cero
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Cero methodsFor: 'testing' stamp: 'ic 4/19/2023 00:04:51'!
+!Cero methodsFor: 'testing' stamp: 'VW 4/19/2023 18:01:42'!
 isNegative
+	
 	^false ! !
 
-!Cero methodsFor: 'testing' stamp: 'ic 4/19/2023 00:04:46'!
+!Cero methodsFor: 'testing' stamp: 'VW 4/19/2023 18:01:47'!
 isOne
+	
 	^false ! !
 
-!Cero methodsFor: 'testing' stamp: 'ic 4/19/2023 00:04:38'!
+!Cero methodsFor: 'testing' stamp: 'VW 4/19/2023 18:01:57'!
 isZero
+	
 	^true ! !
 
 
@@ -640,12 +653,14 @@ isNegative
 
 	^self subclassResponsibility! !
 
-!EnteroQueNoEsUnoNiCero methodsFor: 'testing' stamp: 'ic 4/19/2023 00:05:15'!
+!EnteroQueNoEsUnoNiCero methodsFor: 'testing' stamp: 'VW 4/19/2023 18:03:05'!
 isOne
+	
 	^false! !
 
-!EnteroQueNoEsUnoNiCero methodsFor: 'testing' stamp: 'ic 4/19/2023 00:05:12'!
+!EnteroQueNoEsUnoNiCero methodsFor: 'testing' stamp: 'VW 4/19/2023 18:03:09'!
 isZero
+	
 	^false! !
 
 
@@ -685,8 +700,9 @@ EnteroQueNoEsUnoNiCero subclass: #PositivoMayorAUno
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!PositivoMayorAUno methodsFor: 'testing' stamp: 'ic 4/19/2023 00:16:22'!
+!PositivoMayorAUno methodsFor: 'testing' stamp: 'VW 4/19/2023 18:02:54'!
 isNegative
+	
 	^false! !
 
 
