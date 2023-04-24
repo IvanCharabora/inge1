@@ -245,14 +245,14 @@ assert: aStack hasSameSizeThan: anotherStack
 	! !
 
 
-!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'ic 4/21/2023 19:06:09'!
+!SentenceFinderByPrefixTest methodsFor: 'test - private' stamp: 'ic 4/21/2023 19:06:09'!
 find: aSentence inMultipleElementStackWillAssert: anErrorWhenFindingSentence
 
 	self should: [sentenceFinderByPrefixWithMultipleElementStack find: aSentence 	] 
 	 	raise: Error 
 		withExceptionDo: [:anError |  self assert: anError messageText equals: anErrorWhenFindingSentence ]! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'ic 4/21/2023 19:46:43'!
+!SentenceFinderByPrefixTest methodsFor: 'test - private' stamp: 'ic 4/21/2023 19:46:43'!
 getCollectionWithStackElements: anStack
 	| stackElements |
 	
@@ -261,47 +261,47 @@ getCollectionWithStackElements: anStack
 	self pushTo: anStack from: stackElements.
 	^stackElements  ! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'ic 4/21/2023 19:45:57'!
+!SentenceFinderByPrefixTest methodsFor: 'test - private' stamp: 'ic 4/21/2023 19:45:57'!
 popFrom: anStack andAddFirstIn: aCollection
 
 	(anStack size) timesRepeat: [aCollection 	addFirst: (anStack pop)]
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'ic 4/21/2023 19:46:34'!
+!SentenceFinderByPrefixTest methodsFor: 'test - private' stamp: 'ic 4/21/2023 19:46:34'!
 pushTo: anStack from: aCollection
 	
 	(aCollection) do: [:elem | anStack push: elem].
 	! !
 
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 19:07:33'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 19:07:33'!
 test01PrefixCantBeEmpty
 
 	self find: emptySentence inMultipleElementStackWillAssert: 
 				sentenceFinderByPrefixWithMultipleElementStack prefixIsEmptyErrorDescription.! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 19:05:55'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 19:05:55'!
 test02PrefixCantBeOnlySpaces
 
 	self find: onlySpacesSentence inMultipleElementStackWillAssert: 
 				sentenceFinderByPrefixWithMultipleElementStack prefixHasSpaceErrorDescription
 ! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 19:07:23'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 19:07:23'!
 test03PrefixCantEndWithSpaces
 
 	self find: spacesAfterCharactersSentence inMultipleElementStackWillAssert: 
 				sentenceFinderByPrefixWithMultipleElementStack prefixHasSpaceErrorDescription
 ! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 19:07:16'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 19:07:16'!
 test04PrefixCantHaveSpacesInTheMiddle
 
 	self find: spacesInMiddleSentence inMultipleElementStackWillAssert: 
 				sentenceFinderByPrefixWithMultipleElementStack prefixHasSpaceErrorDescription
 ! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 18:58:18'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 18:58:18'!
 test05NotFindInEmptyStack
 	| foundSentences |
 	
@@ -309,7 +309,7 @@ test05NotFindInEmptyStack
 	self assert: foundSentences isEmpty.
 	self assert: emptyStack isEmpty .! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 19:33:12'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 19:33:12'!
 test06NotFindInStackWithElements
 	| foundSentences |
 	
@@ -319,7 +319,7 @@ test06NotFindInStackWithElements
 	self assert: self createStackWithMultiplesElements 
 		hasSameElementsWithSameOrderAndSizeThan: stackWithMultipleElements! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 19:59:56'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 19:59:56'!
 test07FindTheOnlyElementInStack
 	| foundSentences realSentences |
 		
@@ -332,7 +332,7 @@ test07FindTheOnlyElementInStack
 		hasSameElementsWithSameOrderAndSizeThan: stackWithOneElement 
 ! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 19:59:51'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 19:59:51'!
 test08FindOneElementInStackWithMultipleElements
 	| foundSentences realSentences |
 		
@@ -344,7 +344,7 @@ test08FindOneElementInStackWithMultipleElements
 	self assert: self createStackWithMultiplesElements 
 		hasSameElementsWithSameOrderAndSizeThan: stackWithMultipleElements ! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 19:59:46'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 19:59:46'!
 test09FindMultipleElementsInStackWithMultipleElements
 	| foundSentences realSentences |
 		
@@ -357,7 +357,7 @@ test09FindMultipleElementsInStackWithMultipleElements
 		hasSameElementsWithSameOrderAndSizeThan: stackWithMultipleElements 
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 20:01:01'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 20:01:01'!
 test10FindOnlyOneElementBecauseIsCaseSensitive
 	| foundSentences realSentences |
 		
@@ -370,7 +370,7 @@ test10FindOnlyOneElementBecauseIsCaseSensitive
 		hasSameElementsWithSameOrderAndSizeThan: stackWithMultipleElements 
 ! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ic 4/21/2023 20:01:43'!
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'ic 4/21/2023 20:01:43'!
 test11FindWherePrefixIsAllTheSentence
 	| foundSentences realSentences |
 		
