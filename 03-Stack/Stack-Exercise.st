@@ -420,9 +420,9 @@ pop
 	top := top previous.
 	^lastElement value! !
 
-!OOStack methodsFor: 'stack-actions' stamp: 'ic 4/21/2023 01:34:41'!
-push: anElement
-	top := top push: anElement.
+!OOStack methodsFor: 'stack-actions' stamp: 'VW 4/24/2023 14:36:42'!
+push: anElementToPush
+	top := top push: anElementToPush.
 	! !
 
 
@@ -459,9 +459,9 @@ Object subclass: #OOStackLinkedList
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStackLinkedList methodsFor: 'stack-actions' stamp: 'VW 4/23/2023 14:09:53'!
-push: anElement
-	^OOStackLinkedListElement newWith: anElement andPrevious: self ! !
+!OOStackLinkedList methodsFor: 'stack-actions' stamp: 'VW 4/24/2023 14:36:31'!
+push: anElementToPush
+	^OOStackLinkedListElement newWith: anElementToPush andPrevious: self ! !
 
 
 !OOStackLinkedList methodsFor: 'stack-information' stamp: 'ic 4/21/2023 02:02:28'!
