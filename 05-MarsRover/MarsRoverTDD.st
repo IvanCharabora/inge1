@@ -23,14 +23,14 @@ assertMarsRoverOrientation: aMarsRoverOrientation is: anOrientation
 
 	self assert: (aMarsRoverOrientation isKindOf: anOrientation)! !
 
-!MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/14/2023 00:41:42'!
-assertNewMarsRover: aMarsRover IsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
+!MarsRoverTest methodsFor: 'asserts' stamp: 'VW&IC 5/15/2023 12:28:00'!
+assertNewMarsRover: aMarsRover isInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
 	
 	aMarsRover readCommands: aSerieOfCommands.
 	self assertMarsRover: aMarsRover positionIs: aPosition andFaces: anOrientation! !
 
-!MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/14/2023 00:42:21'!
-assertNewMarsRover: aMarsRover IsInPosition: aPosition facing: anOrientation afterReadingWithError: aSerieOfCommands
+!MarsRoverTest methodsFor: 'asserts' stamp: 'VW&IC 5/15/2023 12:28:11'!
+assertNewMarsRover: aMarsRover isInPosition: aPosition facing: anOrientation afterReadingWithError: aSerieOfCommands
 	
 	self should: [ aMarsRover readCommands: aSerieOfCommands]
 	       raise: Error
@@ -39,49 +39,49 @@ assertNewMarsRover: aMarsRover IsInPosition: aPosition facing: anOrientation aft
 			self assertMarsRover: aMarsRover positionIs: aPosition andFaces: anOrientation
 		]! !
 
-!MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/14/2023 00:13:29'!
+!MarsRoverTest methodsFor: 'asserts' stamp: 'VW&IC 5/15/2023 12:28:00'!
 assertNewMarsRoverFacingEastIsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
 	
 	self assertNewMarsRover: self createMarsRoverIn0x0FacingEast 
-	       IsInPosition: aPosition 
+	       isInPosition: aPosition 
 	       facing: anOrientation 
 	       afterReading: aSerieOfCommands.
 
 ! !
 
-!MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/14/2023 00:07:23'!
+!MarsRoverTest methodsFor: 'asserts' stamp: 'VW&IC 5/15/2023 12:28:00'!
 assertNewMarsRoverFacingNorthIsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
 	
 	self assertNewMarsRover: self createMarsRoverIn0x0FacingNorth
-	       IsInPosition: aPosition 
+	       isInPosition: aPosition 
 	       facing: anOrientation 
 	       afterReading: aSerieOfCommands.
 
 ! !
 
-!MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/14/2023 00:43:40'!
+!MarsRoverTest methodsFor: 'asserts' stamp: 'VW&IC 5/15/2023 12:28:11'!
 assertNewMarsRoverFacingNorthIsInPosition: aPosition facing: anOrientation afterReadingWithError: aSerieOfCommands
 	
 	self assertNewMarsRover: self createMarsRoverIn0x0FacingNorth
-	       IsInPosition: aPosition 
+	       isInPosition: aPosition 
 	       facing: anOrientation 
 	       afterReadingWithError: aSerieOfCommands.
 
 ! !
 
-!MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/14/2023 00:10:34'!
+!MarsRoverTest methodsFor: 'asserts' stamp: 'VW&IC 5/15/2023 12:28:00'!
 assertNewMarsRoverFacingSouthIsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
 	
 	self assertNewMarsRover: self createMarsRoverIn0x0FacingSouth 
-	       IsInPosition: aPosition 
+	       isInPosition: aPosition 
 	       facing: anOrientation 
 	       afterReading: aSerieOfCommands.! !
 
-!MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/14/2023 00:13:23'!
+!MarsRoverTest methodsFor: 'asserts' stamp: 'VW&IC 5/15/2023 12:28:00'!
 assertNewMarsRoverFacingWestIsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
 	
 	self assertNewMarsRover: self createMarsRoverIn0x0FacingWest 
-	       IsInPosition: aPosition 
+	       isInPosition: aPosition 
 	       facing: anOrientation 
 	       afterReading: aSerieOfCommands.
 
@@ -294,11 +294,11 @@ isRightCommand: aCommand
 	^aCommand = $r! !
 
 
-!MarsRover methodsFor: 'orientation and position' stamp: 'VW 5/13/2023 16:28:22'!
+!MarsRover methodsFor: 'accesing' stamp: 'VW 5/13/2023 16:28:22'!
 orientation
 	^orientation! !
 
-!MarsRover methodsFor: 'orientation and position' stamp: 'VW 5/13/2023 16:28:14'!
+!MarsRover methodsFor: 'accesing' stamp: 'VW 5/13/2023 16:28:14'!
 position
 	^position! !
 
@@ -351,38 +351,37 @@ rotateRight
 	^ orientation rotateRight: self! !
 
 
-!MarsRover methodsFor: 'move' stamp: 'VW 5/13/2023 18:15:40'!
-moveToEast
-	position := position + (0@-1).! !
-
-!MarsRover methodsFor: 'move' stamp: 'VW 5/13/2023 18:15:48'!
-moveToNorth
-	position := position + (1@0).! !
-
-!MarsRover methodsFor: 'move' stamp: 'VW 5/13/2023 18:16:00'!
-moveToSouth
-	position := position + (-1@0).! !
-
-!MarsRover methodsFor: 'move' stamp: 'VW 5/13/2023 18:16:08'!
-moveToWest
-	position := position + (0@1).! !
-
-
-!MarsRover methodsFor: 'face' stamp: 'ic&vw 5/14/2023 16:56:38'!
+!MarsRover methodsFor: 'commands - private' stamp: 'ic&vw 5/14/2023 16:56:38'!
 faceEast
 	orientation:= MarsRoverFacingEast new.! !
 
-!MarsRover methodsFor: 'face' stamp: 'ic&vw 5/14/2023 16:56:59'!
+!MarsRover methodsFor: 'commands - private' stamp: 'ic&vw 5/14/2023 16:56:59'!
 faceNorth
 	orientation:= MarsRoverFacingNorth new.! !
 
-!MarsRover methodsFor: 'face' stamp: 'ic&vw 5/14/2023 16:57:12'!
+!MarsRover methodsFor: 'commands - private' stamp: 'ic&vw 5/14/2023 16:57:12'!
 faceSouth
 	orientation:= MarsRoverFacingSouth new.! !
 
-!MarsRover methodsFor: 'face' stamp: 'ic&vw 5/14/2023 16:57:22'!
+!MarsRover methodsFor: 'commands - private' stamp: 'ic&vw 5/14/2023 16:57:22'!
 faceWest
 	orientation:= MarsRoverFacingWest new.! !
+
+!MarsRover methodsFor: 'commands - private' stamp: 'VW 5/13/2023 18:15:40'!
+moveToEast
+	position := position + (0@-1).! !
+
+!MarsRover methodsFor: 'commands - private' stamp: 'VW 5/13/2023 18:15:48'!
+moveToNorth
+	position := position + (1@0).! !
+
+!MarsRover methodsFor: 'commands - private' stamp: 'VW 5/13/2023 18:16:00'!
+moveToSouth
+	position := position + (-1@0).! !
+
+!MarsRover methodsFor: 'commands - private' stamp: 'VW 5/13/2023 18:16:08'!
+moveToWest
+	position := position + (0@1).! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 

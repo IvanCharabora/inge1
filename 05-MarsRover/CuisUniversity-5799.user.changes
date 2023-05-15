@@ -6802,3 +6802,147 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(15 May 2023 00:37:57) CuisUniversity-5706.image priorSource: 9496389!
+
+----STARTUP---- (15 May 2023 12:23:18) as /home/valewodka/Downloads/linux64/CuisUniversity-5799.image!
+
+!MarsRoverTest methodsFor: 'asserts' stamp: 'VW&IC 5/15/2023 12:28:00'!
+assertNewMarsRover: aMarsRover isInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
+	
+	aMarsRover readCommands: aSerieOfCommands.
+	self assertMarsRover: aMarsRover positionIs: aPosition andFaces: anOrientation! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/15/2023 12:28:00' prior: 50624963!
+assertNewMarsRoverFacingWestIsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
+	
+	self assertNewMarsRover: self createMarsRoverIn0x0FacingWest 
+	       isInPosition: aPosition 
+	       facing: anOrientation 
+	       afterReading: aSerieOfCommands.
+
+! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/15/2023 12:28:00' prior: 50624974!
+assertNewMarsRoverFacingEastIsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
+	
+	self assertNewMarsRover: self createMarsRoverIn0x0FacingEast 
+	       isInPosition: aPosition 
+	       facing: anOrientation 
+	       afterReading: aSerieOfCommands.
+
+! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/15/2023 12:28:00' prior: 50624926!
+assertNewMarsRoverFacingSouthIsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
+	
+	self assertNewMarsRover: self createMarsRoverIn0x0FacingSouth 
+	       isInPosition: aPosition 
+	       facing: anOrientation 
+	       afterReading: aSerieOfCommands.! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/15/2023 12:28:00' prior: 50624798!
+assertNewMarsRoverFacingNorthIsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
+	
+	self assertNewMarsRover: self createMarsRoverIn0x0FacingNorth
+	       isInPosition: aPosition 
+	       facing: anOrientation 
+	       afterReading: aSerieOfCommands.
+
+! !
+
+!methodRemoval: MarsRoverTest #assertNewMarsRover:IsInPosition:facing:afterReading: stamp: 'VW&IC 5/15/2023 12:28:00'!
+assertNewMarsRover: aMarsRover IsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
+	
+	aMarsRover readCommands: aSerieOfCommands.
+	self assertMarsRover: aMarsRover positionIs: aPosition andFaces: anOrientation!
+!MarsRoverTest methodsFor: 'asserts' stamp: 'VW&IC 5/15/2023 12:28:11'!
+assertNewMarsRover: aMarsRover isInPosition: aPosition facing: anOrientation afterReadingWithError: aSerieOfCommands
+	
+	self should: [ aMarsRover readCommands: aSerieOfCommands]
+	       raise: Error
+	       withExceptionDo: [ :anError |
+			self assert: anError messageText equals: (aMarsRover class erroredCommandErrorMessage).
+			self assertMarsRover: aMarsRover positionIs: aPosition andFaces: anOrientation
+		]! !
+!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/15/2023 12:28:11' prior: 50625696!
+assertNewMarsRoverFacingNorthIsInPosition: aPosition facing: anOrientation afterReadingWithError: aSerieOfCommands
+	
+	self assertNewMarsRover: self createMarsRoverIn0x0FacingNorth
+	       isInPosition: aPosition 
+	       facing: anOrientation 
+	       afterReadingWithError: aSerieOfCommands.
+
+! !
+
+!methodRemoval: MarsRoverTest #assertNewMarsRover:IsInPosition:facing:afterReadingWithError: stamp: 'VW&IC 5/15/2023 12:28:11'!
+assertNewMarsRover: aMarsRover IsInPosition: aPosition facing: anOrientation afterReadingWithError: aSerieOfCommands
+	
+	self should: [ aMarsRover readCommands: aSerieOfCommands]
+	       raise: Error
+	       withExceptionDo: [ :anError |
+			self assert: anError messageText equals: (aMarsRover class erroredCommandErrorMessage).
+			self assertMarsRover: aMarsRover positionIs: aPosition andFaces: anOrientation
+		]!
+
+!testRun: #MarsRoverTest #test_01AssertInitialPosition0x0FacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_02AssertInitialPosition0x1FacingSouth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_03AssertMarsRoverReadEmptyCommand stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_04AssertMarsRoverReadFowardCommandWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_05AssertMarsRoverReadBackwardCommandWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_06AssertMarsRoverReadLeftCommandWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_07AssertMarsRoverReadRightCommandWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_08AssertMarsRoverReadTwoForwardCommandsWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_09AssertMarsRoverReadTwoLeftCommandsWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_10AssertMarsRoverReadTwoRightCommandsWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_11AssertMarsRoverReadThreeLeftCommandsWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_12AssertMarsRoverReadThreeRightCommandsWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_13AssertMarsRoverReadFourLeftCommandsWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_14AssertMarsRoverReadFourRightCommandsWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_15AssertMarsRoverReadRightForwardCommandsWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_16AssertMarsRoverReadForwardTwiceAndRightCommandsWhenFacingSouth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_17AssertMarsRoverReadForwardTwiceAndRightCommandsWhenFacingWest stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_18AssertMarsRoverReadForwardTwiceAndRightCommandsWhenFacingEast stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_19AssertMarsRoverDontDoAnythingWithErroredCommandWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_20AssertMarsRoverWithErroredCommandAtBeginningWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_21AssertMarsRoverWithErroredCommandAtEndWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+!testRun: #MarsRoverTest #test_22AssertMarsRoverWithErroredCommandInMiddleWhenFacingNorth stamp: 'VW&IC 5/15/2023 12:28:14'!
+PASSED!
+
+----SNAPSHOT----(15 May 2023 12:32:40) CuisUniversity-5799.image priorSource: 9513913!
