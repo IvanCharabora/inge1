@@ -5,11 +5,11 @@ TestCase subclass: #MarsRoverTest
 	poolDictionaries: ''
 	category: 'MarsRoverTDD'!
 
-!MarsRoverTest methodsFor: 'asserts' stamp: 'VW 5/13/2023 16:38:06'!
+!MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/15/2023 00:33:48'!
 assertMarsRover: aMarsRover positionIs: aPosition andFaces: anOrientation 
 
 	self assert: aPosition equals: aMarsRover position.
-	self assert: anOrientation equals: aMarsRover orientation! !
+	self assertMarsRoverOrientation: aMarsRover orientation is: anOrientation! !
 
 !MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/14/2023 17:14:15'!
 assertMarsRoverDontMoveAfterCreatedIn: aPosition facing: anOrientation
@@ -17,6 +17,11 @@ assertMarsRoverDontMoveAfterCreatedIn: aPosition facing: anOrientation
 	|marsRover|
 	marsRover := MarsRover position: aPosition facing: anOrientation new.
 	self assertMarsRover: marsRover positionIs: aPosition andFaces: anOrientation.! !
+
+!MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/15/2023 00:33:27'!
+assertMarsRoverOrientation: aMarsRoverOrientation is: anOrientation
+
+	self assert: (aMarsRoverOrientation isKindOf: anOrientation)! !
 
 !MarsRoverTest methodsFor: 'asserts' stamp: 'ic&vw 5/14/2023 00:41:42'!
 assertNewMarsRover: aMarsRover IsInPosition: aPosition facing: anOrientation afterReading: aSerieOfCommands
@@ -400,3 +405,280 @@ erroredCommandErrorMessage
 position: aPosition facing: anOrientation
 
 	^self new initializePosition: aPosition facing: anOrientation ! !
+
+
+!classDefinition: #MarsRoverFacing category: 'MarsRoverTDD'!
+Object subclass: #MarsRoverFacing
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRoverTDD'!
+
+!MarsRoverFacing methodsFor: 'move' stamp: 'ic&vw 5/13/2023 23:55:54'!
+moveBackward: aMarsRover
+	
+	self subclassResponsibility ! !
+
+!MarsRoverFacing methodsFor: 'move' stamp: 'ic&vw 5/13/2023 23:56:02'!
+moveForward: aMarsRover
+	
+	self subclassResponsibility ! !
+
+
+!MarsRoverFacing methodsFor: 'rotate' stamp: 'ic&vw 5/13/2023 23:56:14'!
+rotateLeft: aMarsRover
+	
+	self subclassResponsibility ! !
+
+!MarsRoverFacing methodsFor: 'rotate' stamp: 'ic&vw 5/13/2023 23:56:16'!
+rotateRight: aMarsRover
+	
+	self subclassResponsibility ! !
+
+
+!classDefinition: #MarsRoverFacingEast category: 'MarsRoverTDD'!
+MarsRoverFacing subclass: #MarsRoverFacingEast
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRoverTDD'!
+
+!MarsRoverFacingEast methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:09:41'!
+rotateLeft: aMarsRover
+	aMarsRover faceNorth.! !
+
+!MarsRoverFacingEast methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:09:50'!
+rotateRight: aMarsRover
+	aMarsRover faceSouth.! !
+
+
+!MarsRoverFacingEast methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:57'!
+moveBackward: aMarsRover
+	aMarsRover moveToWest.! !
+
+!MarsRoverFacingEast methodsFor: 'move' stamp: 'VW 5/13/2023 18:11:01'!
+moveForward: aMarsRover
+	aMarsRover moveToEast.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverFacingEast class' category: 'MarsRoverTDD'!
+MarsRoverFacingEast class
+	instanceVariableNames: 'uniqueInstance'!
+
+
+!classDefinition: #MarsRoverFacingEast category: 'MarsRoverTDD'!
+MarsRoverFacing subclass: #MarsRoverFacingEast
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRoverTDD'!
+
+!MarsRoverFacingEast methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:09:41'!
+rotateLeft: aMarsRover
+	aMarsRover faceNorth.! !
+
+!MarsRoverFacingEast methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:09:50'!
+rotateRight: aMarsRover
+	aMarsRover faceSouth.! !
+
+
+!MarsRoverFacingEast methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:57'!
+moveBackward: aMarsRover
+	aMarsRover moveToWest.! !
+
+!MarsRoverFacingEast methodsFor: 'move' stamp: 'VW 5/13/2023 18:11:01'!
+moveForward: aMarsRover
+	aMarsRover moveToEast.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverFacingEast class' category: 'MarsRoverTDD'!
+MarsRoverFacingEast class
+	instanceVariableNames: 'uniqueInstance'!
+
+
+!classDefinition: #MarsRoverFacingNorth category: 'MarsRoverTDD'!
+MarsRoverFacing subclass: #MarsRoverFacingNorth
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRoverTDD'!
+
+!MarsRoverFacingNorth methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:08:51'!
+rotateLeft: aMarsRover
+	aMarsRover faceWest.! !
+
+!MarsRoverFacingNorth methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:08:59'!
+rotateRight: aMarsRover
+	aMarsRover faceEast.! !
+
+
+!MarsRoverFacingNorth methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:43'!
+moveBackward: aMarsRover
+	aMarsRover moveToSouth.! !
+
+!MarsRoverFacingNorth methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:47'!
+moveForward: aMarsRover
+	aMarsRover moveToNorth! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverFacingNorth class' category: 'MarsRoverTDD'!
+MarsRoverFacingNorth class
+	instanceVariableNames: 'uniqueInstance'!
+
+
+!classDefinition: #MarsRoverFacingNorth category: 'MarsRoverTDD'!
+MarsRoverFacing subclass: #MarsRoverFacingNorth
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRoverTDD'!
+
+!MarsRoverFacingNorth methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:08:51'!
+rotateLeft: aMarsRover
+	aMarsRover faceWest.! !
+
+!MarsRoverFacingNorth methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:08:59'!
+rotateRight: aMarsRover
+	aMarsRover faceEast.! !
+
+
+!MarsRoverFacingNorth methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:43'!
+moveBackward: aMarsRover
+	aMarsRover moveToSouth.! !
+
+!MarsRoverFacingNorth methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:47'!
+moveForward: aMarsRover
+	aMarsRover moveToNorth! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverFacingNorth class' category: 'MarsRoverTDD'!
+MarsRoverFacingNorth class
+	instanceVariableNames: 'uniqueInstance'!
+
+
+!classDefinition: #MarsRoverFacingSouth category: 'MarsRoverTDD'!
+MarsRoverFacing subclass: #MarsRoverFacingSouth
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRoverTDD'!
+
+!MarsRoverFacingSouth methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:39'!
+moveBackward: aMarsRover
+	aMarsRover moveToNorth.! !
+
+!MarsRoverFacingSouth methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:34'!
+moveForward: aMarsRover
+	aMarsRover moveToSouth.! !
+
+
+!MarsRoverFacingSouth methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:07:34'!
+rotateLeft: aMarsRover
+	aMarsRover faceEast.! !
+
+!MarsRoverFacingSouth methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:07:45'!
+rotateRight: aMarsRover
+	aMarsRover faceWest.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverFacingSouth class' category: 'MarsRoverTDD'!
+MarsRoverFacingSouth class
+	instanceVariableNames: 'uniqueInstance'!
+
+
+!classDefinition: #MarsRoverFacingSouth category: 'MarsRoverTDD'!
+MarsRoverFacing subclass: #MarsRoverFacingSouth
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRoverTDD'!
+
+!MarsRoverFacingSouth methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:39'!
+moveBackward: aMarsRover
+	aMarsRover moveToNorth.! !
+
+!MarsRoverFacingSouth methodsFor: 'move' stamp: 'VW 5/13/2023 18:10:34'!
+moveForward: aMarsRover
+	aMarsRover moveToSouth.! !
+
+
+!MarsRoverFacingSouth methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:07:34'!
+rotateLeft: aMarsRover
+	aMarsRover faceEast.! !
+
+!MarsRoverFacingSouth methodsFor: 'rotate' stamp: 'VW 5/13/2023 18:07:45'!
+rotateRight: aMarsRover
+	aMarsRover faceWest.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverFacingSouth class' category: 'MarsRoverTDD'!
+MarsRoverFacingSouth class
+	instanceVariableNames: 'uniqueInstance'!
+
+
+!classDefinition: #MarsRoverFacingWest category: 'MarsRoverTDD'!
+MarsRoverFacing subclass: #MarsRoverFacingWest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRoverTDD'!
+
+!MarsRoverFacingWest methodsFor: 'move' stamp: 'VW 5/13/2023 18:06:38'!
+moveBackward: aMarsRover
+	aMarsRover moveToEast.! !
+
+!MarsRoverFacingWest methodsFor: 'move' stamp: 'VW 5/13/2023 18:07:04'!
+moveForward: aMarsRover
+	aMarsRover moveToWest.! !
+
+
+!MarsRoverFacingWest methodsFor: 'rotate' stamp: 'ic&vw 5/13/2023 23:41:56'!
+rotateLeft: aMarsRover
+	aMarsRover faceSouth.! !
+
+!MarsRoverFacingWest methodsFor: 'rotate' stamp: 'ic&vw 5/13/2023 23:42:01'!
+rotateRight: aMarsRover
+	aMarsRover faceNorth.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverFacingWest class' category: 'MarsRoverTDD'!
+MarsRoverFacingWest class
+	instanceVariableNames: 'uniqueInstance'!
+
+
+!classDefinition: #MarsRoverFacingWest category: 'MarsRoverTDD'!
+MarsRoverFacing subclass: #MarsRoverFacingWest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRoverTDD'!
+
+!MarsRoverFacingWest methodsFor: 'move' stamp: 'VW 5/13/2023 18:06:38'!
+moveBackward: aMarsRover
+	aMarsRover moveToEast.! !
+
+!MarsRoverFacingWest methodsFor: 'move' stamp: 'VW 5/13/2023 18:07:04'!
+moveForward: aMarsRover
+	aMarsRover moveToWest.! !
+
+
+!MarsRoverFacingWest methodsFor: 'rotate' stamp: 'ic&vw 5/13/2023 23:41:56'!
+rotateLeft: aMarsRover
+	aMarsRover faceSouth.! !
+
+!MarsRoverFacingWest methodsFor: 'rotate' stamp: 'ic&vw 5/13/2023 23:42:01'!
+rotateRight: aMarsRover
+	aMarsRover faceNorth.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverFacingWest class' category: 'MarsRoverTDD'!
+MarsRoverFacingWest class
+	instanceVariableNames: 'uniqueInstance'!
