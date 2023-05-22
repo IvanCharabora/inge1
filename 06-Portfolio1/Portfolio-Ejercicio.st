@@ -13,6 +13,14 @@ assertAccountAlreadyAddedWhileTryingToAdd: anAccountToAdd in: anAccount
 	]
 	! !
 
+!PortfolioTest methodsFor: 'asserts' stamp: 'VW&IC 5/22/2023 13:45:22'!
+assertThatTheOnlyTwoTransactionsFromPortfolio: aPortfolio are: aTransaction and: anotherTransaction
+
+	self assert: 2 equals: (aPortfolio transactions size).
+	self assert: (aPortfolio transactions) includes: aTransaction.
+	self assert: (aPortfolio transactions) includes: anotherTransaction
+	! !
+
 
 !PortfolioTest methodsFor: 'tests' stamp: 'icvw 5/15/2023 20:43:57'!
 test01NewPortfolioMustHaveBalanceZero
@@ -110,7 +118,7 @@ test10NewPortfolioHasNoTransactions
 		
 	self assert: (Portfolio new transactions isEmpty)! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'IC&VW 5/20/2023 15:42:40'!
+!PortfolioTest methodsFor: 'tests' stamp: 'VW&IC 5/22/2023 13:46:42'!
 test11PortfolioWithAccountWithTransactions
 	
 	| account portfolio |
@@ -119,13 +127,12 @@ test11PortfolioWithAccountWithTransactions
 	Deposit register: 70 on: account.
 	
 	portfolio := self createPortfolioWith: account.
+	
+	self assertThatTheOnlyTwoTransactionsFromPortfolio: portfolio are: (Deposit for: 50) and: (Deposit for: 70).
 			
-	self assert: 2 equals: (portfolio transactions size).
-	self assert: (portfolio transactions includes: (Deposit for: 50)).
-	self assert: (portfolio transactions includes: (Deposit for: 70))
 	! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'IC&VW 5/20/2023 15:46:13'!
+!PortfolioTest methodsFor: 'tests' stamp: 'VW&IC 5/22/2023 13:47:03'!
 test12PortfolioWithPorfolioWithTransactions
 	
 	| portfolioWithAccountAndPortfolio |
@@ -133,10 +140,7 @@ test12PortfolioWithPorfolioWithTransactions
 	portfolioWithAccountAndPortfolio := self createPortfolioWith: self createReceptiveAccountWithBalanceTwenty
 									 with: self createPortfolioWithAccountWithBalanceFifty.
 		
-	self assert: 2 equals: (portfolioWithAccountAndPortfolio transactions size).
-	self assert: (portfolioWithAccountAndPortfolio transactions includes: (Deposit for: 50)).
-	self assert: (portfolioWithAccountAndPortfolio transactions includes: (Deposit for: 20))
-	! !
+	self assertThatTheOnlyTwoTransactionsFromPortfolio: portfolioWithAccountAndPortfolio are: (Deposit for: 50) and: (Deposit for: 20).! !
 
 !PortfolioTest methodsFor: 'tests' stamp: 'IC&VW 5/20/2023 16:04:16'!
 test13PortfolioCantAddAnAlreadyAddedAccount
@@ -374,7 +378,7 @@ test07AccountKnowsItsTransactions
 
 !classDefinition: #Account category: 'Portfolio-Ejercicio'!
 Object subclass: #Account
-	instanceVariableNames: 'fathers'
+	instanceVariableNames: 'accountsThatAddedMe'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
@@ -389,9 +393,9 @@ balance
 	self  subclassResponsibility.! !
 
 
-!Account methodsFor: 'adding' stamp: 'VW&IC 5/20/2023 13:11:42'!
-addFather: aPortfolio
-	fathers add: aPortfolio! !
+!Account methodsFor: 'adding' stamp: 'VW&IC 5/22/2023 13:41:32'!
+addAccountThatAddedMe: aPortfolio
+	accountsThatAddedMe add: aPortfolio! !
 
 
 !Account methodsFor: 'transactions' stamp: 'VW&IC 5/20/2023 12:12:34'!
@@ -439,11 +443,11 @@ accounts
 	^accounts ! !
 
 
-!Portfolio methodsFor: 'adding - private' stamp: 'IC&VW 5/20/2023 14:09:50'!
+!Portfolio methodsFor: 'adding - private' stamp: 'VW&IC 5/22/2023 13:50:58'!
 canAddReceptiveAccount: aReceptiveAccount
 
-	fathers ifEmpty: [ ^self checkIfReceptiveAccountsIsAlreadyAdded: aReceptiveAccount].
-	^fathers do:[:father| father canAddReceptiveAccount: aReceptiveAccount ] ! !
+	accountsThatAddedMe ifEmpty: [ ^self checkIfReceptiveAccountsIsAlreadyAdded: aReceptiveAccount].
+	^accountsThatAddedMe do:[:anAccountThatAddedMe| anAccountThatAddedMe canAddReceptiveAccount: aReceptiveAccount ] ! !
 
 !Portfolio methodsFor: 'adding - private' stamp: 'VW&IC 5/20/2023 12:36:40'!
 canBeAddedTo: aPortfolio
@@ -455,18 +459,18 @@ checkIfReceptiveAccountsIsAlreadyAdded: aReceptiveAccount
 	^ (accounts includes: aReceptiveAccount) ifTrue: [self class accountAlreadyAddedError]! !
 
 
-!Portfolio methodsFor: 'adding' stamp: 'IC&VW 5/20/2023 13:56:09'!
+!Portfolio methodsFor: 'adding' stamp: 'VW&IC 5/22/2023 13:41:32'!
 add: anAccount
 
 	anAccount canBeAddedTo: self.
 	accounts add: anAccount.
-	anAccount addFather: self.! !
+	anAccount addAccountThatAddedMe: self.! !
 
 
-!Portfolio methodsFor: 'initialization' stamp: 'VW&IC 5/20/2023 13:10:42'!
+!Portfolio methodsFor: 'initialization' stamp: 'VW&IC 5/22/2023 13:41:03'!
 initialize
 	accounts := OrderedCollection new.
-	fathers := OrderedCollection new.! !
+	accountsThatAddedMe := OrderedCollection new.! !
 
 
 !Portfolio methodsFor: 'balance' stamp: 'IC&VW 5/20/2023 13:54:31'!
@@ -497,11 +501,11 @@ Account subclass: #ReceptiveAccount
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!ReceptiveAccount methodsFor: 'initialization' stamp: 'VW&IC 5/20/2023 13:10:54'!
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'VW&IC 5/22/2023 13:41:03'!
 initialize
 
 	transactions := OrderedCollection new.
-	fathers := OrderedCollection new.! !
+	accountsThatAddedMe := OrderedCollection new.! !
 
 
 !ReceptiveAccount methodsFor: 'transactions' stamp: 'icvw 5/15/2023 21:10:05'!

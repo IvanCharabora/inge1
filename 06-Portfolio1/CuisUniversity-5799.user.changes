@@ -8242,3 +8242,238 @@ test17PortfolioCantAddAnAccountAlreadyAddedByFirstFather
 	! !
 
 ----SNAPSHOT----(20 May 2023 16:08:07) CuisUniversity-5799.image priorSource: 9525934!
+
+----STARTUP---- (22 May 2023 13:37:41) as /home/valewodka/Downloads/linux64/CuisUniversity-5799.image!
+
+
+!classDefinition: #Account category: 'Portfolio-Ejercicio' stamp: 'VW&IC 5/22/2023 13:41:03'!
+Object subclass: #Account
+	instanceVariableNames: 'accountsThatAddedMe'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Account methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/22/2023 13:41:03' prior: 50625580!
+addFather: aPortfolio
+	accountsThatAddedMe add: aPortfolio! !
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/22/2023 13:41:03' prior: 50625560 overrides: 50624359!
+initialize
+
+	transactions := OrderedCollection new.
+	accountsThatAddedMe := OrderedCollection new.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/22/2023 13:41:03' prior: 50626362!
+canAddReceptiveAccount: aReceptiveAccount
+
+	accountsThatAddedMe ifEmpty: [ ^self checkIfReceptiveAccountsIsAlreadyAdded: aReceptiveAccount].
+	^accountsThatAddedMe do:[:father| father canAddReceptiveAccount: aReceptiveAccount ] ! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/22/2023 13:41:03' prior: 50625553 overrides: 50624359!
+initialize
+	accounts := OrderedCollection new.
+	accountsThatAddedMe := OrderedCollection new.! !
+!Account methodsFor: 'adding' stamp: 'VW&IC 5/22/2023 13:41:32'!
+addAccountThatAddedMe: aPortfolio
+	accountsThatAddedMe add: aPortfolio! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'VW&IC 5/22/2023 13:41:32' prior: 50626117!
+add: anAccount
+
+	anAccount canBeAddedTo: self.
+	accounts add: anAccount.
+	anAccount addAccountThatAddedMe: self.! !
+
+!methodRemoval: Account #addFather: stamp: 'VW&IC 5/22/2023 13:41:32'!
+addFather: aPortfolio
+	accountsThatAddedMe add: aPortfolio!
+!PortfolioTest methodsFor: 'tests' stamp: 'VW&IC 5/22/2023 13:45:22'!
+assertThatTheOnlyTwoTransactionsFromPortfolio: aPortfolio are: aTransaction and: anotherTransaction
+
+	self assert: 2 equals: (aPortfolio transactions size).
+	self assert: (aPortfolio transactions) includes: aTransaction.
+	self assert: (aPortfolio transactions) includes: anotherTransaction
+	! !
+
+!testRun: #PortfolioTest #test01NewPortfolioMustHaveBalanceZero stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioCanAddAccountWithBalanceZero stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioCanAddAccountWithBalanceNotZero stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioCanAddTwoAccountWithBalanceZero stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioCanAddTwoAccountWithBalanceNotZero stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioCanAddPortfolioWithAccountWithBalanceNotZero stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioWithNoAccountHasNoTransaction stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioWithAccountWithTransactionHasThatTransaction stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioWithPortfolioWithTransaction stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test10NewPortfolioHasNoTransactions stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioWithAccountWithTransactions stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioWithPorfolioWithTransactions stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test13PortfolioCantAddAnAlreadyAddedAccount stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test14PortfolioCantAddAPortfolioWithAnAlreadyAddedAccount stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCantAddAnAlreadyAddedAccountByFather stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test16PortfolioCantAddAPortfolioWithAnAlreadyAddedAccountByFather stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test17PortfolioCantAddAnAccountAlreadyAddedByFirstFather stamp: 'VW&IC 5/22/2023 13:45:26'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'VW&IC 5/22/2023 13:46:42' prior: 50628291!
+test11PortfolioWithAccountWithTransactions
+	
+	| account portfolio |
+	
+	account := self createReceptiveAccountWithBalanceFifty.
+	Deposit register: 70 on: account.
+	
+	portfolio := self createPortfolioWith: account.
+	
+	self assertThatTheOnlyTwoTransactionsFromPortfolio: portfolio are: (Deposit for: 50) and: (Deposit for: 70).
+			
+	! !
+
+!testRun: #PortfolioTest #test11PortfolioWithAccountWithTransactions stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test01NewPortfolioMustHaveBalanceZero stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioCanAddAccountWithBalanceZero stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioCanAddAccountWithBalanceNotZero stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioCanAddTwoAccountWithBalanceZero stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioCanAddTwoAccountWithBalanceNotZero stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioCanAddPortfolioWithAccountWithBalanceNotZero stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioWithNoAccountHasNoTransaction stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioWithAccountWithTransactionHasThatTransaction stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioWithPortfolioWithTransaction stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test10NewPortfolioHasNoTransactions stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioWithAccountWithTransactions stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioWithPorfolioWithTransactions stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test13PortfolioCantAddAnAlreadyAddedAccount stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test14PortfolioCantAddAPortfolioWithAnAlreadyAddedAccount stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCantAddAnAlreadyAddedAccountByFather stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test16PortfolioCantAddAPortfolioWithAnAlreadyAddedAccountByFather stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test17PortfolioCantAddAnAccountAlreadyAddedByFirstFather stamp: 'VW&IC 5/22/2023 13:46:43'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'VW&IC 5/22/2023 13:47:03' prior: 50628403!
+test12PortfolioWithPorfolioWithTransactions
+	
+	| portfolioWithAccountAndPortfolio |
+	
+	portfolioWithAccountAndPortfolio := self createPortfolioWith: self createReceptiveAccountWithBalanceTwenty
+									 with: self createPortfolioWithAccountWithBalanceFifty.
+		
+	self assertThatTheOnlyTwoTransactionsFromPortfolio: portfolioWithAccountAndPortfolio are: (Deposit for: 50) and: (Deposit for: 20).! !
+
+!testRun: #PortfolioTest #test12PortfolioWithPorfolioWithTransactions stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test01NewPortfolioMustHaveBalanceZero stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioCanAddAccountWithBalanceZero stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioCanAddAccountWithBalanceNotZero stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioCanAddTwoAccountWithBalanceZero stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioCanAddTwoAccountWithBalanceNotZero stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioCanAddPortfolioWithAccountWithBalanceNotZero stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioWithNoAccountHasNoTransaction stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioWithAccountWithTransactionHasThatTransaction stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioWithPortfolioWithTransaction stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test10NewPortfolioHasNoTransactions stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioWithAccountWithTransactions stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioWithPorfolioWithTransactions stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test13PortfolioCantAddAnAlreadyAddedAccount stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test14PortfolioCantAddAPortfolioWithAnAlreadyAddedAccount stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCantAddAnAlreadyAddedAccountByFather stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test16PortfolioCantAddAPortfolioWithAnAlreadyAddedAccountByFather stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test17PortfolioCantAddAnAccountAlreadyAddedByFirstFather stamp: 'VW&IC 5/22/2023 13:47:04'!
+PASSED!
+!Portfolio methodsFor: 'adding - private' stamp: 'VW&IC 5/22/2023 13:50:58' prior: 50629685!
+canAddReceptiveAccount: aReceptiveAccount
+
+	accountsThatAddedMe ifEmpty: [ ^self checkIfReceptiveAccountsIsAlreadyAdded: aReceptiveAccount].
+	^accountsThatAddedMe do:[:anAccountThatAddedMe| anAccountThatAddedMe canAddReceptiveAccount: aReceptiveAccount ] ! !
+
+----SNAPSHOT----(22 May 2023 13:51:33) CuisUniversity-5799.image priorSource: 9536203!
