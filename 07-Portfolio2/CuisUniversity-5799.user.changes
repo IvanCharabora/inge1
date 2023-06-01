@@ -24538,3 +24538,259 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(31 May 2023 17:13:10) CuisUniversity-5799.image priorSource: 10013177!
+
+----STARTUP---- (1 June 2023 14:29:17) as C:\Users\Ivo\Desktop\uba\inge1\cuises\cuis 4 - portfolio 2 (imagen nueva)\CuisUniversity-5799.image!
+
+!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 6/1/2023 15:13:06' prior: 50643825!
+test02PrintPortfolioNameAndAccountWithOneIndentation
+
+	| childrenPortfolio johnsAccount treeFormat |
+	
+	johnsAccount  := ReceptiveAccount named: 'Cuenta de Juan'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount.
+	treeFormat := PortfolioTreeFormat for: childrenPortfolio.
+	
+	
+	self assert: (OrderedCollection with: 'Portfolio de hijos' 
+							     with: ('    Cuenta de Juan'	)
+			   ) equals: treeFormat summary! !
+
+!testRun: #PortfolioTreeFormatTest #test02PrintPortfolioNameAndAccountWithOneIndentation stamp: 'ic&vw 6/1/2023 15:13:08'!
+PASSED!
+!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 6/1/2023 15:13:24' prior: 50643916!
+test03PrintPortfolioNameAndMoreThanOneAccountWithOneIndentation
+
+	| childrenPortfolio johnsAccount angiesAccount treeFormat |
+	
+	johnsAccount  := ReceptiveAccount named: 'Cuenta de Juan'.
+	angiesAccount  := ReceptiveAccount named: 'Cuenta de Angeles'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount with: angiesAccount.
+	treeFormat := PortfolioTreeFormat for: childrenPortfolio.
+	
+	self assert: (OrderedCollection with: 'Portfolio de hijos' 
+	  					             with: ('    Cuenta de Juan'	) 
+							     with: ('    Cuenta de Angeles'	)
+			   ) equals: treeFormat summary ! !
+!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 6/1/2023 15:13:38' prior: 50643891!
+test04PrintPortfolioWithAccountInPortfolioWithTheRightIndentation
+
+	| childrenPortfolio johnsAccount familyPortfolio treeFormat |
+	
+	johnsAccount  := ReceptiveAccount named: 'Cuenta de Juan'.
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: johnsAccount.
+	familyPortfolio := Portfolio named: 'Portfolio de la familia' with: childrenPortfolio.
+	treeFormat := PortfolioTreeFormat for: familyPortfolio.
+
+	
+	self assert: (OrderedCollection with: 'Portfolio de la familia' 
+							     with: ('    Portfolio de hijos'	) 
+							     with: ('        Cuenta de Juan'	)
+			   ) equals: treeFormat summary! !
+!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 6/1/2023 15:13:59' prior: 50643844!
+test05PrintPortfolioWithIndentationGoingUpAndDown
+
+	| childrenPortfolio familyPortfolio treeFormat dadAccount momAccount sonAccount |
+	
+	sonAccount  := ReceptiveAccount named: 'Cuenta del hijo'.
+	dadAccount  := ReceptiveAccount named: 'Cuenta del padre'.
+	momAccount := ReceptiveAccount named: 'Cuenta de la madre'.
+	
+	childrenPortfolio := Portfolio named: 'Portfolio de hijos' with: sonAccount.
+	familyPortfolio := Portfolio named: 'Portfolio de la familia' with: dadAccount with: childrenPortfolio with: momAccount.
+	treeFormat := PortfolioTreeFormat for: familyPortfolio.
+
+	
+	self assert: (OrderedCollection with: 'Portfolio de la familia' 
+							     with: ('    Cuenta del padre'	)
+							     with: ('    Portfolio de hijos'	)
+							     with: ('        Cuenta del hijo'	)
+							     with: ('    Cuenta de la madre'	)
+			   ) 
+	
+	equals: treeFormat summary! !
+
+!testRun: #PortfolioTreeFormatTest #test01PrintPortfolioNameInEmptyPortfolio stamp: 'ic&vw 6/1/2023 15:14:01'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test02PrintPortfolioNameAndAccountWithOneIndentation stamp: 'ic&vw 6/1/2023 15:14:01'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test03PrintPortfolioNameAndMoreThanOneAccountWithOneIndentation stamp: 'ic&vw 6/1/2023 15:14:01'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test04PrintPortfolioWithAccountInPortfolioWithTheRightIndentation stamp: 'ic&vw 6/1/2023 15:14:01'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test05PrintPortfolioWithIndentationGoingUpAndDown stamp: 'ic&vw 6/1/2023 15:14:01'!
+PASSED!
+
+!methodRemoval: PortfolioTreeFormatTest #format:withIndentations: stamp: 'ic&vw 6/1/2023 15:14:04'!
+format: aStringToFormat withIndentations: anAmountOfIdentations
+
+	anAmountOfIdentations = 0 ifTrue: [^aStringToFormat].
+	^self format: ('    ', aStringToFormat) withIndentations: anAmountOfIdentations-1!
+
+!methodRemoval: PortfolioTreeFormatTest #formatWithOneIndentation: stamp: 'ic&vw 6/1/2023 15:14:04'!
+formatWithOneIndentation: aStringToFormat
+
+	^self format: aStringToFormat withIndentations: 1 !
+
+!methodRemoval: PortfolioTreeFormatTest #formatWithTwoIndentations: stamp: 'ic&vw 6/1/2023 15:14:04'!
+formatWithTwoIndentations: aStringToFormat
+
+	^self format: aStringToFormat withIndentations: 2 !
+
+!testRun: #PortfolioTreeFormatTest #test01PrintPortfolioNameInEmptyPortfolio stamp: 'ic&vw 6/1/2023 15:14:05'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test02PrintPortfolioNameAndAccountWithOneIndentation stamp: 'ic&vw 6/1/2023 15:14:05'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test03PrintPortfolioNameAndMoreThanOneAccountWithOneIndentation stamp: 'ic&vw 6/1/2023 15:14:05'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test04PrintPortfolioWithAccountInPortfolioWithTheRightIndentation stamp: 'ic&vw 6/1/2023 15:14:05'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test05PrintPortfolioWithIndentationGoingUpAndDown stamp: 'ic&vw 6/1/2023 15:14:05'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test01NewAccountSumaryTestHasOnlyBalance stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test02AccountWithDepositHasDepositAndBalance stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test03AccountWithWithdrawHasWithdrawAndBalance stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test04AccountWithTransferDespositHasTransferDespositAndBalance stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test05AccountWithTransferWithdrawHasTransferWithdrawAndBalance stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #AccountSummaryTest #test06PortfolioWithAccountsShowTransferTwice stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioSummaryTest #test01EmptyPortfolioSummaryReturnsNameAndBalance stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioSummaryTest #test02SummaryOfPortfolioWithAccountsAndAllPossibleTransactions stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test01PrintPortfolioNameInEmptyPortfolio stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test02PrintPortfolioNameAndAccountWithOneIndentation stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test03PrintPortfolioNameAndMoreThanOneAccountWithOneIndentation stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test04PrintPortfolioWithAccountInPortfolioWithTheRightIndentation stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #PortfolioTreeFormatTest #test05PrintPortfolioWithIndentationGoingUpAndDown stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferNetTest #test01TransferNetForNewAccountReturnsZero stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferNetTest #test02TransferNetIsAffectedByAccountWithTransferDeposit stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferNetTest #test03TransferNetIsNotAffectedByAccountWithDeposit stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferNetTest #test04TransferNetIsNotAffectedByAccountWithWithdraw stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferNetTest #test05TransferNetIsAffectedByAccountWithTransferWithdraw stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferNetTest #test06TransferNetAffectForPortfolioWithTwoTransferAccountsIsCancelled stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferTest #test01TransferAffectsBalanceOfBothAccounts stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferTest #test02TransferIsRegisteredInBothAccounts stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferTest #test03TransferLegsHaveTheSameTransfer stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferTest #test04TransferWithdrawCanAccessTransferDeposit stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+!testRun: #TransferTest #test05TransferDepositCanAccessTransferWithdraw stamp: 'ic&vw 6/1/2023 15:14:15'!
+PASSED!
+
+----SNAPSHOT----(1 June 2023 15:14:40) CuisUniversity-5799.image priorSource: 10029416!

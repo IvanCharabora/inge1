@@ -512,23 +512,6 @@ TestCase subclass: #PortfolioTreeFormatTest
 	poolDictionaries: ''
 	category: 'Portfolio'!
 
-!PortfolioTreeFormatTest methodsFor: 'formating' stamp: 'ic&vw 5/27/2023 13:55:37'!
-format: aStringToFormat withIndentations: anAmountOfIdentations
-
-	anAmountOfIdentations = 0 ifTrue: [^aStringToFormat].
-	^self format: ('    ', aStringToFormat) withIndentations: anAmountOfIdentations-1! !
-
-!PortfolioTreeFormatTest methodsFor: 'formating' stamp: 'ic&vw 5/27/2023 13:34:59'!
-formatWithOneIndentation: aStringToFormat
-
-	^self format: aStringToFormat withIndentations: 1 ! !
-
-!PortfolioTreeFormatTest methodsFor: 'formating' stamp: 'ic&vw 5/27/2023 13:35:07'!
-formatWithTwoIndentations: aStringToFormat
-
-	^self format: aStringToFormat withIndentations: 2 ! !
-
-
 !PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 5/31/2023 16:57:01'!
 test01PrintPortfolioNameInEmptyPortfolio
 
@@ -539,7 +522,7 @@ test01PrintPortfolioNameInEmptyPortfolio
 	
 	self assert: (OrderedCollection with: 'Portfolio de hijos') equals: (treeFormat summary).! !
 
-!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 5/31/2023 16:57:01'!
+!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 6/1/2023 15:13:06'!
 test02PrintPortfolioNameAndAccountWithOneIndentation
 
 	| childrenPortfolio johnsAccount treeFormat |
@@ -550,10 +533,10 @@ test02PrintPortfolioNameAndAccountWithOneIndentation
 	
 	
 	self assert: (OrderedCollection with: 'Portfolio de hijos' 
-							     with: (self formatWithOneIndentation: 'Cuenta de Juan'	)
+							     with: ('    Cuenta de Juan'	)
 			   ) equals: treeFormat summary! !
 
-!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 5/31/2023 16:57:01'!
+!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 6/1/2023 15:13:24'!
 test03PrintPortfolioNameAndMoreThanOneAccountWithOneIndentation
 
 	| childrenPortfolio johnsAccount angiesAccount treeFormat |
@@ -564,11 +547,11 @@ test03PrintPortfolioNameAndMoreThanOneAccountWithOneIndentation
 	treeFormat := PortfolioTreeFormat for: childrenPortfolio.
 	
 	self assert: (OrderedCollection with: 'Portfolio de hijos' 
-	  					             with: (self formatWithOneIndentation: 'Cuenta de Juan'	) 
-							     with: (self formatWithOneIndentation: 'Cuenta de Angeles'	)
+	  					             with: ('    Cuenta de Juan'	) 
+							     with: ('    Cuenta de Angeles'	)
 			   ) equals: treeFormat summary ! !
 
-!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 5/31/2023 16:57:01'!
+!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 6/1/2023 15:13:38'!
 test04PrintPortfolioWithAccountInPortfolioWithTheRightIndentation
 
 	| childrenPortfolio johnsAccount familyPortfolio treeFormat |
@@ -580,11 +563,11 @@ test04PrintPortfolioWithAccountInPortfolioWithTheRightIndentation
 
 	
 	self assert: (OrderedCollection with: 'Portfolio de la familia' 
-							     with: (self formatWithOneIndentation: 'Portfolio de hijos'	) 
-							     with: (self formatWithTwoIndentations: 'Cuenta de Juan'	)
+							     with: ('    Portfolio de hijos'	) 
+							     with: ('        Cuenta de Juan'	)
 			   ) equals: treeFormat summary! !
 
-!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 5/31/2023 16:57:01'!
+!PortfolioTreeFormatTest methodsFor: 'tests' stamp: 'ic&vw 6/1/2023 15:13:59'!
 test05PrintPortfolioWithIndentationGoingUpAndDown
 
 	| childrenPortfolio familyPortfolio treeFormat dadAccount momAccount sonAccount |
@@ -599,10 +582,10 @@ test05PrintPortfolioWithIndentationGoingUpAndDown
 
 	
 	self assert: (OrderedCollection with: 'Portfolio de la familia' 
-							     with: (self formatWithOneIndentation: 'Cuenta del padre'	)
-							     with: (self formatWithOneIndentation: 'Portfolio de hijos'	)
-							     with: (self formatWithTwoIndentations: 'Cuenta del hijo'	)
-							     with: (self formatWithOneIndentation: 'Cuenta de la madre'	)
+							     with: ('    Cuenta del padre'	)
+							     with: ('    Portfolio de hijos'	)
+							     with: ('        Cuenta del hijo'	)
+							     with: ('    Cuenta de la madre'	)
 			   ) 
 	
 	equals: treeFormat summary! !
