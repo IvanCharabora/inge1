@@ -130,8 +130,8 @@ registerPortfolio: aPortfolio
 
 	self subclassResponsibility ! !
 
-!PortfolioReport methodsFor: 'register' stamp: 'ic&vw 5/31/2023 17:08:40'!
-registerPortfolio: aPortfolio andAfterAddingAccountsDo: aBlock
+!PortfolioReport methodsFor: 'register' stamp: 'IC&VW 6/1/2023 15:50:16'!
+registerPortfolio: aPortfolio andAfterAddingAccountsAddBalance: aBlock
 
 	self registerMessage: aPortfolio name.
 	self addIndentation.
@@ -146,8 +146,8 @@ registerReceptiveAccount: aReceptiveAccount
 
 	self subclassResponsibility ! !
 
-!PortfolioReport methodsFor: 'register' stamp: 'ic&vw 5/31/2023 17:10:57'!
-registerReceptiveAccount: aReceptiveAccount andAfterAddingNameDo: aBlock
+!PortfolioReport methodsFor: 'register' stamp: 'IC&VW 6/1/2023 15:50:41'!
+registerReceptiveAccount: aReceptiveAccount andAddSummary: aBlock
 
 	self registerMessage: aReceptiveAccount name.
 	aBlock value.! !
@@ -171,11 +171,6 @@ PortfolioReport subclass: #PortfolioSummary
 	poolDictionaries: ''
 	category: 'Portfolio'!
 
-!PortfolioSummary methodsFor: 'indentation' stamp: 'ic&vw 5/31/2023 16:14:26'!
-addIndentationIn: aSummary
-
-	^aSummary collect: [:aSummaryLine | indents,aSummaryLine]! !
-
 
 !PortfolioSummary methodsFor: 'messages' stamp: 'ic&vw 5/31/2023 15:31:34'!
 balanceMessageFor: anAccount
@@ -183,22 +178,22 @@ balanceMessageFor: anAccount
 	^ 'Balance = ', anAccount balance asString! !
 
 
-!PortfolioSummary methodsFor: 'register' stamp: 'ic&vw 5/31/2023 17:08:48'!
+!PortfolioSummary methodsFor: 'register' stamp: 'IC&VW 6/1/2023 15:50:16'!
 registerPortfolio: aPortfolio
 
-	self registerPortfolio: aPortfolio andAfterAddingAccountsDo: [self registerMessage: (self balanceMessageFor: aPortfolio)]
+	self registerPortfolio: aPortfolio andAfterAddingAccountsAddBalance: [self registerMessage: (self balanceMessageFor: aPortfolio)]
 	
 ! !
 
-!PortfolioSummary methodsFor: 'register' stamp: 'ic&vw 5/31/2023 17:12:04'!
+!PortfolioSummary methodsFor: 'register' stamp: 'IC&VW 6/1/2023 15:50:41'!
 registerReceptiveAccount: aReceptiveAccount
 
 	| accountSummary |
-	self registerReceptiveAccount: aReceptiveAccount andAfterAddingNameDo: [
+	self registerReceptiveAccount: aReceptiveAccount andAddSummary: [
 		
 		self addIndentation.		
 		accountSummary := (AccountSummary for: aReceptiveAccount) summary.
-		tree addAllLast: (self addIndentationIn: accountSummary).
+		tree addAllLast: (accountSummary collect: [:aSummaryLine | indents,aSummaryLine]).
 		self removeIndentation.
 		
 	].
@@ -214,16 +209,16 @@ PortfolioReport subclass: #PortfolioTreeFormat
 	poolDictionaries: ''
 	category: 'Portfolio'!
 
-!PortfolioTreeFormat methodsFor: 'register' stamp: 'ic&vw 5/31/2023 17:09:19'!
+!PortfolioTreeFormat methodsFor: 'register' stamp: 'IC&VW 6/1/2023 15:50:16'!
 registerPortfolio: aPortfolio
 
-	self registerPortfolio: aPortfolio andAfterAddingAccountsDo: []
+	self registerPortfolio: aPortfolio andAfterAddingAccountsAddBalance: []
 ! !
 
-!PortfolioTreeFormat methodsFor: 'register' stamp: 'ic&vw 5/31/2023 17:11:15'!
+!PortfolioTreeFormat methodsFor: 'register' stamp: 'IC&VW 6/1/2023 15:50:41'!
 registerReceptiveAccount: aReceptiveAccount
 
-	self registerReceptiveAccount: aReceptiveAccount andAfterAddingNameDo: [].
+	self registerReceptiveAccount: aReceptiveAccount andAddSummary: [].
 ! !
 
 
@@ -256,8 +251,8 @@ portfolioSummaryWithAccountsAndAllPossibleTransactions
 	! !
 
 
-!PortfolioSummaryTest methodsFor: 'tests' stamp: 'ic&vw 5/31/2023 15:24:14'!
-test01EmptyPortfolioSummaryReturnsNameAndBalance
+!PortfolioSummaryTest methodsFor: 'tests' stamp: 'IC&VW 6/1/2023 15:52:44'!
+test01PortfolioSummaryofEmptyPortfolioReturnsNameAndBalance
 
 	| portfolioSummary |
 	
@@ -265,8 +260,8 @@ test01EmptyPortfolioSummaryReturnsNameAndBalance
 	
 	self assert: (OrderedCollection with: 'Portfolio de la familia' with: '    Balance = 0') equals: portfolioSummary summary! !
 
-!PortfolioSummaryTest methodsFor: 'tests' stamp: 'ic&vw 5/31/2023 16:37:33'!
-test02SummaryOfPortfolioWithAccountsAndAllPossibleTransactions
+!PortfolioSummaryTest methodsFor: 'tests' stamp: 'IC&VW 6/1/2023 15:52:22'!
+test02PortfolioSummaryOfPortfolioWithAccountsReturnsTreeTransactionsAndBalances
 
 	| johnsAccount familyPortfolio miaAccount sonsPortfolio portfolioSummary |
 	
