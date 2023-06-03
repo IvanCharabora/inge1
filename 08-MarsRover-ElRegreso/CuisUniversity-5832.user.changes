@@ -10672,3 +10672,283 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(3 June 2023 16:18:56) CuisUniversity-5832.image priorSource: 9608119!
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:32:25'!
+observeWith: anObserver assertPositions: anExpectedPositions andHeading: anExpectedHeadings afterDoing: aSerieOfCommands 
+
+	| logChanges marsRover |
+	marsRover := MarsRover at: 0@0 heading: MarsRoverHeadingNorth.
+		
+	marsRover addObserver: anObserver.
+	
+	marsRover process: aSerieOfCommands.
+	
+	self assert: anExpectedPositions equals: anObserver positions.
+	self assert: anExpectedHeadings equals: anObserver heading.
+! !
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:32:32' prior: 50636877!
+observeWith: anObserver assertPositions: anExpectedPositions andHeading: anExpectedHeadings afterDoing: aSerieOfCommands 
+
+	| marsRover |
+	marsRover := MarsRover at: 0@0 heading: MarsRoverHeadingNorth.
+		
+	marsRover addObserver: anObserver.
+	
+	marsRover process: aSerieOfCommands.
+	
+	self assert: anExpectedPositions equals: anObserver positions.
+	self assert: anExpectedHeadings equals: anObserver heading. 
+! !
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:34:46' prior: 50632256!
+test01MarsRoverWithLogObserverStartsWithEmptyLoggedChanges
+
+	
+	self observeWith: MarsRoverLogChanges new
+	     assertPositions: OrderedCollection new  
+		 andHeading: OrderedCollection new 
+		 afterDoing: ''.
+! !
+
+!testRun: #MarsRoverObserverTest #test01MarsRoverWithLogObserverStartsWithEmptyLoggedChanges stamp: 'vw&ic 6/3/2023 16:34:59'!
+PASSED!
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:35:08' prior: 50636910!
+test01MarsRoverWithLogObserverStartsWithEmptyLoggedChanges
+
+	self observeWith: MarsRoverLogChanges new
+	     assertPositions: OrderedCollection new  
+		 andHeading: OrderedCollection new 
+		 afterDoing: ''.
+! !
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:35:37' prior: 50632068!
+test02MarsRoverWithLogObserverMovesForwardLogsEmptyHeadingAndNewPosition
+
+	self observeWith: MarsRoverLogChanges new
+	     assertPositions: (OrderedCollection with: 0@1)  
+		 andHeading: OrderedCollection new 
+		 afterDoing: 'f'.
+! !
+
+!testRun: #MarsRoverObserverTest #test02MarsRoverWithLogObserverMovesForwardLogsEmptyHeadingAndNewPosition stamp: 'vw&ic 6/3/2023 16:35:40'!
+PASSED!
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:36:15' prior: 50632101!
+test03MarsRoverWithLogObserverMovesBackwardLogsEmptyHeadingAndNewPosition
+
+	self observeWith: MarsRoverLogChanges new
+	     assertPositions: (OrderedCollection with: 0@-1)  
+		 andHeading: OrderedCollection new 
+		 afterDoing: 'b'.
+! !
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:36:45' prior: 50632002!
+test04MarsRoverWithLogObserverRotatesLeftLogsEmptyMovementAndHeadsWest
+
+	self observeWith: MarsRoverLogChanges new
+	     assertPositions: OrderedCollection new 
+		 andHeading: (OrderedCollection with: 'West')
+		 afterDoing: 'l'.
+! !
+
+!testRun: #MarsRoverObserverTest #test01MarsRoverWithLogObserverStartsWithEmptyLoggedChanges stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test02MarsRoverWithLogObserverMovesForwardLogsEmptyHeadingAndNewPosition stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test03MarsRoverWithLogObserverMovesBackwardLogsEmptyHeadingAndNewPosition stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test04MarsRoverWithLogObserverRotatesLeftLogsEmptyMovementAndHeadsWest stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test05MarsRoverWithLogObserverRotatesRightLogsEmptyMovementAndHeadsEast stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test06MarsRoverWithLogObserverRotatesTwiceLogsEmptyMovementAndTwoHeadings stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test07MarsRoverWithLogObserverMovesAndRotatesAndLogsNewHeadingAndPosition stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test08MarsRoverWithWindowObserverStartsWithEmptyWindow stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test09MarsRoverWithWindowObserverMovesForwardAndShowsNewPositionAndEmptyHeading stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test10MarsRoverWithWindowObserverMovesForwardAndRotatesAndShowsNewPositionAndNewHeading stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test11MarsRoverWithWindowObserverMovesForwardAndRotatesCanShowNewPositionAndNewHeadingSimultaneously stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test12MarsRoverWithWindowAndLogObserverMovesForwardAndRotatesCanShowNewPositionAndNewHeadingSimultaneously stamp: 'vw&ic 6/3/2023 16:36:49'!
+PASSED!
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:37:56' prior: 50632035!
+test05MarsRoverWithLogObserverRotatesRightLogsEmptyMovementAndHeadsEast
+
+	self observeWith: MarsRoverLogChanges new
+	     assertPositions: OrderedCollection new 
+		 andHeading: (OrderedCollection with: 'East')
+		 afterDoing: 'r'.
+! !
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:38:27' prior: 50632197!
+test06MarsRoverWithLogObserverRotatesTwiceLogsEmptyMovementAndTwoHeadings
+
+	self observeWith: MarsRoverLogChanges new
+	     assertPositions: OrderedCollection new 
+		 andHeading: (OrderedCollection with: 'East' with: 'South')
+		 afterDoing: 'rr'.
+
+! !
+
+!testRun: #MarsRoverObserverTest #test01MarsRoverWithLogObserverStartsWithEmptyLoggedChanges stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test02MarsRoverWithLogObserverMovesForwardLogsEmptyHeadingAndNewPosition stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test03MarsRoverWithLogObserverMovesBackwardLogsEmptyHeadingAndNewPosition stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test04MarsRoverWithLogObserverRotatesLeftLogsEmptyMovementAndHeadsWest stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test05MarsRoverWithLogObserverRotatesRightLogsEmptyMovementAndHeadsEast stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test06MarsRoverWithLogObserverRotatesTwiceLogsEmptyMovementAndTwoHeadings stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test07MarsRoverWithLogObserverMovesAndRotatesAndLogsNewHeadingAndPosition stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test08MarsRoverWithWindowObserverStartsWithEmptyWindow stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test09MarsRoverWithWindowObserverMovesForwardAndShowsNewPositionAndEmptyHeading stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test10MarsRoverWithWindowObserverMovesForwardAndRotatesAndShowsNewPositionAndNewHeading stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test11MarsRoverWithWindowObserverMovesForwardAndRotatesCanShowNewPositionAndNewHeadingSimultaneously stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test12MarsRoverWithWindowAndLogObserverMovesForwardAndRotatesCanShowNewPositionAndNewHeadingSimultaneously stamp: 'vw&ic 6/3/2023 16:38:56'!
+PASSED!
+!MarsRoverObserverTest methodsFor: 'asserts' stamp: 'vw&ic 6/3/2023 16:39:24'!
+observeWith: anObserver assertPositionsAndHeadings: anExpectedPositionsAndHeadings afterDoing: aSerieOfCommands 
+
+	| marsRover |
+	marsRover := MarsRover at: 0@0 heading: MarsRoverHeadingNorth.
+		
+	marsRover addObserver: anObserver.
+	
+	marsRover process: aSerieOfCommands.
+	
+	self assert: anExpectedPositionsAndHeadings equals: anObserver headingAndPosition.! !
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:40:08' prior: 50632134!
+test07MarsRoverWithLogObserverMovesAndRotatesAndLogsNewHeadingAndPosition
+
+	self observeWith: MarsRoverLogChanges new
+		 assertPositionsAndHeadings:  (OrderedCollection with: 0@1 with: 'East')
+		 afterDoing: 'fr'
+! !
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:41:03' prior: 50632370!
+test08MarsRoverWithWindowObserverStartsWithEmptyWindow
+
+	self observeWith: MarsRoverWindow new
+	     assertPositions: MarsRoverWindow defaultPositionValue 
+		 andHeading: ''
+		 afterDoing: ''.
+! !
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:41:25' prior: 50632468!
+test09MarsRoverWithWindowObserverMovesForwardAndShowsNewPositionAndEmptyHeading
+
+	self observeWith: MarsRoverWindow new
+	     assertPositions: 0@1
+		 andHeading: ''
+		 afterDoing: 'f'.
+! !
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:41:49' prior: 50632497!
+test10MarsRoverWithWindowObserverMovesForwardAndRotatesAndShowsNewPositionAndNewHeading
+
+	self observeWith: MarsRoverWindow new
+	     assertPositions: 0@1
+		 andHeading: 'Apuntando al Este'
+		 afterDoing: 'fr'.
+! !
+
+!testRun: #MarsRoverObserverTest #test10MarsRoverWithWindowObserverMovesForwardAndRotatesAndShowsNewPositionAndNewHeading stamp: 'vw&ic 6/3/2023 16:41:51'!
+ERROR!
+
+!testRun: #MarsRoverObserverTest #test10MarsRoverWithWindowObserverMovesForwardAndRotatesAndShowsNewPositionAndNewHeading stamp: 'vw&ic 6/3/2023 16:41:51'!
+ERROR!
+!MarsRoverLogChanges methodsFor: 'accessing' stamp: 'vw&ic 6/3/2023 16:43:10'!
+position
+	
+	^positions.! !
+!MarsRoverObserverTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/3/2023 16:43:10' prior: 50636894!
+observeWith: anObserver assertPositions: anExpectedPositions andHeading: anExpectedHeadings afterDoing: aSerieOfCommands 
+
+	| marsRover |
+	marsRover := MarsRover at: 0@0 heading: MarsRoverHeadingNorth.
+		
+	marsRover addObserver: anObserver.
+	
+	marsRover process: aSerieOfCommands.
+	
+	self assert: anExpectedPositions equals: anObserver position.
+	self assert: anExpectedHeadings equals: anObserver heading. 
+! !
+
+!methodRemoval: MarsRoverLogChanges #positions stamp: 'vw&ic 6/3/2023 16:43:10'!
+positions
+	
+	^positions.!
+
+!testRun: #MarsRoverObserverTest #test01MarsRoverWithLogObserverStartsWithEmptyLoggedChanges stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test02MarsRoverWithLogObserverMovesForwardLogsEmptyHeadingAndNewPosition stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test03MarsRoverWithLogObserverMovesBackwardLogsEmptyHeadingAndNewPosition stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test04MarsRoverWithLogObserverRotatesLeftLogsEmptyMovementAndHeadsWest stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test05MarsRoverWithLogObserverRotatesRightLogsEmptyMovementAndHeadsEast stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test06MarsRoverWithLogObserverRotatesTwiceLogsEmptyMovementAndTwoHeadings stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test07MarsRoverWithLogObserverMovesAndRotatesAndLogsNewHeadingAndPosition stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test08MarsRoverWithWindowObserverStartsWithEmptyWindow stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test09MarsRoverWithWindowObserverMovesForwardAndShowsNewPositionAndEmptyHeading stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test10MarsRoverWithWindowObserverMovesForwardAndRotatesAndShowsNewPositionAndNewHeading stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test11MarsRoverWithWindowObserverMovesForwardAndRotatesCanShowNewPositionAndNewHeadingSimultaneously stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+
+!testRun: #MarsRoverObserverTest #test12MarsRoverWithWindowAndLogObserverMovesForwardAndRotatesCanShowNewPositionAndNewHeadingSimultaneously stamp: 'vw&ic 6/3/2023 16:43:18'!
+PASSED!
+!MarsRoverObserverTest methodsFor: 'tests' stamp: 'vw&ic 6/3/2023 16:44:37' prior: 50632636!
+test11MarsRoverWithWindowObserverMovesForwardAndRotatesCanShowNewPositionAndNewHeadingSimultaneously
+
+	self observeWith: MarsRoverWindow new
+	     assertPositionsAndHeadings: 'Posicion: 0@1; Apuntando al Este'
+		 afterDoing: 'fr'.  
+! !
+
+!testRun: #MarsRoverObserverTest #test11MarsRoverWithWindowObserverMovesForwardAndRotatesCanShowNewPositionAndNewHeadingSimultaneously stamp: 'vw&ic 6/3/2023 16:44:39'!
+PASSED!
+
+----SNAPSHOT----(3 June 2023 16:45:18) CuisUniversity-5832.image priorSource: 9767152!
