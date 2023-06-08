@@ -1229,3 +1229,29 @@ PASSED!
 
 
 ----SNAPSHOT----(6 June 2023 20:21:29) CuisUniversity-5832.image priorSource: 9417387!
+
+----STARTUP---- (7 June 2023 23:38:41) as /home/valewodka/Downloads/linux64/linux64/CuisUniversity-5832.image!
+
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/7/2023 23:38:46'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/7/2023 23:38:46'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/7/2023 23:38:46'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/7/2023 23:38:46'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/7/2023 23:38:46'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/7/2023 23:38:46'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/7/2023 23:38:46'!
+PASSED!
+
+----SNAPSHOT----(7 June 2023 23:40:23) CuisUniversity-5832.image priorSource: 9417588!
