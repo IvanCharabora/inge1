@@ -1401,3 +1401,503 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(7 June 2023 23:55:31) CuisUniversity-5832.image priorSource: 9418577!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/7/2023 23:58:05'!
+addingItem
+
+	^ self should: [cart add: 'Harry Potter y la piedra filosofal' amount: -1.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: Cart messageErrorCantAddANotNaturalAmountOfBooks equals: anError messageText]! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/7/2023 23:58:05' prior: 50625391!
+test03_NewCartThatAddsMinusOneBookShouldThrowsAnError
+	
+	self addingItem .! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/7/2023 23:58:47'!
+addingItem: item
+
+	^ self should: [cart add: 'Harry Potter y la piedra filosofal' amount: -1.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: Cart messageErrorCantAddANotNaturalAmountOfBooks equals: anError messageText]! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/7/2023 23:58:47' prior: 50626195!
+test03_NewCartThatAddsMinusOneBookShouldThrowsAnError
+	
+	self addingItem: 'Harry Potter y la piedra filosofal' .! !
+
+!methodRemoval: CartTest #addingItem stamp: 'IC&VW 6/7/2023 23:58:47'!
+addingItem
+
+	^ self should: [cart add: 'Harry Potter y la piedra filosofal' amount: -1.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: Cart messageErrorCantAddANotNaturalAmountOfBooks equals: anError messageText]!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/7/2023 23:59:12' prior: 50626200!
+addingItem: anItem
+
+	^ self should: [cart add: anItem amount: -1.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: Cart messageErrorCantAddANotNaturalAmountOfBooks equals: anError messageText]! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/7/2023 23:59:35'!
+addingItem: anItem withAmount: withAmount 
+
+	^ self should: [cart add: anItem amount: -1.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: Cart messageErrorCantAddANotNaturalAmountOfBooks equals: anError messageText]! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/7/2023 23:59:35' prior: 50626211!
+test03_NewCartThatAddsMinusOneBookShouldThrowsAnError
+	
+	self addingItem: 'Harry Potter y la piedra filosofal' withAmount: -1 .! !
+
+!methodRemoval: CartTest #addingItem: stamp: 'IC&VW 6/7/2023 23:59:35'!
+addingItem: anItem
+
+	^ self should: [cart add: anItem amount: -1.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: Cart messageErrorCantAddANotNaturalAmountOfBooks equals: anError messageText]!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/7/2023 23:59:50' prior: 50626236!
+addingItem: anItem withAmount: anAmount 
+
+	^ self should: [cart add: anItem amount: anAmount.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: Cart messageErrorCantAddANotNaturalAmountOfBooks equals: anError messageText]! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:01:39'!
+addingItem: anItem withAmount: anAmount shouldRaise: aMessageError  
+
+	^ self should: [cart add: anItem amount: anAmount.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: Cart messageErrorCantAddANotNaturalAmountOfBooks equals: anError messageText]! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:01:39' prior: 50626247!
+test03_NewCartThatAddsMinusOneBookShouldThrowsAnError
+	
+	self addingItem: 'Harry Potter y la piedra filosofal' withAmount: -1 shouldRaise: Cart messageErrorCantAddANotNaturalAmountOfBooks .! !
+
+!methodRemoval: CartTest #addingItem:withAmount: stamp: 'IC&VW 6/8/2023 00:01:39'!
+addingItem: anItem withAmount: anAmount 
+
+	^ self should: [cart add: anItem amount: anAmount.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: Cart messageErrorCantAddANotNaturalAmountOfBooks equals: anError messageText]!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:01:47' prior: 50626273!
+addingItem: anItem withAmount: anAmount shouldRaise: aMessageError  
+
+	^ self should: [cart add: anItem amount: anAmount.] 
+		raise: Error 
+		withExceptionDo: [:anError | self assert: aMessageError equals: anError messageText]! !
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:01:54'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:02:58' prior: 50625424!
+test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError
+
+	self addingItem: 'Harry Potter y la piedra filosofal' withAmount: 1.5 shouldRaise: Cart messageErrorCantAddANotNaturalAmountOfBooks .! !
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:02:59'!
+PASSED!
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/8/2023 00:02:59'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/8/2023 00:02:59'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:02:59'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:02:59'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/8/2023 00:02:59'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/8/2023 00:02:59'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/8/2023 00:02:59'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:03:38' prior: 50625436!
+test05_NewCartThatAddsNotValidBookShouldThrowAnError
+
+	self addingItem: 'asdfghjk' withAmount: 5 shouldRaise: Cart messageErrorCantAddNotValidBook .! !
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/8/2023 00:03:40'!
+PASSED!
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/8/2023 00:03:40'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/8/2023 00:03:40'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:03:40'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:03:40'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/8/2023 00:03:40'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/8/2023 00:03:40'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/8/2023 00:03:40'!
+PASSED!
+!Cart class methodsFor: 'errors' stamp: 'IC&VW 6/8/2023 00:05:32'!
+messageErrorCantAddANotNaturalAmountOfItems
+	^'No se puede agregar una cantitad no natural de libros'
+! !
+!Cart class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:05:32' prior: 50624588!
+errorCantAddANotNaturalAmountOfBooks
+	^self error: self messageErrorCantAddANotNaturalAmountOfItems
+! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:05:32' prior: 50626285!
+test03_NewCartThatAddsMinusOneBookShouldThrowsAnError
+	
+	self addingItem: 'Harry Potter y la piedra filosofal' withAmount: -1 shouldRaise: Cart messageErrorCantAddANotNaturalAmountOfItems .! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:05:32' prior: 50626318!
+test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError
+
+	self addingItem: 'Harry Potter y la piedra filosofal' withAmount: 1.5 shouldRaise: Cart messageErrorCantAddANotNaturalAmountOfItems .! !
+
+!methodRemoval: Cart class #messageErrorCantAddANotNaturalAmountOfBooks stamp: 'IC&VW 6/8/2023 00:05:32'!
+messageErrorCantAddANotNaturalAmountOfBooks
+	^'No se puede agregar una cantitad no natural de libros'
+!
+!Cart class methodsFor: 'errors' stamp: 'IC&VW 6/8/2023 00:05:36' prior: 50626392!
+messageErrorCantAddANotNaturalAmountOfItems
+	^'No se puede agregar una cantitad no natural de items'
+! !
+!Cart class methodsFor: 'errors' stamp: 'IC&VW 6/8/2023 00:05:50'!
+messageErrorCantAddNotValidItem
+	^'No se puede agrega un libro no valido'
+! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:05:50' prior: 50626356!
+test05_NewCartThatAddsNotValidBookShouldThrowAnError
+
+	self addingItem: 'asdfghjk' withAmount: 5 shouldRaise: Cart messageErrorCantAddNotValidItem .! !
+!Cart class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:05:50' prior: 50624936!
+errorCantAddNotValidBook
+	^self error: self messageErrorCantAddNotValidItem.
+! !
+
+!methodRemoval: Cart class #messageErrorCantAddNotValidBook stamp: 'IC&VW 6/8/2023 00:05:50'!
+messageErrorCantAddNotValidBook
+	^'No se puede agrega un libro no valido'
+!
+!Cart class methodsFor: 'errors' stamp: 'IC&VW 6/8/2023 00:05:56' prior: 50626437!
+messageErrorCantAddNotValidItem
+	^'No se puede agrega un item no valido'
+! !
+!Cart class methodsFor: 'errors' stamp: 'IC&VW 6/8/2023 00:06:07'!
+errorCantAddNotValidItem
+	^self error: self messageErrorCantAddNotValidItem.
+! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:06:07' prior: 50626081!
+assertValidItem: anItem 
+	(validItems includes: anItem) ifFalse: [self class errorCantAddNotValidItem]. ! !
+
+!methodRemoval: Cart class #errorCantAddNotValidBook stamp: 'IC&VW 6/8/2023 00:06:07'!
+errorCantAddNotValidBook
+	^self error: self messageErrorCantAddNotValidItem.
+!
+!Cart class methodsFor: 'errors' stamp: 'IC&VW 6/8/2023 00:06:29'!
+errorCantAddANotNaturalAmountOfItems
+	^self error: self messageErrorCantAddANotNaturalAmountOfItems
+! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:06:29' prior: 50626003!
+assertValidAmountOfItemsToBeAddedToCart: anAmount
+
+	^ (anAmount < 0 or: anAmount isFloat) ifTrue: [self class errorCantAddANotNaturalAmountOfItems ]! !
+
+!methodRemoval: Cart class #errorCantAddANotNaturalAmountOfBooks stamp: 'IC&VW 6/8/2023 00:06:29'!
+errorCantAddANotNaturalAmountOfBooks
+	^self error: self messageErrorCantAddANotNaturalAmountOfItems
+!
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/8/2023 00:07:00'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/8/2023 00:07:00'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:07:00'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:07:00'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/8/2023 00:07:00'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/8/2023 00:07:00'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/8/2023 00:07:00'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:08:29' prior: 50625899!
+test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem
+
+	cart add: 'La biblia' amount: 2.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents.! !
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/8/2023 00:08:31'!
+PASSED!
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/8/2023 00:08:31'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/8/2023 00:08:31'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:08:31'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:08:31'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/8/2023 00:08:31'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/8/2023 00:08:31'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/8/2023 00:08:31'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:09:54'!
+addItem
+
+	cart add: 'La biblia' amount: 2.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:09:54' prior: 50626530!
+test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem
+
+	self addItem.! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:10:21'!
+addItem: anItem
+
+	cart add: 'La biblia' amount: 2.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:10:21' prior: 50626582!
+test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem
+
+	self addItem: 'La biblia'.! !
+
+!methodRemoval: CartTest #addItem stamp: 'IC&VW 6/8/2023 00:10:21'!
+addItem
+
+	cart add: 'La biblia' amount: 2.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:10:34' prior: 50626587!
+addItem: anItem
+
+	cart add: anItem amount: 2.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:11:04'!
+addItem: anItem withAmount: anAmount 
+
+	cart add: anItem amount: 2.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:11:04' prior: 50626599!
+test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem
+
+	self addItem: 'La biblia' withAmount: 2.! !
+
+!methodRemoval: CartTest #addItem: stamp: 'IC&VW 6/8/2023 00:11:04'!
+addItem: anItem
+
+	cart add: anItem amount: 2.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:11:10' prior: 50626626!
+addItem: anItem withAmount: anAmount 
+
+	cart add: anItem amount: anAmount.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:11:35'!
+addItem: anItem withAmount: anAmount andItem: anotherItem  
+
+	cart add: anItem amount: anAmount.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:11:35' prior: 50626639!
+test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem
+
+	self addItem: 'La biblia' withAmount: 2 andItem: 'Harry Potter y la piedra filosofal'.! !
+
+!methodRemoval: CartTest #addItem:withAmount: stamp: 'IC&VW 6/8/2023 00:11:35'!
+addItem: anItem withAmount: anAmount 
+
+	cart add: anItem amount: anAmount.
+	cart add: 'Harry Potter y la piedra filosofal' amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:11:46' prior: 50626668!
+addItem: anItem withAmount: anAmount andItem: anotherItem  
+
+	cart add: anItem amount: anAmount.
+	cart add: anotherItem amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:11:56' prior: 50626702!
+addItem: anItem withAmount: anAmount andItem: anotherItem
+
+	cart add: anItem amount: anAmount.
+	cart add: anotherItem amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:12:28'!
+addItem: anItem withAmount: anAmount andItem: anotherItem withAmount: anotherAmounr 
+
+	cart add: anItem amount: anAmount.
+	cart add: anotherItem amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:12:28' prior: 50626682!
+test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem
+
+	self addItem: 'La biblia' withAmount: 2 andItem: 'Harry Potter y la piedra filosofal' withAmount: 2.! !
+
+!methodRemoval: CartTest #addItem:withAmount:andItem: stamp: 'IC&VW 6/8/2023 00:12:28'!
+addItem: anItem withAmount: anAmount andItem: anotherItem
+
+	cart add: anItem amount: anAmount.
+	cart add: anotherItem amount: 2.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:13:14' prior: 50626726!
+addItem: anItem withAmount: anAmount andItem: anotherItem withAmount: anotherAmount
+
+	cart add: anItem amount: anAmount.
+	cart add: anotherItem amount: anotherAmount.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:13:48'!
+addItem: anItem withAmount: anAmount andItem: anotherItem withAmount: anotherAmount expects: anExpectedCart 
+
+	cart add: anItem amount: anAmount.
+	cart add: anotherItem amount: anotherAmount.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/8/2023 00:13:48' prior: 50626740!
+test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem
+
+	self addItem: 'La biblia' withAmount: 2 andItem: 'Harry Potter y la piedra filosofal' withAmount: 2 expects: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal').! !
+
+!methodRemoval: CartTest #addItem:withAmount:andItem:withAmount: stamp: 'IC&VW 6/8/2023 00:13:48'!
+addItem: anItem withAmount: anAmount andItem: anotherItem withAmount: anotherAmount
+
+	cart add: anItem amount: anAmount.
+	cart add: anotherItem amount: anotherAmount.
+	
+	self assert: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal') equals: cart contents!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:13:58' prior: 50626773!
+addItem: anItem withAmount: anAmount andItem: anotherItem withAmount: anotherAmount expects: anExpectedCart 
+
+	cart add: anItem amount: anAmount.
+	cart add: anotherItem amount: anotherAmount.
+	
+	self assert: anExpectedCart equals: cart contents! !
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/8/2023 00:13:59'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/8/2023 00:13:59'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:13:59'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:13:59'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/8/2023 00:13:59'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/8/2023 00:13:59'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/8/2023 00:13:59'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:14:04' prior: 50626814!
+addItem: anItem withAmount: anAmount andItem: anotherItem withAmount: anotherAmount expects: anExpectedCart 
+
+	cart add: anItem amount: anAmount.
+	cart add: anotherItem amount: anotherAmount.
+	self assert: anExpectedCart equals: cart contents! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:14:21' prior: 50626788!
+test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem
+
+	self  addItem: 'La biblia' withAmount: 2 
+		andItem: 'Harry Potter y la piedra filosofal' withAmount: 2 
+		expects: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal' with: 'La biblia' with: 'Harry Potter y la piedra filosofal').! !
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/8/2023 00:14:22'!
+PASSED!
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/8/2023 00:14:22'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/8/2023 00:14:22'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:14:22'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:14:22'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/8/2023 00:14:22'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/8/2023 00:14:22'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/8/2023 00:14:22'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/8/2023 00:14:59' prior: 50625678!
+test06_NewCartThatAddsOneOfEachBookCanListThem
+	
+	self  addItem: 'La biblia' withAmount: 1
+		andItem: 'Harry Potter y la piedra filosofal' withAmount: 1 
+		expects: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal').! !
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/8/2023 00:15:00'!
+PASSED!
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/8/2023 00:15:00'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/8/2023 00:15:00'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:15:00'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/8/2023 00:15:00'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/8/2023 00:15:00'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/8/2023 00:15:00'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/8/2023 00:15:00'!
+PASSED!
+
+----SNAPSHOT----(8 June 2023 00:17:39) CuisUniversity-5832.image priorSource: 9425028!
+
+----SNAPSHOT----(8 June 2023 00:18:27) CuisUniversity-5832.image priorSource: 9449230!
