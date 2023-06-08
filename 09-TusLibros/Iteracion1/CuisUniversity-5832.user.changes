@@ -1255,3 +1255,149 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(7 June 2023 23:40:23) CuisUniversity-5832.image priorSource: 9417588!
+
+!classDefinition: #Cart category: 'TusLibros' stamp: 'IC&VW 6/7/2023 23:50:51'!
+Object subclass: #Cart
+	instanceVariableNames: 'contents validItems'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cart methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/7/2023 23:50:51' prior: 50625652!
+initializeAcceptingBooks: aListOfBooks
+	contents:= Bag new.
+	validItems := aListOfBooks! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/7/2023 23:50:51' prior: 50625085!
+assertValidBook: aBook 
+	(validItems includes: aBook) ifFalse: [self class errorCantAddNotValidBook]. ! !
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/7/2023 23:51:11'!
+assertValidAmountOfItemsToBeAddedToCart: anAmount
+
+	^ (anAmount < 0 or: anAmount isFloat) ifTrue: [self class errorCantAddANotNaturalAmountOfBooks ]! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/7/2023 23:51:11' prior: 50625765!
+add: aBook amount: anAmount  
+	self assertValidAmountOfItemsToBeAddedToCart: anAmount.
+	self assertValidBook: aBook.
+ 	contents add: aBook withOccurrences: anAmount.! !
+
+!methodRemoval: Cart #assertValidAmountOfBooksToBeAddedToCart: stamp: 'IC&VW 6/7/2023 23:51:11'!
+assertValidAmountOfBooksToBeAddedToCart: anAmount
+
+	^ (anAmount < 0 or: anAmount isFloat) ifTrue: [self class errorCantAddANotNaturalAmountOfBooks ]!
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/7/2023 23:51:31'!
+assertValidItem: aBook 
+	(validItems includes: aBook) ifFalse: [self class errorCantAddNotValidBook]. ! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/7/2023 23:51:31' prior: 50626011!
+add: aBook amount: anAmount  
+	self assertValidAmountOfItemsToBeAddedToCart: anAmount.
+	self assertValidItem: aBook.
+ 	contents add: aBook withOccurrences: anAmount.! !
+
+!methodRemoval: Cart #assertValidBook: stamp: 'IC&VW 6/7/2023 23:51:31'!
+assertValidBook: aBook 
+	(validItems includes: aBook) ifFalse: [self class errorCantAddNotValidBook]. !
+!Cart methodsFor: 'adding' stamp: 'IC&VW 6/7/2023 23:51:45' prior: 50626034!
+add: anItem amount: anAmount  
+	self assertValidAmountOfItemsToBeAddedToCart: anAmount.
+	self assertValidItem: anItem.
+ 	contents add: anItem withOccurrences: anAmount.! !
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/7/2023 23:51:46'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/7/2023 23:51:46'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/7/2023 23:51:46'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/7/2023 23:51:46'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/7/2023 23:51:46'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/7/2023 23:51:46'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/7/2023 23:51:46'!
+PASSED!
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/7/2023 23:51:59' prior: 50626027!
+assertValidItem: anItem 
+	(validItems includes: anItem) ifFalse: [self class errorCantAddNotValidBook]. ! !
+!Cart methodsFor: 'initialization' stamp: 'IC&VW 6/7/2023 23:52:54' prior: 50625991!
+initializeAcceptingBooks: aListOfItems
+	contents:= Bag new.
+	validItems := aListOfItems! !
+!Cart methodsFor: 'initialization' stamp: 'IC&VW 6/7/2023 23:53:08'!
+initializeAcceptingItems: aListOfItems
+	contents:= Bag new.
+	validItems := aListOfItems! !
+!Cart class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/7/2023 23:53:08' prior: 50625196!
+acceptsBooks: aListOfBooks
+	^self new initializeAcceptingItems: aListOfBooks
+! !
+
+!methodRemoval: Cart #initializeAcceptingBooks: stamp: 'IC&VW 6/7/2023 23:53:08'!
+initializeAcceptingBooks: aListOfItems
+	contents:= Bag new.
+	validItems := aListOfItems!
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/7/2023 23:53:13'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/7/2023 23:53:13'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/7/2023 23:53:13'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/7/2023 23:53:13'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/7/2023 23:53:13'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/7/2023 23:53:13'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/7/2023 23:53:13'!
+PASSED!
+!Cart class methodsFor: 'instance creation' stamp: 'IC&VW 6/7/2023 23:53:37'!
+acceptsItems: aListOfBooks
+	^self new initializeAcceptingItems: aListOfBooks
+! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/7/2023 23:53:37' prior: 50625631 overrides: 16961394!
+setUp
+	cart := Cart acceptsItems: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal').! !
+
+!methodRemoval: Cart class #acceptsBooks: stamp: 'IC&VW 6/7/2023 23:53:37'!
+acceptsBooks: aListOfBooks
+	^self new initializeAcceptingItems: aListOfBooks
+!
+!Cart class methodsFor: 'instance creation' stamp: 'IC&VW 6/7/2023 23:53:44' prior: 50626134!
+acceptsItems: aListOfItems
+	^self new initializeAcceptingItems: aListOfItems
+! !
+
+!testRun: #CartTest #test01_newCartShouldBeEmpty stamp: 'IC&VW 6/7/2023 23:53:45'!
+PASSED!
+
+!testRun: #CartTest #test02_NewCartThatAddsOneBookShouldNotBeEmpty stamp: 'IC&VW 6/7/2023 23:53:45'!
+PASSED!
+
+!testRun: #CartTest #test03_NewCartThatAddsMinusOneBookShouldThrowsAnError stamp: 'IC&VW 6/7/2023 23:53:45'!
+PASSED!
+
+!testRun: #CartTest #test04_NewCartThatAddsOneAndAHalfBookShouldThrowsAnError stamp: 'IC&VW 6/7/2023 23:53:45'!
+PASSED!
+
+!testRun: #CartTest #test05_NewCartThatAddsNotValidBookShouldThrowAnError stamp: 'IC&VW 6/7/2023 23:53:45'!
+PASSED!
+
+!testRun: #CartTest #test06_NewCartThatAddsOneOfEachBookCanListThem stamp: 'IC&VW 6/7/2023 23:53:45'!
+PASSED!
+
+!testRun: #CartTest #test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem stamp: 'IC&VW 6/7/2023 23:53:45'!
+PASSED!
+
+----SNAPSHOT----(7 June 2023 23:55:31) CuisUniversity-5832.image priorSource: 9418577!

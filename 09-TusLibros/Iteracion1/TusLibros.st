@@ -5,9 +5,9 @@ TestCase subclass: #CartTest
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CartTest methodsFor: 'setUp' stamp: 'IC&VW 6/6/2023 17:52:47'!
+!CartTest methodsFor: 'setUp' stamp: 'IC&VW 6/7/2023 23:53:37'!
 setUp
-	cart := Cart acceptsBooks: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal').! !
+	cart := Cart acceptsItems: (Bag with: 'La biblia' with: 'Harry Potter y la piedra filosofal').! !
 
 
 !CartTest methodsFor: 'tests' stamp: 'IC&VW 6/6/2023 17:46:56'!
@@ -63,26 +63,26 @@ test07_NewCartThatAddsMoreThanOneBookOfEachCanListThem
 
 !classDefinition: #Cart category: 'TusLibros'!
 Object subclass: #Cart
-	instanceVariableNames: 'contents validBooks'
+	instanceVariableNames: 'contents validItems'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/6/2023 17:22:14'!
-assertValidAmountOfBooksToBeAddedToCart: anAmount
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/7/2023 23:51:11'!
+assertValidAmountOfItemsToBeAddedToCart: anAmount
 
 	^ (anAmount < 0 or: anAmount isFloat) ifTrue: [self class errorCantAddANotNaturalAmountOfBooks ]! !
 
-!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/6/2023 17:39:09'!
-assertValidBook: aBook 
-	(validBooks includes: aBook) ifFalse: [self class errorCantAddNotValidBook]. ! !
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/7/2023 23:51:59'!
+assertValidItem: anItem 
+	(validItems includes: anItem) ifFalse: [self class errorCantAddNotValidBook]. ! !
 
 
-!Cart methodsFor: 'adding' stamp: 'IC&VW 6/6/2023 17:58:13'!
-add: aBook amount: anAmount  
-	self assertValidAmountOfBooksToBeAddedToCart: anAmount.
-	self assertValidBook: aBook.
- 	contents add: aBook withOccurrences: anAmount.! !
+!Cart methodsFor: 'adding' stamp: 'IC&VW 6/7/2023 23:51:45'!
+add: anItem amount: anAmount  
+	self assertValidAmountOfItemsToBeAddedToCart: anAmount.
+	self assertValidItem: anItem.
+ 	contents add: anItem withOccurrences: anAmount.! !
 
 
 !Cart methodsFor: 'contents' stamp: 'IC&VW 6/6/2023 17:58:45'!
@@ -94,10 +94,10 @@ isEmpty
 	^contents isEmpty ! !
 
 
-!Cart methodsFor: 'initialization' stamp: 'IC&VW 6/6/2023 17:53:23'!
-initializeAcceptingBooks: aListOfBooks
+!Cart methodsFor: 'initialization' stamp: 'IC&VW 6/7/2023 23:53:08'!
+initializeAcceptingItems: aListOfItems
 	contents:= Bag new.
-	validBooks := aListOfBooks! !
+	validItems := aListOfItems! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -105,9 +105,9 @@ initializeAcceptingBooks: aListOfBooks
 Cart class
 	instanceVariableNames: ''!
 
-!Cart class methodsFor: 'instance creation' stamp: 'IC&VW 6/6/2023 17:44:15'!
-acceptsBooks: aListOfBooks
-	^self new initializeAcceptingBooks: aListOfBooks
+!Cart class methodsFor: 'instance creation' stamp: 'IC&VW 6/7/2023 23:53:44'!
+acceptsItems: aListOfItems
+	^self new initializeAcceptingItems: aListOfItems
 ! !
 
 
