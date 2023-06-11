@@ -1,0 +1,4280 @@
+
+
+----QUIT----(30 May 2023 00:05:32) CuisUniversity-5832.image priorSource: 4928100!
+
+----STARTUP---- (30 May 2023 00:05:33) as /Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/CuisUniversity-5832.image!
+
+
+----QUIT----(30 May 2023 00:05:33) CuisUniversity-5832.image priorSource: 9366537!
+
+----STARTUP---- (9 June 2023 14:15:21) as /home/valewodka/Downloads/linux64/CuisUniversity-5832.image!
+
+
+----End fileIn of /home/valewodka/Downloads/linux64/TusLibros-18.st----!
+
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:23:05'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:23:32'!
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #TestProvider category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:23:37'!
+Object subclass: #TestProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CheckoutTest methodsFor: 'no messages' stamp: 'IC&VW 6/9/2023 14:23:22'!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	| card cashier |
+	"salesBook := OrderedCollection new."
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	self should: [cashier checkout: TestProvider createCart withCard: card] 
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText 
+			
+			".self assert: salesBook isEmpty"
+			]! !
+!TestProvider class methodsFor: 'no messages' stamp: 'IC&VW 6/9/2023 14:24:53'!
+createCard
+	
+	^''! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:25:02'!
+createCart
+	
+	^Cart acceptingItemsOf: self defaultCatalog! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:25:13'!
+defaultCatalog
+	|listPrices|
+	listPrices := Dictionary new.
+	listPrices add: (Association key: 'Brujerias: La macumba de el Papu' value: 100).
+	listPrices add: (Association key: 'validBook' value: 100). 
+	listPrices add: (Association key: 'Psicologia: Como superar la tristeza de que Messi se fue al Inter' value: 200).
+	^ listPrices
+	! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:25:39' prior: 50624602!
+defaultCatalog
+	|listPrices|
+	listPrices := Dictionary new.
+	listPrices add: (Association key: 'validBook' value: 100).
+	listPrices add: (Association key: 'validBook2' value: 100). 
+	listPrices add: (Association key: 'validBook3' value: 200).
+	^ listPrices
+	! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:25:43' prior: 50624616!
+defaultCatalog
+	|listPrices|
+	listPrices := Dictionary new.
+	listPrices add: (Association key: 'validBook' value: 100).
+	listPrices add: (Association key: 'validBook2' value: 200). 
+	listPrices add: (Association key: 'validBook3' value: 300).
+	^ listPrices
+	! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:25:54'!
+itemNotSellByTheStore
+	
+	^'invalidBook'! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:26:03'!
+itemSellByTheStore
+	
+	^ 'validBook'! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:26:41'!
+ERROR!
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/9/2023 14:27:02'!
+emptyCartErrorMessage
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/9/2023 14:27:47' prior: 50624652!
+emptyCartErrorMessage
+	^'El carrito no esta a la venta'! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:27:49'!
+FAILURE!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:28:00'!
+FAILURE!
+
+!classDefinition: #Cashier category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:29:29'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:29:31'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart card'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:29:32'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart card date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:29:34'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart card date salesBook'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cashier methodsFor: 'no messages' stamp: 'IC&VW 6/9/2023 14:29:23'!
+initializeToCheckout: aCart charging: aCard on: aDate registeringOn: aSalesBook
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	salesBook := aSalesBook.! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:30:04' prior: 50624696!
+initializeToCheckout: aCart charging: aCard on: aDate registeringOn: aSalesBook
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	salesBook := aSalesBook.
+	! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:30:26' prior: 50624704!
+initializeToCheckout: aCart charging: aCard on: aDate registeringOn: aSalesBook
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	salesBook := aSalesBook.
+	
+	cart isEmpty ifTrue: [^self class emptyCartError.].
+	
+	^cart calculateTotalPrice! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:30:33'!
+FAILURE!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:30:33'!
+FAILURE!
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/9/2023 14:30:52'!
+emptyCartError
+	self error: self emptyCartErrorMessage! !
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/9/2023 14:31:17'!
+calculateTotalPrice
+
+	^items sum: [:item| catalog at: item].! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:31:54'!
+FAILURE!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:31:54'!
+FAILURE!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:33:24' prior: 50624577!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	| card cashier date|
+	"salesBook := OrderedCollection new."
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	date := Date today.
+	self should: [cashier initializeToCheckout: TestProvider createCart charging: card on: date] 
+	
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText 
+			
+			".self assert: salesBook isEmpty"
+			]! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:33:37' prior: 50624712!
+initializeToCheckout: aCart charging: aCard on: aDate registeringOn: aSalesBook
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^self class emptyCartError.].
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:33:50'!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^self class emptyCartError.].
+	
+	^cart calculateTotalPrice! !
+
+!methodRemoval: Cashier #initializeToCheckout:charging:on:registeringOn: stamp: 'IC&VW 6/9/2023 14:33:50'!
+initializeToCheckout: aCart charging: aCard on: aDate registeringOn: aSalesBook
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^self class emptyCartError.].
+	
+	^cart calculateTotalPrice!
+
+Object subclass: #Cashier
+	instanceVariableNames: 'cart card date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:34:00'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart card date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:34:03'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:35:01'!
+test02CheckoutCanHandleACartWithOneItem 
+
+	| card cashier cart total |
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	cart := TestProvider createCart.
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier checkout: cart withCard: card.
+	
+	self assert: 100 equals: total
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:35:52' prior: 50624809!
+test02CheckoutCanHandleACartWithOneItem 
+
+	| card cashier cart total |
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	cart := TestProvider createCart.
+	cart add: TestProvider itemSellByTheStore.
+	"total := cashier initializeToCheckout: TestProvider createCart charging: card on: date"
+	
+	self assert: 100 equals: total
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:36:24' prior: 50624822!
+test02CheckoutCanHandleACartWithOneItem 
+	
+	"cart add: TestProvider itemSellByTheStore."
+	"total := cashier initializeToCheckout: TestProvider createCart charging: card on: date"
+	
+	"self assert: 100 equals: total"
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:36:58' prior: 50624836!
+test02CheckoutCanHandleACartWithOneItem 
+
+	"
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: TestProvider createCart charging: card on: date
+	
+	self assert: 100 equals: total"
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:37:33' overrides: 16961394!
+setUp
+	"cashier := Cashier new.
+	card := TestProvider createCard. 
+	cart := TestProvider createCart.
+	date := Date today."! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:38:00' prior: 50624747!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	"salesBook := OrderedCollection new.
+	self should: [cashier initializeToCheckout: TestProvider createCart charging: card on: date] 
+	
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText 
+			
+			.self assert: salesBook isEmpty
+			]"! !
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:38:09'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:38:11'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:38:12'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:38:15'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:38:08' prior: 50624856 overrides: 16961394!
+setUp
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	cart := TestProvider createCart.
+	date := Date today.! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:38:26' prior: 50624863!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	"salesBook := OrderedCollection new."
+	self should: [cashier initializeToCheckout: TestProvider createCart charging: card on: date] 
+	
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText 
+			
+			".self assert: salesBook isEmpty"
+			]! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:38:28'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:38:28'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:38:28'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:38:44' prior: 50624846!
+test02CheckoutCanHandleACartWithOneItem 
+
+	|total|
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: TestProvider createCart charging: card on: date.
+	
+	self assert: 100 equals: total
+	! !
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:38:45'!
+ERROR!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:39:16' prior: 50624939!
+test02CheckoutCanHandleACartWithOneItem 
+
+	|total|
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date.
+	
+	self assert: 100 equals: total
+	! !
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:39:17'!
+ERROR!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:39:32' prior: 50624914!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	"salesBook := OrderedCollection new."
+	self should: [cashier initializeToCheckout: cart charging: card on: date] 
+	
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText 
+			
+			".self assert: salesBook isEmpty"
+			]! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:39:39'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:39:39'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:39:39'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:39:39'!
+ERROR!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:39:45'!
+PASSED!
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:40:12' prior: 50624644!
+itemSellByTheStore
+	
+	^ 'validBook'! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:40:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:40:14'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:40:14'!
+ERROR!
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/9/2023 14:41:25' prior: 50624389!
+assertIsValidItem: anItem
+
+	(catalog includesKey: anItem) ifFalse: [ self error: self invalidItemErrorMessage ]! !
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:41:32'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:41:33'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:41:39'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:41:39'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:41:59'!
+test03CheckoutCanHandleACartWithMultipleItems 
+
+	"| card cashier cart total |
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	cart := TestProvider createCart.
+	cart add: 'Brujerias: La macumba de el Papu'.
+	cart add: 'Psicologia: Como superar la tristeza de que Messi se fue al Inter'.
+	total := cashier checkout: cart withCard: card.
+	
+	self assert: 300 equals: total
+	"! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:42:54' prior: 50625033!
+test03CheckoutCanHandleACartWithMultipleItems 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	"total := cashier checkout: cart withCard: card.
+	
+	self assert: 300 equals: total"! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:43:13' prior: 50625049!
+test03CheckoutCanHandleACartWithMultipleItems 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	"total := cashier initializeToCheckout: cart charging: card on: date.
+	
+	self assert: 300 equals: total"! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:43:23' prior: 50625060!
+test03CheckoutCanHandleACartWithMultipleItems 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date.
+	
+	self assert: 300 equals: total! !
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/9/2023 14:43:56' prior: 50624734!
+calculateTotalPrice
+
+	^catalog valueOf: items first! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:43:57'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:43:57'!
+ERROR!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:43:57'!
+ERROR!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:43:57'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:43:57'!
+ERROR!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:43:57'!
+ERROR!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:43:57'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:43:57'!
+ERROR!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:44:11'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:44:11'!
+ERROR!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:44:11'!
+ERROR!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:44:11'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:44:11'!
+ERROR!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:44:11'!
+ERROR!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:44:11'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:44:11'!
+ERROR!
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/9/2023 14:43:56' prior: 50625083!
+calculateTotalPrice
+
+	^catalog valueOf: items first! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:44:36'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:44:37'!
+ERROR!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:44:37'!
+ERROR!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:45:02' prior: 50624491!
+test01NewCartsAreCreatedEmpty
+
+	self assert: TestProvider createCart isEmpty! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:45:03'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:45:03'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:45:03'!
+ERROR!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:45:04'!
+ERROR!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:45:04'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:45:04'!
+ERROR!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:45:04'!
+ERROR!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:45:04'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:45:04'!
+ERROR!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:45:08'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:45:09'!
+ERROR!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:45:09'!
+ERROR!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:45:41' prior: 50624469!
+test02CanNotAddItemsThatDoNotBelongToStore
+
+	| cart |
+	
+	cart := TestProvider createCart.
+	
+	self 
+		should: [ cart add: TestProvider itemNotSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidItemErrorMessage.
+			self assert: cart isEmpty ]! !
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:45:42'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:45:42'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:45:42'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:45:42'!
+ERROR!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:45:42'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:45:42'!
+ERROR!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:45:42'!
+ERROR!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:45:42'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:45:42'!
+ERROR!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:45:49' prior: 50624496!
+test03AfterAddingAnItemTheCartIsNotEmptyAnymore
+
+	| cart |
+	
+	cart := TestProvider createCart.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self deny: cart isEmpty ! !
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:45:51'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:45:51'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:45:51'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:45:51'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:45:51'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:45:51'!
+ERROR!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:45:51'!
+ERROR!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:45:51'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:45:51'!
+ERROR!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:45:57' prior: 50624456!
+test04CanNotAddNonPositiveNumberOfItems
+
+	| cart |
+	
+	cart := TestProvider createCart.
+	
+	self 
+		should: [cart add: 0 of: TestProvider itemSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidQuantityErrorMessage.
+			self assert: cart isEmpty ]! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:46:03' prior: 50624511!
+test05CanNotAddMoreThanOneItemNotSellByTheStore
+
+	| cart |
+	
+	cart := TestProvider createCart.
+	
+	self 
+		should: [cart add: 2 of: TestProvider itemNotSellByTheStore  ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidItemErrorMessage.
+			self assert: cart isEmpty ]! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:46:09' prior: 50624524!
+test06CartRemembersAddedItems
+
+	| cart |
+	
+	cart := TestProvider createCart.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self assert: (cart includes: self itemSellByTheStore)! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:46:14' prior: 50624504!
+test07CartDoesNotHoldNotAddedItems
+
+	| cart |
+	
+	cart := TestProvider createCart.
+	
+	self deny: (cart includes: TestProvider itemSellByTheStore)! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:46:20' prior: 50624482!
+test08CartRemembersTheNumberOfAddedItems
+
+	| cart |
+	
+	cart := TestProvider createCart.
+	
+	cart add: 2 of: TestProvider itemSellByTheStore.
+	self assert: (cart occurrencesOf: self itemSellByTheStore) = 2! !
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:46:22'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:46:22'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:46:22'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:46:22'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:46:22'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:46:22'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:46:22'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:46:22'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:46:22'!
+PASSED!
+
+!classDefinition: #CartTest category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:47:31'!
+TestCase subclass: #CartTest
+	instanceVariableNames: 'cart2'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartTest methodsFor: 'support' stamp: 'IC&VW 6/9/2023 14:47:30' overrides: 16961394!
+setUp
+	cart2 := TestProvider createCart.! !
+
+!methodRemoval: CartTest #createCart stamp: 'IC&VW 6/9/2023 14:47:51'!
+createCart
+	
+	^Cart acceptingItemsOf: self defaultCatalog!
+
+!methodRemoval: CartTest #itemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:47:59'!
+itemNotSellByTheStore
+	
+	^'invalidBook'!
+
+!methodRemoval: CartTest #defaultCatalog stamp: 'IC&VW 6/9/2023 14:48:05'!
+defaultCatalog
+	
+	^ Array with: self itemSellByTheStore!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:48:28' prior: 50625304!
+test06CartRemembersAddedItems
+
+	| cart |
+	
+	cart := TestProvider createCart.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self assert: (cart includes: TestProvider itemSellByTheStore)! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:48:31' prior: 50625321!
+test08CartRemembersTheNumberOfAddedItems
+
+	| cart |
+	
+	cart := TestProvider createCart.
+	
+	cart add: 2 of: TestProvider itemSellByTheStore.
+	self assert: (cart occurrencesOf: TestProvider itemSellByTheStore) = 2! !
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:48:39'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:48:39'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:48:39'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:48:39'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:48:39'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:48:39'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:48:39'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:48:39'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:48:39'!
+PASSED!
+
+!methodRemoval: CartTest #itemSellByTheStore stamp: 'IC&VW 6/9/2023 14:48:48'!
+itemSellByTheStore
+	
+	^ 'validBook'!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:49:15' prior: 50625197!
+test02CanNotAddItemsThatDoNotBelongToStore
+
+	cart2 := TestProvider createCart.
+	
+	self 
+		should: [ cart2 add: TestProvider itemNotSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart2 invalidItemErrorMessage.
+			self assert: cart2 isEmpty ]! !
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:49:17'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:49:17'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:49:17'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:49:17'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:49:17'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:49:17'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:49:17'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:49:17'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:49:17'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:49:26' prior: 50625239!
+test03AfterAddingAnItemTheCartIsNotEmptyAnymore
+
+	
+	
+	cart2 := TestProvider createCart.
+	
+	cart2 add: TestProvider itemSellByTheStore.
+	self deny: cart2 isEmpty ! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:49:31' prior: 50625476!
+test03AfterAddingAnItemTheCartIsNotEmptyAnymore
+	
+	cart2 := TestProvider createCart.
+	
+	cart2 add: TestProvider itemSellByTheStore.
+	self deny: cart2 isEmpty ! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:49:45' prior: 50625277!
+test04CanNotAddNonPositiveNumberOfItems
+
+	cart2 := TestProvider createCart.
+	
+	self 
+		should: [cart2 add: 0 of: TestProvider itemSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart2 invalidQuantityErrorMessage.
+			self assert: cart2 isEmpty ]! !
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:49:46'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:49:46'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:49:46'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:49:46'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:49:46'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:49:46'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:49:46'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:49:46'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:49:46'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:50:01' prior: 50625290!
+test05CanNotAddMoreThanOneItemNotSellByTheStore
+	
+	cart2 := TestProvider createCart.
+	
+	self 
+		should: [cart2 add: 2 of: TestProvider itemNotSellByTheStore  ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart2 invalidItemErrorMessage.
+			self assert: cart2 isEmpty ]! !
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:50:02'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:50:02'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:50:02'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:50:02'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:50:02'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:50:02'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:50:02'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:50:02'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:50:02'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:50:14' prior: 50625383!
+test06CartRemembersAddedItems
+
+	cart2 := TestProvider createCart.
+	
+	cart2 add: TestProvider itemSellByTheStore.
+	self assert: (cart2 includes: TestProvider itemSellByTheStore)! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:50:24' prior: 50625313!
+test07CartDoesNotHoldNotAddedItems
+
+	cart2 := TestProvider createCart.
+	
+	self deny: (cart2 includes: TestProvider itemSellByTheStore)! !
+!CartTest methodsFor: 'tests' stamp: 'IC&VW 6/9/2023 14:50:36' prior: 50625392!
+test08CartRemembersTheNumberOfAddedItems
+	
+	cart2 := TestProvider createCart.
+	
+	cart2 add: 2 of: TestProvider itemSellByTheStore.
+	self assert: (cart2 occurrencesOf: TestProvider itemSellByTheStore) = 2! !
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:50:37'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:50:37'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:50:37'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:50:37'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:50:37'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:50:37'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:50:37'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:50:37'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:50:37'!
+PASSED!
+
+!classDefinition: #CartTest category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:50:43'!
+TestCase subclass: #CartTest
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:50:43' prior: 50625434!
+test02CanNotAddItemsThatDoNotBelongToStore
+
+	cart := TestProvider createCart.
+	
+	self 
+		should: [ cart add: TestProvider itemNotSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidItemErrorMessage.
+			self assert: cart isEmpty ]! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:50:43' prior: 50625586!
+test07CartDoesNotHoldNotAddedItems
+
+	cart := TestProvider createCart.
+	
+	self deny: (cart includes: TestProvider itemSellByTheStore)! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:50:43' prior: 50625484!
+test03AfterAddingAnItemTheCartIsNotEmptyAnymore
+	
+	cart := TestProvider createCart.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self deny: cart isEmpty ! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:50:43' prior: 50625492!
+test04CanNotAddNonPositiveNumberOfItems
+
+	cart := TestProvider createCart.
+	
+	self 
+		should: [cart add: 0 of: TestProvider itemSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidQuantityErrorMessage.
+			self assert: cart isEmpty ]! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:50:43' prior: 50625593!
+test08CartRemembersTheNumberOfAddedItems
+	
+	cart := TestProvider createCart.
+	
+	cart add: 2 of: TestProvider itemSellByTheStore.
+	self assert: (cart occurrencesOf: TestProvider itemSellByTheStore) = 2! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:50:43' prior: 50625367 overrides: 16961394!
+setUp
+	cart := TestProvider createCart.! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:50:43' prior: 50625534!
+test05CanNotAddMoreThanOneItemNotSellByTheStore
+	
+	cart := TestProvider createCart.
+	
+	self 
+		should: [cart add: 2 of: TestProvider itemNotSellByTheStore  ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidItemErrorMessage.
+			self assert: cart isEmpty ]! !
+!CartTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:50:43' prior: 50625577!
+test06CartRemembersAddedItems
+
+	cart := TestProvider createCart.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self assert: (cart includes: TestProvider itemSellByTheStore)! !
+!Cart methodsFor: 'adding' stamp: 'IC&VW 6/9/2023 14:51:21' prior: 50624420!
+add: aQuantity of: anItem
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+
+	items add: anItem withOccurrences: aQuantity
+	! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:51:22'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:51:22'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:51:22'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:51:22'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:51:22'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:51:22'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:51:22'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:51:22'!
+PASSED!
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:51:57'!
+anotherItemSellByTheStore
+	
+	^ 'validBook2'! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:51:58'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:51:58'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 14:51:58'!
+ERROR!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:51:58'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:51:58'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:51:59'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:51:59'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:51:59'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:51:59'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:51:59'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:51:59'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:52:12'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:52:12'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:52:26'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:52:32'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:52:32'!
+ERROR!
+!Cart methodsFor: 'assertions' stamp: 'IC&VW 6/9/2023 14:31:17' prior: 50625139!
+calculateTotalPrice
+
+	^items sum: [:item| catalog at: item].! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:53:06'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:53:06'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:53:06'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:53:06'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:53:06'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:53:06'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:53:06'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:53:06'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 14:53:07'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 14:53:07'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 14:53:07'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 14:53:07'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 14:53:07'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 14:53:07'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 14:53:07'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 14:53:07'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 14:53:11'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 14:53:11'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 14:53:11'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:53:40'!
+test04 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date.
+	
+	self assert: 300 equals: total! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:54:27'!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date.
+	
+	self assert: 300 equals: total! !
+
+!methodRemoval: CheckoutTest #test04 stamp: 'IC&VW 6/9/2023 14:54:27'!
+test04 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date.
+	
+	self assert: 300 equals: total!
+
+Object subclass: #Card
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:54:52'!
+Object subclass: #Card
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:55:28'!
+Object subclass: #Card
+	instanceVariableNames: 'name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Card methodsFor: 'no messages' stamp: 'IC&VW 6/9/2023 14:55:10' overrides: 16903442!
+name
+	^name! !
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:55:37'!
+Object subclass: #Card
+	instanceVariableNames: 'name number'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:55:35'!
+number
+	^number! !
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:56:05'!
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:56:04'!
+securityNumber
+	^securityNumber! !
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:56:15'!
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expiryDate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:56:13'!
+expiryDate
+	^expiryDate! !
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:56:28'!
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expiryDate expireDate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:56:27'!
+expireDate
+	^expireDate! !
+
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expireDate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 14:56:35'!
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expireDate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:56:58' prior: 50624593!
+createCard
+	
+	^''! !
+!Card class methodsFor: 'no messages' stamp: 'IC&VW 6/9/2023 14:58:38'!
+name: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aDate
+	^self initializeWithName: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aDate! !
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:58:46' prior: 50625986!
+name: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aDate
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aDate! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 14:59:40'!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aDate
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireDate  := aDate.! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:00:20' prior: 50625887!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| total expiredCard |
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: expiredCard on: date.
+	
+	self assert: 300 equals: total! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:00:54' prior: 50626014!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| total expiredCard |
+	expiredCard := TestProvider createExpiredCart.
+	
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: expiredCard on: date.
+	
+	self assert: 300 equals: total! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:01:05'!
+createExpiredCart
+	
+	^''! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:02:20' prior: 50625983!
+createCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 andExpireDate: Date tomorrow.! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:03:26' prior: 50626042!
+createCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 andExpireDate: Date tomorrow .! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:03:42'!
+createExpiredCard
+	
+	^''! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:03:42' prior: 50626025!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| total expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: expiredCard on: date.
+	
+	self assert: 300 equals: total! !
+
+!methodRemoval: TestProvider class #createExpiredCart stamp: 'IC&VW 6/9/2023 15:03:42'!
+createExpiredCart
+	
+	^''!
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:03:52' prior: 50626056!
+createExpiredCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 andExpireDate: Date yesterday .! !
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:03:59'!
+FAILURE!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:03:59'!
+FAILURE!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:04:07' prior: 50626060!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| total expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: expiredCard on: date.
+	
+	self assert: 100 equals: total! !
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:04:09'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:04:09'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:04:09'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:04:09'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:04:09'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:06:15' prior: 50626091!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Card expiredCartErrorMessage equals: anError messageText ]
+
+	! !
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:06:28'!
+FAILURE!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:06:44' prior: 50626121!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Card expiredCardErrorMessage equals: anError messageText ]
+
+	! !
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:07:03'!
+expiredCardErrorMessage
+	^'La tarjeta se encuentra vencida'! !
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:07:39'!
+expiredCardError
+	^self error: self expiredCardErrorMessage! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:08:02' prior: 50624775!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^self class emptyCartError.].
+	
+	^cart calculateTotalPrice! !
+
+!methodRemoval: Card #expiryDate stamp: 'IC&VW 6/9/2023 15:08:09'!
+expiryDate
+	^expiryDate!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:08:26'!
+isExpired
+	^(expireDate > Date today)! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:08:36'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:08:36'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:08:36'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:08:36'!
+FAILURE!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:08:36'!
+FAILURE!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:09:38' prior: 50626165!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^self class emptyCartError.].
+	card isExpired ifTrue: [^self Card expiredCardError. ]
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:09:46' prior: 50626200!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^self class emptyCartError.].
+	card isExpired ifTrue: [^Card class expiredCardError. ]
+	
+	^cart calculateTotalPrice! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:09:47'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:09:47'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:09:47'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:09:47'!
+FAILURE!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:09:56' prior: 50626211!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^self class emptyCartError.].
+	card isExpired ifTrue: [^ Card class expiredCardError. ]
+	
+	^cart calculateTotalPrice! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:09:57'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:09:57'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:09:57'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:09:57'!
+FAILURE!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:10:05'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:10:07'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:10:07'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:10:14'!
+ERROR!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:10:30' prior: 50626236!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	card isExpired ifTrue: [^ Card class expiredCardError. ].
+	
+	^cart calculateTotalPrice! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:10:31'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:10:31'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:10:31'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:10:31'!
+FAILURE!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:10:34'!
+ERROR!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:10:46' prior: 50626275!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	card isExpired ifTrue: [^ Card expiredCardError. ].
+	
+	^cart calculateTotalPrice! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:10:48'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:10:48'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:10:48'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:10:48'!
+FAILURE!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:10:50'!
+ERROR!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:11:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:11:41'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:11:41'!
+ERROR!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:13:49' prior: 50626177!
+isExpired
+	^(expireDate < Date today)! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:13:50'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:13:50'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:13:50'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:13:50'!
+PASSED!
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/9/2023 15:14:16'!
+expiredCardErrorMessage
+	^'La tarjeta se encuentra vencida'! !
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/9/2023 15:14:28'!
+expiredCardError
+	^self error: self expiredCardErrorMessage! !
+
+!methodRemoval: Card class #expiredCardErrorMessage stamp: 'IC&VW 6/9/2023 15:14:40'!
+expiredCardErrorMessage
+	^'La tarjeta se encuentra vencida'!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:15:01' prior: 50626140!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]
+
+	! !
+
+!methodRemoval: Card class #expiredCardError stamp: 'IC&VW 6/9/2023 15:15:27'!
+expiredCardError
+	^self error: self expiredCardErrorMessage!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:15:34' prior: 50626304!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	card isExpired ifTrue: [^ self expiredCardError. ].
+	
+	^cart calculateTotalPrice! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:15:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:15:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:15:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:15:40'!
+FAILURE!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:15:40'!
+FAILURE!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:16:03'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:16:04'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:16:06'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:16:07'!
+FAILURE!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:16:07'!
+FAILURE!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:16:34' prior: 50626396!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	card isExpired ifTrue: [^ self class expiredCardError. ].
+	
+	^cart calculateTotalPrice! !
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:16:36'!
+PASSED!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:16:57'!
+expireMonth
+	^expireDate! !
+
+!methodRemoval: Card #expireDate stamp: 'IC&VW 6/9/2023 15:16:57'!
+expireDate
+	^expireDate!
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 15:17:07'!
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expireMonth'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:17:07' prior: 50626457!
+expireMonth
+	^expireMonth! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:17:07' prior: 50626004!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aDate
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aDate.! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:17:07' prior: 50626343!
+isExpired
+	^(expireMonth < Date today)! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:17:33'!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aDate
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aDate.! !
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:17:33' prior: 50625995!
+name: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aDate
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aDate! !
+
+!methodRemoval: Card #initializeWithName:number:securityNumber:andExpireDate: stamp: 'IC&VW 6/9/2023 15:17:33'!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aDate
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aDate.!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:17:45' prior: 50626489!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aMonth.! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:18:16'!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: andExpireYear 
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aMonth.! !
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:18:16' prior: 50626499!
+name: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aDate
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aDate andExpireYear: 2023! !
+
+!methodRemoval: Card #initializeWithName:number:securityNumber:expireMonth: stamp: 'IC&VW 6/9/2023 15:18:16'!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aMonth.!
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 15:18:36'!
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expireMonth expireYear'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:18:34' prior: 50626527!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: anYear 
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aMonth.
+	expireYear := anYear.! !
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:18:52' prior: 50626538!
+name: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aMonth
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: 2023! !
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:19:14'!
+name: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aMonth andExpireYear: anYear 
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: 2023! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:19:14' prior: 50626049!
+createCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 andExpireDate: Date tomorrow andExpireYear: 2023 .! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:19:15' prior: 50626076!
+createExpiredCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 andExpireDate: Date yesterday andExpireYear: 2023 .! !
+
+!methodRemoval: Card class #name:number:securityNumber:andExpireDate: stamp: 'IC&VW 6/9/2023 15:19:15'!
+name: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aMonth
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: 2023!
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:19:33'!
+name: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: anYear 
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: 2023! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:19:33' prior: 50626605!
+createExpiredCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 expireMonth: Date yesterday andExpireYear: 2023 .! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:19:33' prior: 50626597!
+createCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 expireMonth: Date tomorrow andExpireYear: 2023 .! !
+
+!methodRemoval: Card class #name:number:securityNumber:andExpireDate:andExpireYear: stamp: 'IC&VW 6/9/2023 15:19:33'!
+name: aName number: aNumber securityNumber: aSecurityNumber andExpireDate: aMonth andExpireYear: anYear 
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: 2023!
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:19:37' prior: 50626622!
+name: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: anYear 
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: anYear! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:19:51'!
+expireYear
+	^expireYear! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:21:06' prior: 50626485!
+isExpired
+	^ (expireYear < Date today year) or: (expireYear = Date today year and: expireMonth = Date today month)! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:21:10'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:21:10'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:21:10'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:21:10'!
+FAILURE!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:21:16'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:21:16'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:23:22'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:23:35'!
+ERROR!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:24:04'!
+isExpired: aDate
+	^ (expireYear < Date today year) or: (expireYear = Date today year and: expireMonth = Date today month)! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:24:05' prior: 50626443!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	card isExpired: Date today ifTrue: [^ self class expiredCardError. ].
+	
+	^cart calculateTotalPrice! !
+
+!methodRemoval: Card #isExpired stamp: 'IC&VW 6/9/2023 15:24:05'!
+isExpired
+	^ (expireYear < Date today year) or: (expireYear = Date today year and: expireMonth = Date today month)!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:24:12'!
+isExpiredOn: aDate
+	^ (expireYear < Date today year) or: (expireYear = Date today year and: expireMonth = Date today month)! !
+
+!methodRemoval: Card #isExpired: stamp: 'IC&VW 6/9/2023 15:24:12'!
+isExpired: aDate
+	^ (expireYear < Date today year) or: (expireYear = Date today year and: expireMonth = Date today month)!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:24:24' prior: 50626731!
+isExpiredOn: aDate
+	^ (expireYear < aDate year) or: (expireYear = aDate year and: expireMonth = aDate month)! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:24:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:24:31'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:24:31'!
+ERROR!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:25:05' prior: 50626714!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	(card isExpired: aDate) ifTrue: [^ self class expiredCardError. ].
+	
+	^cart calculateTotalPrice! !
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:25:07'!
+ERROR!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:25:20' prior: 50626761!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	(card isExpiredOn: aDate) ifTrue: [^ self class expiredCardError. ].
+	
+	^cart calculateTotalPrice! !
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:25:22'!
+ERROR!
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:27:37' prior: 50626641!
+createCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 expireMonth: (Month month: 06 year: 2023) .! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:27:48' prior: 50626791!
+createCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 expireMonth: (Month month: 07 year: 2023) .! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:28:02' prior: 50626633!
+createExpiredCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 expireMonth: (Month month: 05 year: 2023) .! !
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:28:25' prior: 50626659!
+name: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: anYear 
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth! !
+!Card class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:28:36'!
+name: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth  
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth! !
+
+!methodRemoval: Card class #name:number:securityNumber:expireMonth:andExpireYear: stamp: 'IC&VW 6/9/2023 15:28:36'!
+name: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: anYear 
+	^self new initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:28:52' prior: 50626565!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: anYear 
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aMonth.! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:28:55'!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth  
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aMonth.! !
+
+!methodRemoval: Card #initializeWithName:number:securityNumber:expireMonth:andExpireYear: stamp: 'IC&VW 6/9/2023 15:28:55'!
+initializeWithName: aName number: aNumber securityNumber: aSecurityNumber expireMonth: aMonth andExpireYear: anYear 
+	name := aName.
+	number := aNumber.
+	securityNumber  := aSecurityNumber.
+	expireMonth  := aMonth.!
+
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expireMonth'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Card category: 'TusLibros' stamp: 'IC&VW 6/9/2023 15:29:03'!
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expireMonth'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:29:06'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:29:06'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:29:06'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:29:06'!
+FAILURE!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:29:12'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:29:14'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:29:14'!
+ERROR!
+
+!methodRemoval: Card #expireYear stamp: 'IC&VW 6/9/2023 15:29:37'!
+expireYear
+	^expireYear!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:30:54' prior: 50626744!
+isExpiredOn: aDate
+	^ (expireMonth year < aDate year) or: (expireMonth year = aDate year and: expireMonth monthIndex = aDate monthIndex)! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:31:04'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:31:05'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:31:05'!
+ERROR!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:31:44' prior: 50624907 overrides: 16961394!
+setUp
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	cart := TestProvider createCart.
+	date := Month month: 6 year: 2023.! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:31:45'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:31:45'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:31:45'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:31:45'!
+FAILURE!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:31:50'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:31:50'!
+ERROR!
+
+aDate year!
+
+expireMonth year!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:33:36' prior: 50626911!
+isExpiredOn: aDate
+	^ expireMonth < aDate! !
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:33:39'!
+ERROR!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:34:01' prior: 50626930 overrides: 16961394!
+setUp
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	cart := TestProvider createCart.
+	date := Date today.! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:34:02'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:34:02'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:34:02'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:34:02'!
+FAILURE!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:34:07'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:34:07'!
+ERROR!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:36:12' prior: 50626960!
+isExpiredOn: aDate
+	|expireDate|
+	expireDate := Date newDay: 01 month: expireMonth monthIndex year: expireMonth year.
+	^ expireDate < aDate! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:37:17' prior: 50626997!
+isExpiredOn: aDate	
+	"Date newDay: 01 month: expireMonth monthIndex year: expireMonth year."
+	^ expireMonth start  < aDate! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:37:22' prior: 50627005!
+isExpiredOn: aDate	
+
+	^ expireMonth start  < aDate! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:37:26'!
+PASSED!
+
+expireMonth start!
+
+aDate start!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:38:24' prior: 50627012!
+isExpiredOn: aDate	
+
+	^ expireMonth start  < aDate start! !
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:38:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:38:28'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:38:28'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:38:28'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:38:28'!
+PASSED!
+
+----SNAPSHOT----(9 June 2023 15:38:40) CuisUniversity-5832.image priorSource: 9366758!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:39:43'!
+test04CheckoutThrowsErrorWhenReceivingAnExpiredCard 
+
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]
+
+	! !
+
+!methodRemoval: CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/9/2023 15:39:43'!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]
+
+	!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:40:58'!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+
+	| invalidFormartNumberCard |
+	invalidFormartNumberCard := TestProvider createInvalidFormatNumberCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: invalidFormartNumberCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]
+
+	! !
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:41:01'!
+ERROR!
+!TestProvider class methodsFor: 'instance creation' stamp: 'IC&VW 6/9/2023 15:41:09'!
+createInvalidFormatNumberCard
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeCreateInvalidFormatNumberCard! !
+!TestProvider class methodsFor: 'instance creation' stamp: 'IC&VW 6/9/2023 15:41:15' prior: 50627098!
+createInvalidFormatNumberCard
+
+	^self new initializeCreateInvalidFormatNumberCard! !
+!TestProvider class methodsFor: 'instance creation' stamp: 'IC&VW 6/9/2023 15:41:50' prior: 50626805!
+createExpiredCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 expireMonth: (Month month: 05 year: 2023) .! !
+!TestProvider class methodsFor: 'instance creation' stamp: 'IC&VW 6/9/2023 15:42:06' prior: 50627107!
+createInvalidFormatNumberCard
+	
+	^Card name: 'Harry Potter' number: 934 securityNumber: 934 expireMonth: (Month month: 07 year: 2023) .! !
+!TestProvider class methodsFor: 'instance creation' stamp: 'IC&VW 6/9/2023 15:42:48' prior: 50626798!
+createCard
+	
+	^Card name: 'Harry Potter' number: 1234567891234567 securityNumber: 934 expireMonth: (Month month: 07 year: 2023) .! !
+!TestProvider class methodsFor: 'instance creation' stamp: 'IC&VW 6/9/2023 15:43:18' prior: 50627129!
+createCard
+	
+	^Card name: 'Harry Potter' number: 1234567890123456 securityNumber: 934 expireMonth: (Month month: 07 year: 2023) .! !
+!TestProvider class methodsFor: 'instance creation' stamp: 'IC&VW 6/9/2023 15:43:22' prior: 50627113!
+createExpiredCard
+	
+	^Card name: 'Harry Potter' number: 1234567890123456 securityNumber: 934 expireMonth: (Month month: 05 year: 2023) .! !
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:43:31'!
+FAILURE!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:43:31'!
+FAILURE!
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/9/2023 15:43:55'!
+invalidFormatNumberCardErrorMessage
+	^'El numero de tarjeta es invalido'! !
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/9/2023 15:44:20'!
+InvalidFormatNumberCardError
+	^self error: self invalidFormatNumberCardErrorMessage ! !
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:44:30'!
+FAILURE!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:45:10' prior: 50626776!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	card isValidOn: aDate.
+	
+	^cart calculateTotalPrice! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:45:28'!
+isValidOn: aDate	
+
+	^ expireMonth start  < aDate start! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:46:04' prior: 50627185!
+isValidOn: aDate	
+
+	(self isExpiredOn: aDate) ifTrue: [^ self class expiredCardError. ].
+	(self hasValidNumberFormat) ifTrue: [^ self class InvalidFormatNumberCardError . ]! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:46:19'!
+hasValidNumberFormat
+
+	^''! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:47:01' prior: 50627198!
+hasValidNumberFormat
+
+	^self number asString size = 16! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:47:07'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:47:07'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:47:07'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivingAnExpiredCard stamp: 'IC&VW 6/9/2023 15:47:07'!
+FAILURE!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:47:07'!
+FAILURE!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:47:15'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:47:15'!
+ERROR!
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:47:45' prior: 50627190!
+isValidOn: aDate	
+
+	(self isExpiredOn: aDate) ifTrue: [^ self class expiredCardError. ].
+	(self hasValidNumberFormat) ifFalse: [^ self class InvalidFormatNumberCardError . ]! !
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:47:46'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:47:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:47:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:47:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivingAnExpiredCard stamp: 'IC&VW 6/9/2023 15:47:49'!
+FAILURE!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:47:49'!
+FAILURE!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:47:56'!
+FAILURE!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:47:56'!
+FAILURE!
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/9/2023 15:48:37'!
+invalidFormatNumberCardError
+	^self error: self invalidFormatNumberCardErrorMessage ! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:48:37' prior: 50627232!
+isValidOn: aDate	
+
+	(self isExpiredOn: aDate) ifTrue: [^ self class expiredCardError. ].
+	(self hasValidNumberFormat) ifFalse: [^ self class invalidFormatNumberCardError . ]! !
+
+!methodRemoval: Cashier class #InvalidFormatNumberCardError stamp: 'IC&VW 6/9/2023 15:48:37'!
+InvalidFormatNumberCardError
+	^self error: self invalidFormatNumberCardErrorMessage !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:49:04' prior: 50627276!
+isValidOn: aDate	
+
+	(self isExpiredOn: aDate) ifTrue: [^ Cashier expiredCardError. ].
+	(self hasValidNumberFormat) ifFalse: [^ Cashier invalidFormatNumberCardError . ]! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:49:24'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:49:24'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:49:24'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivingAnExpiredCard stamp: 'IC&VW 6/9/2023 15:49:24'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:49:24'!
+PASSED!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:50:22' prior: 50627175!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard: card.
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:51:01'!
+isValidCard: aCard on: aDate
+	
+	(aCard isExpiredOn: aDate) ifTrue: [^ Cashier expiredCardError. ].
+	(aCard hasValidNumberFormat) ifFalse: [^ Cashier invalidFormatNumberCardError . ]! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/9/2023 15:51:09' prior: 50627317!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard: card on: date.
+	
+	^cart calculateTotalPrice! !
+
+!methodRemoval: Card #isValidOn: stamp: 'IC&VW 6/9/2023 15:51:21'!
+isValidOn: aDate	
+
+	(self isExpiredOn: aDate) ifTrue: [^ Cashier expiredCardError. ].
+	(self hasValidNumberFormat) ifFalse: [^ Cashier invalidFormatNumberCardError . ]!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivingAnExpiredCard stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:51:23'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:51:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:51:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:51:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivingAnExpiredCard stamp: 'IC&VW 6/9/2023 15:51:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:51:25'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivingAnExpiredCard stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:51:26'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivingAnExpiredCard stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/9/2023 15:51:40'!
+PASSED!
+
+----SNAPSHOT----(10 June 2023 15:20:28) CuisUniversity-5832.image priorSource: 9452594!
+
+----STARTUP---- (11 June 2023 12:01:11) as /home/valewodka/Downloads/linux64/CuisUniversity-5832.image!
+
+
+!classRemoval: #TestProvider stamp: 'IC&VW 6/11/2023 12:02:55'!
+Object subclass: #TestProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cashier stamp: 'IC&VW 6/11/2023 12:02:56'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart card date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cart stamp: 'IC&VW 6/11/2023 12:02:56'!
+Object subclass: #Cart
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Card stamp: 'IC&VW 6/11/2023 12:02:56'!
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expireMonth'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CheckoutTest stamp: 'IC&VW 6/11/2023 12:02:56'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CartTest stamp: 'IC&VW 6/11/2023 12:02:57'!
+TestCase subclass: #CartTest
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+----End fileIn of /home/valewodka/Downloads/linux64/TusLibros.st----!
+
+----STARTUP---- (11 June 2023 12:03:37) as /home/valewodka/Downloads/linux64/CuisUniversity-5832.image!
+
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:04:35'!
+test04CanNotAddNonPositiveNumberOfItems
+	cart := TestProvider createCart.
+	self should: [cart add: 0 of: TestProvider itemSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidQuantityErrorMessage.
+			self assert: cart isEmpty ]! !
+
+!methodRemoval: CheckoutTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/11/2023 12:04:46'!
+test04CanNotAddNonPositiveNumberOfItems
+	cart := TestProvider createCart.
+	self should: [cart add: 0 of: TestProvider itemSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidQuantityErrorMessage.
+			self assert: cart isEmpty ]!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:05:21'!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]! !
+
+!methodRemoval: CheckoutTest #test04CheckoutThrowsErrorWhenReceivingAnExpiredCard stamp: 'IC&VW 6/11/2023 12:05:29'!
+94!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:05:50'!
+test04CheckoutThrowsErrorWhenReceivingnAnExpiredCard
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]! !
+
+!methodRemoval: CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 12:05:50'!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]!
+
+!classRemoval: #TestProvider stamp: 'IC&VW 6/11/2023 12:08:43'!
+Object subclass: #TestProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cashier stamp: 'IC&VW 6/11/2023 12:08:44'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart card date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cart stamp: 'IC&VW 6/11/2023 12:08:44'!
+Object subclass: #Cart
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Card stamp: 'IC&VW 6/11/2023 12:08:44'!
+Object subclass: #Card
+	instanceVariableNames: 'name number securityNumber expireMonth'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CheckoutTest stamp: 'IC&VW 6/11/2023 12:08:44'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CartTest stamp: 'IC&VW 6/11/2023 12:08:45'!
+TestCase subclass: #CartTest
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+----End fileIn of /home/valewodka/Downloads/linux64/TusLibros.st----!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:09:27'!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+
+	| invalidFormatNumberCard |
+	invalidFormatNumberCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: invalidFormatNumberCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:09:39' prior: 50627575!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+
+	| invalidFormatNumberCard |
+	invalidFormatNumberCard := TestProvider createInvalidFormatNumberCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: invalidFormatNumberCard on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]
+
+	! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:10:11' prior: 50627545!
+createExpiredCard
+	
+	^Card name: 'Harry Potter' number: 1234567812345678 securityNumber: 934 expireMonth: (Month month: 05 year: 2023) .! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:10:15' prior: 50627533!
+createCard
+	
+	^Card name: 'Harry Potter' number: 1234567812345678 securityNumber: 934 expireMonth: (Month month: 07 year: 2023) .! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:10:25'!
+createInvalidFormatNumberCard
+	
+	^Card name: 'Harry Potter' number: 123 securityNumber: 934 expireMonth: (Month month: 07 year: 2023) .! !
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/11/2023 12:11:13'!
+invalidFormatNumberCardErrorMessage
+	^'El numero de la tarjeta es invalido'! !
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/11/2023 12:11:26'!
+invalidFormatNumberCardError
+	^self error: self invalidFormatNumberCardErrorMessage ! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:12:26' prior: 50627472!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	(self isValidCard: card on: date) ifFalse:  [^ self class expiredCardError. ].
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:14:40'!
+isValidCard
+
+	(card isExpired) ifTrue: [^self class expiredCardError.].
+	(card hasValidFormatNumber) ifFalse: [^self class invalidFormatNumberCardError.].! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:15:02' prior: 50627643!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard.
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:15:30' prior: 50627654!
+isValidCard
+
+	(card isExpiredOn: date) ifTrue: [^self class expiredCardError.].
+	(card hasValidFormatNumber) ifFalse: [^self class invalidFormatNumberCardError.].! !
+!Card methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:16:12'!
+hasValidFormatNumber	
+
+	^ number asString size = 16! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 12:16:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 12:16:21'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 12:16:21'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 12:16:21'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 12:16:21'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 12:16:21'!
+PASSED!
+
+----SNAPSHOT----(11 June 2023 12:16:42) CuisUniversity-5832.image priorSource: 9452682!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:18:55'!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	|cardWithNoCredit|
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:19:18' prior: 50627751!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	|cardWithNoCredit|
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+
+Object subclass: #MercantProccesorSimulator
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #MercantProccesorSimulator category: 'TusLibros' stamp: 'IC&VW 6/11/2023 12:20:13'!
+Object subclass: #MercantProccesorSimulator
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRenamed: #MercantProccesorSimulator as: #MerchantProccesorSimulator stamp: 'IC&VW 6/11/2023 12:21:27'!
+Smalltalk renameClassNamed: #MercantProccesorSimulator as: #MerchantProccesorSimulator!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:22:19' prior: 50627767!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	|cardWithNoCredit|
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:22:44' prior: 50627662!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard.
+	MerchantProccesorSimulator validateCard: card.
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:24:32' prior: 50627817!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard.
+	"MerchantProccesorSimulator validateCard: card withBehaivour:[]."
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:25:19'!
+initializeToCheckout: aCart charging: aCard on: aDate withMerchant: aMerchant  
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard.
+	"MerchantProccesorSimulator validateCard: card withBehaivour:[]."
+	
+	^cart calculateTotalPrice! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:25:19' prior: 50627299!
+test03CheckoutCanHandleACartWithMultipleItems 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date withMerchant: MerchantProccesorSimulator new.
+	
+	self assert: 300 equals: total! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:25:19' prior: 50627592!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+
+	| invalidFormatNumberCard |
+	invalidFormatNumberCard := TestProvider createInvalidFormatNumberCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: invalidFormatNumberCard on: date withMerchant: MerchantProccesorSimulator new.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:25:19' prior: 50627290!
+test02CheckoutCanHandleACartWithOneItem 
+
+	|total|
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date withMerchant: MerchantProccesorSimulator new.
+	
+	self assert: 100 equals: total
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:25:19' prior: 50627801!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	|cardWithNoCredit|
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date withMerchant: MerchantProccesorSimulator new.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:25:19' prior: 50627310!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date withMerchant: MerchantProccesorSimulator new.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:25:19' prior: 50627276!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	"salesBook := OrderedCollection new."
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: MerchantProccesorSimulator new] 
+	
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText 
+			
+			".self assert: salesBook isEmpty"
+			]! !
+
+!methodRemoval: Cashier #initializeToCheckout:charging:on: stamp: 'IC&VW 6/11/2023 12:25:19'!
+initializeToCheckout: aCart charging: aCard on: aDate 
+
+	cart := aCart.
+	card := aCard.
+	date := aDate.
+	
+	cart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard.
+	"MerchantProccesorSimulator validateCard: card withBehaivour:[]."
+	
+	^cart calculateTotalPrice!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:26:07' prior: 50627841!
+initializeToCheckout: aCart charging: aCard on: aDate withMerchant: aMerchant  
+
+	card := aCard.
+	date := aDate.
+	
+	aCart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard.
+	aMerchant validateCard: card withBehaivour:[].
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:26:43' prior: 50627959!
+initializeToCheckout: aCart charging: aCard on: aDate withMerchant: aMerchant  
+
+	card := aCard.
+	date := aDate.
+	
+	aCart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard.
+	aMerchant validateCard: card.
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:27:14'!
+isValidCard: aCard
+
+	(card isExpiredOn: date) ifTrue: [^self class expiredCardError.].
+	(card hasValidFormatNumber) ifFalse: [^self class invalidFormatNumberCardError.].! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:27:14' prior: 50627971!
+initializeToCheckout: aCart charging: aCard on: aDate withMerchant: aMerchant  
+
+	card := aCard.
+	date := aDate.
+	
+	aCart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard: card.
+	aMerchant validateCard: card.
+	
+	^cart calculateTotalPrice! !
+
+!methodRemoval: Cashier #isValidCard stamp: 'IC&VW 6/11/2023 12:27:14'!
+isValidCard
+
+	(card isExpiredOn: date) ifTrue: [^self class expiredCardError.].
+	(card hasValidFormatNumber) ifFalse: [^self class invalidFormatNumberCardError.].!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:27:22' prior: 50627982!
+isValidCard: aCard
+
+	(aCard isExpiredOn: date) ifTrue: [^self class expiredCardError.].
+	(aCard hasValidFormatNumber) ifFalse: [^self class invalidFormatNumberCardError.].! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:27:41'!
+isValidCard: aCard on: aDate 
+
+	(aCard isExpiredOn: date) ifTrue: [^self class expiredCardError.].
+	(aCard hasValidFormatNumber) ifFalse: [^self class invalidFormatNumberCardError.].! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:27:41' prior: 50627991!
+initializeToCheckout: aCart charging: aCard on: aDate withMerchant: aMerchant  
+
+	card := aCard.
+	date := aDate.
+	
+	aCart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard: card on: date.
+	aMerchant validateCard: card.
+	
+	^cart calculateTotalPrice! !
+
+!methodRemoval: Cashier #isValidCard: stamp: 'IC&VW 6/11/2023 12:27:41'!
+isValidCard: aCard
+
+	(aCard isExpiredOn: date) ifTrue: [^self class expiredCardError.].
+	(aCard hasValidFormatNumber) ifFalse: [^self class invalidFormatNumberCardError.].!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:27:44' prior: 50628018!
+isValidCard: aCard on: aDate 
+
+	(aCard isExpiredOn: aDate) ifTrue: [^self class expiredCardError.].
+	(aCard hasValidFormatNumber) ifFalse: [^self class invalidFormatNumberCardError.].! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:28:00' prior: 50628027!
+initializeToCheckout: aCart charging: aCard on: aDate withMerchant: aMerchant  
+	
+	aCart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard: aCard on: aDate.
+	aMerchant validateCard: card.
+	
+	^cart calculateTotalPrice! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:28:05' prior: 50628055!
+initializeToCheckout: aCart charging: aCard on: aDate withMerchant: aMerchant  
+	
+	aCart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard: aCard on: aDate.
+	aMerchant validateCard: aCard.
+	
+	^cart calculateTotalPrice! !
+
+!classDefinition: #Cashier category: 'TusLibros' stamp: 'IC&VW 6/11/2023 12:28:58'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: 'TusLibros' stamp: 'IC&VW 6/11/2023 12:28:58'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:29:16' prior: 50628066!
+initializeToCheckout: aCart charging: aCard on: aDate withMerchant: aMerchant  
+	
+	aCart isEmpty ifTrue: [^ self class emptyCartError.].
+	self isValidCard: aCard on: aDate.
+	aMerchant validateCard: aCard.
+	
+	^aCart calculateTotalPrice! !
+
+!classDefinition: #Cashier category: 'TusLibros' stamp: 'IC&VW 6/11/2023 12:29:22'!
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #MerchantProccesorSimulator category: 'TusLibros' stamp: 'IC&VW 6/11/2023 12:32:25'!
+Object subclass: #MerchantProccesorSimulator
+	instanceVariableNames: 'cardsWithNoCredit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!MerchantProccesorSimulator methodsFor: 'no messages' stamp: 'IC&VW 6/11/2023 12:32:22'!
+addCardwithNoCredit: aCard 
+	cardsWithNoCredit add: aCard
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:32:52' overrides: 16920235!
+initialize
+	cardsWithNoCredit := 	OrderedCollection new.
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:34:14' prior: 50627897!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	|cardWithNoCredit merchant|
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	merchant := TestProvider createMerchant.
+	
+	merchant addCardwithNoCredit: cardWithNoCredit.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:35:04'!
+createCardWithNoCredit
+	
+	^Card name: 'La Rana Rene' number: 1111222233334444 securityNumber: 123 expireMonth: (Month month: 07 year: 2024) .! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:35:23'!
+createMerchant
+	
+	^MerchantProccesorSimulator new.! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:35:52' prior: 50627932!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	"salesBook := OrderedCollection new."
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: TestProvider createMerchant ] 
+	
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText 
+			
+			".self assert: salesBook isEmpty"
+			]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:35:57' prior: 50627886!
+test02CheckoutCanHandleACartWithOneItem 
+
+	|total|
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date withMerchant: TestProvider createMerchant.
+	
+	self assert: 100 equals: total
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:36:02' prior: 50627854!
+test03CheckoutCanHandleACartWithMultipleItems 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date withMerchant: TestProvider createMerchant.
+	
+	self assert: 300 equals: total! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:36:06' prior: 50627915!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date withMerchant: TestProvider createMerchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:36:10' prior: 50627867!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+
+	| invalidFormatNumberCard |
+	invalidFormatNumberCard := TestProvider createInvalidFormatNumberCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: invalidFormatNumberCard on: date withMerchant: TestProvider createMerchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]
+
+	! !
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/11/2023 12:36:41'!
+cardWithNoCreditErrorMessage
+	^'La tarjeta no tiene credito'! !
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/11/2023 12:37:02'!
+cardWithNoCreditError
+	^self error: self cardWithNoCreditErrorMessage ! !
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:37:10'!
+FAILURE!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:37:10'!
+FAILURE!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:37:16'!
+FAILURE!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:37:16'!
+FAILURE!
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:38:17'!
+validateCard: aCard
+	(cardsWithNoCredit includes: aCard) ifTrue: [^ Cashier cardWithNoCreditError ]! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:38:25'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:38:53'!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	|cardWithNoCredit merchant|
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	merchant := TestProvider createMerchant.
+	
+	merchant addCardwithNoCredit: cardWithNoCredit.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+
+----SNAPSHOT----(11 June 2023 12:40:31) CuisUniversity-5832.image priorSource: 9475105!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:41:35' prior: 50628316!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	|stolenCard merchant|
+	stolenCard := TestProvider createStolenCard.
+	merchant := TestProvider createMerchant.
+	
+	merchant addStolenCard: stolenCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: stolenCard on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier stolenCardErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:42:12' prior: 50628339!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	|stolenCard merchant|
+	stolenCard := TestProvider createCard.
+	merchant := TestProvider createMerchant.
+	
+	merchant addStolenCard: stolenCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: stolenCard on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier stolenCardErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:42:22' prior: 50628127!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	|cardWithNoCredit merchant|
+	cardWithNoCredit := TestProvider createCard.
+	merchant := TestProvider createMerchant.
+	
+	merchant addCardwithNoCredit: cardWithNoCredit.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+
+!methodRemoval: TestProvider class #createCardWithNoCredit stamp: 'IC&VW 6/11/2023 12:42:32'!
+createCardWithNoCredit
+	
+	^Card name: 'La Rana Rene' number: 1111222233334444 securityNumber: 123 expireMonth: (Month month: 07 year: 2024) .!
+
+!classDefinition: #MerchantProccesorSimulator category: 'TusLibros' stamp: 'IC&VW 6/11/2023 12:43:00'!
+Object subclass: #MerchantProccesorSimulator
+	instanceVariableNames: 'cardsWithNoCredit stolenCards'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:42:58'!
+addStolenCard: aCard 
+	stolenCards add: aCard
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:43:10'!
+addCardWithNoCredit: aCard 
+	cardsWithNoCredit add: aCard
+	
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:43:10' prior: 50628376!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	|cardWithNoCredit merchant|
+	cardWithNoCredit := TestProvider createCard.
+	merchant := TestProvider createMerchant.
+	
+	merchant addCardWithNoCredit: cardWithNoCredit.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+
+!methodRemoval: MerchantProccesorSimulator #addCardwithNoCredit: stamp: 'IC&VW 6/11/2023 12:43:10'!
+addCardwithNoCredit: aCard 
+	cardsWithNoCredit add: aCard
+	
+	!
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:43:24' prior: 50628121 overrides: 16920235!
+initialize
+	cardsWithNoCredit := 	OrderedCollection new.
+	stolenCards := OrderedCollection new.
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:43:55' prior: 50628261!
+validateCard: aCard
+	(cardsWithNoCredit includes: aCard) ifTrue: [^ Cashier cardWithNoCreditError ].
+	(stolenCards includes: aCard) ifTrue: [^ Cashier stolenCardError ].! !
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/11/2023 12:44:17'!
+stolenCardErrorMessage
+	^'La tarjeta fue robada'! !
+!Cashier class methodsFor: 'errors' stamp: 'IC&VW 6/11/2023 12:44:26'!
+stolenCardError
+	^self error: self stolenCardErrorMessage ! !
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 12:44:34'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 12:44:34'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 12:44:34'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 12:44:34'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 12:44:34'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:44:34'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 12:44:34'!
+PASSED!
+
+!classDefinition: #MerchantProccesorSimulator category: 'TusLibros' stamp: 'IC&VW 6/11/2023 12:46:02'!
+Object subclass: #MerchantProccesorSimulator
+	instanceVariableNames: 'cardsWithNoCredit stolenCards invalidCards'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:46:00' prior: 50628449 overrides: 16920235!
+initialize
+	cardsWithNoCredit := 	OrderedCollection new.
+	stolenCards := OrderedCollection new.
+	invalidCards := Dictionary new.
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:46:26' prior: 50628417!
+addCardWithNoCredit: aCard 
+	cardsWithNoCredit add: aCard
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:47:26' prior: 50628518!
+addCardWithNoCredit: aCard 
+	cardsWithNoCredit add: aCard.
+	invalidCards key: aCard value: [^Cashier cardWithNoCreditError ].
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:47:37' prior: 50628412!
+addStolenCard: aCard 
+	stolenCards add: aCard.
+	invalidCards key: aCard value: [^Cashier stolenCardError ].
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:48:31' prior: 50628456!
+validateCard: aCard
+	(cardsWithNoCredit includes: aCard) ifTrue: [^ Cashier cardWithNoCreditError ].
+	(stolenCards includes: aCard) ifTrue: [^ Cashier stolenCardError ].
+	(invalidCards includesKey: aCard) ifTrue: [^(invalidCards at: aCard) value]! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:48:38' prior: 50628540!
+validateCard: aCard
+	"(cardsWithNoCredit includes: aCard) ifTrue: [^ Cashier cardWithNoCreditError ].
+	(stolenCards includes: aCard) ifTrue: [^ Cashier stolenCardError ]."
+	(invalidCards includesKey: aCard) ifTrue: [^(invalidCards at: aCard) value]! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:48:45' prior: 50628510 overrides: 16920235!
+initialize
+	"cardsWithNoCredit := 	OrderedCollection new.
+	stolenCards := OrderedCollection new."
+	invalidCards := Dictionary new.
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:48:51' prior: 50628532!
+addStolenCard: aCard 
+	"stolenCards add: aCard."
+	invalidCards key: aCard value: [^Cashier stolenCardError ].
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:48:57' prior: 50628524!
+addCardWithNoCredit: aCard 
+	"cardsWithNoCredit add: aCard."
+	invalidCards key: aCard value: [^Cashier cardWithNoCreditError ].
+	
+	! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 12:49:02'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:49:02'!
+ERROR!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 12:49:02'!
+ERROR!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:49:22'!
+ERROR!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:49:33'!
+ERROR!
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:51:11' prior: 50628581!
+addCardWithNoCredit: aCard 
+	"cardsWithNoCredit add: aCard."
+	
+	invalidCards add: (Association key: aCard value: [^Cashier cardWithNoCreditError ]).
+	
+	! !
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:51:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 12:51:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 12:51:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 12:51:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 12:51:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 12:51:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:51:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 12:51:16'!
+ERROR!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 12:51:16'!
+ERROR!
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:51:42' prior: 50628573!
+addStolenCard: aCard 
+	"stolenCards add: aCard."
+	invalidCards add: (Association key: aCard value: [^Cashier stolenCardError ]).
+	
+	! !
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 12:51:50'!
+PASSED!
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:52:36'!
+add: aCard withBehavior: aBehavior
+	
+	invalidCards add: (Association key: aCard value: aBehavior).
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:53:01' prior: 50628649!
+addCardWithNoCredit: aCard 
+	
+	invalidCards add: aCard withBehavior: [^Cashier cardWithNoCreditError ].
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:53:19' prior: 50628692!
+addStolenCard: aCard 
+
+	invalidCards add: aCard withBehavior: [^Cashier stolenCardError ].
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:53:26' prior: 50628565 overrides: 16920235!
+initialize
+	
+	invalidCards := Dictionary new.
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:53:33' prior: 50628552!
+validateCard: aCard
+
+	(invalidCards includesKey: aCard) ifTrue: [^(invalidCards at: aCard) value]! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/11/2023 12:53:39'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 12:53:40'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:53:40'!
+ERROR!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 12:53:40'!
+ERROR!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:53:43'!
+ERROR!
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:54:04' prior: 50628710!
+addCardWithNoCredit: aCard 
+	
+	self add: aCard withBehavior: [^Cashier cardWithNoCreditError ].
+	
+	! !
+!MerchantProccesorSimulator methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:54:08' prior: 50628717!
+addStolenCard: aCard 
+
+	self add: aCard withBehavior: [^Cashier stolenCardError ].
+	
+	! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 12:54:13'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:54:39' prior: 50628160!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: TestProvider createMerchant ] 
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText]! !
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/11/2023 12:55:47'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart date merchant2'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:55:45' prior: 50627269 overrides: 16961394!
+setUp
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	cart := TestProvider createCart.
+	date := Date today.
+	merchant2 := TestProvider createMerchant.! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:55:54' prior: 50628860!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant2 ] 
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:56:02' prior: 50628175!
+test02CheckoutCanHandleACartWithOneItem 
+
+	|total|
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant2 .
+	
+	self assert: 100 equals: total
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:56:10' prior: 50628186!
+test03CheckoutCanHandleACartWithMultipleItems 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant2 .
+	
+	self assert: 300 equals: total! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:56:16' prior: 50628913!
+test03CheckoutCanHandleACartWithMultipleItems 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant2.
+	
+	self assert: 300 equals: total! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:56:24' prior: 50628199!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date withMerchant: merchant2 .] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:56:31' prior: 50628216!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+
+	| invalidFormatNumberCard |
+	invalidFormatNumberCard := TestProvider createInvalidFormatNumberCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: invalidFormatNumberCard on: date withMerchant: merchant2.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:57:20' prior: 50628423!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	|cardWithNoCredit|
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	
+	merchant2 addCardWithNoCredit: cardWithNoCredit.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date withMerchant: merchant2 .] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:57:41' prior: 50628358!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	|stolenCard|
+	stolenCard := TestProvider createStolenCard.
+	
+	merchant2 addStolenCard: stolenCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: stolenCard on: date withMerchant: merchant2.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier stolenCardErrorMessage equals: anError messageText ]! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:58:18'!
+createStolenCard
+	
+	^Card name: 'La Rana Rene' number: 1111222233334444 securityNumber: 934 expireMonth: (Month month: 07 year: 2024) .! !
+!TestProvider class methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:58:48'!
+createCardWithNoCredit
+	
+	^Card name: 'Kim Kardashian' number: 1234123412341234 securityNumber: 000 expireMonth: (Month month: 07 year: 2024) .! !
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/11/2023 12:59:13'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart date merchant'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:59:13' prior: 50628926!
+test03CheckoutCanHandleACartWithMultipleItems 
+
+	| total |
+	cart add: TestProvider itemSellByTheStore.
+	cart add: TestProvider anotherItemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant.
+	
+	self assert: 300 equals: total! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:59:13' prior: 50628902!
+test02CheckoutCanHandleACartWithOneItem 
+
+	|total|
+	cart add: TestProvider itemSellByTheStore.
+	total := cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant .
+	
+	self assert: 100 equals: total
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:59:13' prior: 50628954!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+
+	| invalidFormatNumberCard |
+	invalidFormatNumberCard := TestProvider createInvalidFormatNumberCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: invalidFormatNumberCard on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:59:13' prior: 50628972!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	|cardWithNoCredit|
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	
+	merchant addCardWithNoCredit: cardWithNoCredit.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date withMerchant: merchant .] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:59:13' prior: 50628938!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+
+	| expiredCard |
+	expiredCard := TestProvider createExpiredCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date withMerchant: merchant .] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:59:13' prior: 50628881 overrides: 16961394!
+setUp
+	cashier := Cashier new.
+	card := TestProvider createCard. 
+	cart := TestProvider createCart.
+	date := Date today.
+	merchant := TestProvider createMerchant.! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:59:13' prior: 50628991!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	|stolenCard|
+	stolenCard := TestProvider createStolenCard.
+	
+	merchant addStolenCard: stolenCard.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: stolenCard on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier stolenCardErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 12:59:13' prior: 50628890!
+test01CheckoutThrowsErrorWhenReceivingAnEmptyCart
+
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant ] 
+		 raise: Error
+		 withExceptionDo: [:anError | self assert: Cashier emptyCartErrorMessage equals: anError messageText]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:00:03' prior: 50629092!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant .] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]
+
+	! !
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/11/2023 13:00:24'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart date merchant expiredCard'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:00:23' prior: 50629109 overrides: 16961394!
+setUp
+	cashier := Cashier new. 
+	cart := TestProvider createCart.
+	date := Date today.
+	merchant := TestProvider createMerchant.
+	card := TestProvider createCard.
+	expiredCard := TestProvider createExpiredCard.
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:00:32' prior: 50629147!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: expiredCard on: date withMerchant: merchant .] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier expiredCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:00:45' prior: 50629055!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]
+
+	! !
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/11/2023 13:00:51'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart date merchant expiredCard invalidFormatNumberCard'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:00:50' prior: 50629170 overrides: 16961394!
+setUp
+	cashier := Cashier new. 
+	cart := TestProvider createCart.
+	date := Date today.
+	merchant := TestProvider createMerchant.
+	card := TestProvider createCard.
+	expiredCard := TestProvider createExpiredCard.
+	invalidFormatNumberCard := TestProvider createInvalidFormatNumberCard.
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:00:56' prior: 50629194!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: invalidFormatNumberCard on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier invalidFormatNumberCardErrorMessage equals: anError messageText ]
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:01:14' prior: 50629073!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	merchant addCardWithNoCredit: card.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant .] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/11/2023 13:01:21'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart date merchant expiredCard invalidFormatNumberCard cardWithNoCredit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:01:19' prior: 50629218 overrides: 16961394!
+setUp
+	cashier := Cashier new. 
+	cart := TestProvider createCart.
+	date := Date today.
+	merchant := TestProvider createMerchant.
+	card := TestProvider createCard.
+	expiredCard := TestProvider createExpiredCard.
+	invalidFormatNumberCard := TestProvider createInvalidFormatNumberCard.
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:01:38' prior: 50629246!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	merchant addCardWithNoCredit: cardWithNoCredit.
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date withMerchant: merchant .] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:01:45' prior: 50629285!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: cardWithNoCredit on: date withMerchant: merchant .] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier cardWithNoCreditErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:01:52' prior: 50629271 overrides: 16961394!
+setUp
+	cashier := Cashier new. 
+	cart := TestProvider createCart.
+	date := Date today.
+	merchant := TestProvider createMerchant.
+	card := TestProvider createCard.
+	expiredCard := TestProvider createExpiredCard.
+	invalidFormatNumberCard := TestProvider createInvalidFormatNumberCard.
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	
+	merchant addCardWithNoCredit: cardWithNoCredit.
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:02:11' prior: 50629118!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier stolenCardErrorMessage equals: anError messageText ]! !
+
+!classDefinition: #CheckoutTest category: 'TusLibros' stamp: 'IC&VW 6/11/2023 13:02:22'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: 'cashier card cart date merchant expiredCard invalidFormatNumberCard cardWithNoCredit stolenCard'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:02:20' prior: 50629316 overrides: 16961394!
+setUp
+	cashier := Cashier new. 
+	cart := TestProvider createCart.
+	date := Date today.
+	merchant := TestProvider createMerchant.
+	card := TestProvider createCard.
+	expiredCard := TestProvider createExpiredCard.
+	invalidFormatNumberCard := TestProvider createInvalidFormatNumberCard.
+	cardWithNoCredit := TestProvider createCardWithNoCredit.
+	stolenCard := TestProvider createStolenCard.
+	
+	
+	merchant addCardWithNoCredit: cardWithNoCredit.
+	merchant addStolenCard: stolenCard.
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:02:45' prior: 50629332!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: stolenCard charging: card on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier stolenCardErrorMessage equals: anError messageText ]! !
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:02:46'!
+FAILURE!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 13:02:53'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 13:02:54'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 13:02:55'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:02:59'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 13:02:59'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 13:02:59'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 13:02:59'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:02:59'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 13:02:59'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 13:02:59'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:02:59'!
+FAILURE!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:02:59'!
+FAILURE!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:03:10'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 13:03:13'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:03:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 13:03:15'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 13:03:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:03:18'!
+FAILURE!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:03:18'!
+FAILURE!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:02:11' prior: 50629375!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: card on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier stolenCardErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:03:43' prior: 50629464!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: stolenCard on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: Cashier stolenCardErrorMessage equals: anError messageText ]! !
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:03:44'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 13:03:44'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 13:03:44'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 13:03:44'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:03:44'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 13:03:44'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 13:03:44'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:03:44'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:05:20'!
+setCheckoutWithCard: aCard throwsErrorMessage: anErrorMessage
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: aCard on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: anErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:06:02' prior: 50629478!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	self setCheckoutWithCard: stolenCard throwsErrorMessage: Cashier stolenCardErrorMessage! !
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:06:03'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 13:06:03'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 13:06:03'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 13:06:03'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:06:03'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 13:06:03'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 13:06:03'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:06:03'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:06:10' prior: 50629535!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	self setCheckoutWithCard: stolenCard throwsErrorMessage: Cashier stolenCardErrorMessage.! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:06:23' prior: 50629301!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	self setCheckoutWithCard: cardWithNoCredit throwsErrorMessage: Cashier cardWithNoCreditErrorMessage.! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:07:08' prior: 50629231!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+	
+	self setCheckoutWithCard: invalidFormatNumberCard throwsErrorMessage: Cashier invalidFormatNumberCardErrorMessage.
+
+	! !
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 13:07:09'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 13:07:09'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 13:07:10'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 13:07:10'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:07:10'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 13:07:10'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 13:07:10'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:07:10'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:07:42' prior: 50629180!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+	
+	self setCheckoutWithCard: expiredCard throwsErrorMessage: Cashier expiredCardErrorMessage.
+
+	! !
+!CheckoutTest methodsFor: 'tests - private' stamp: 'IC&VW 6/11/2023 13:08:19'!
+checkoutWithCard: aCard throwsErrorMessage: anErrorMessage
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: aCard on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: anErrorMessage equals: anError messageText ]! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:08:19' prior: 50629581!
+test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit 
+	
+	self checkoutWithCard: cardWithNoCredit throwsErrorMessage: Cashier cardWithNoCreditErrorMessage.! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:08:19' prior: 50629630!
+test04CheckoutThrowsErrorWhenReceivenAnExpiredCard 
+	
+	self checkoutWithCard: expiredCard throwsErrorMessage: Cashier expiredCardErrorMessage.
+
+	! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:08:19' prior: 50629573!
+test07CheckoutThrowsErrorWhenReceivingAStolenCard
+	
+	self checkoutWithCard: stolenCard throwsErrorMessage: Cashier stolenCardErrorMessage.! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'IC&VW 6/11/2023 13:08:19' prior: 50629590!
+test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard 
+	
+	self checkoutWithCard: invalidFormatNumberCard throwsErrorMessage: Cashier invalidFormatNumberCardErrorMessage.
+
+	! !
+
+!methodRemoval: CheckoutTest #setCheckoutWithCard:throwsErrorMessage: stamp: 'IC&VW 6/11/2023 13:08:19'!
+setCheckoutWithCard: aCard throwsErrorMessage: anErrorMessage
+	
+	cart add: TestProvider itemSellByTheStore.
+	self should: [cashier initializeToCheckout: cart charging: aCard on: date withMerchant: merchant.] 
+		raise: Error  
+		withExceptionDo: [:anError | self assert: anErrorMessage equals: anError messageText ]!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 13:08:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 13:08:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 13:08:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:08:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 13:08:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 13:08:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:08:30'!
+PASSED!
+
+!methodRemoval: Card #securityNumber stamp: 'IC&VW 6/11/2023 13:11:40'!
+securityNumber
+	^securityNumber!
+
+!methodRemoval: Card #number stamp: 'IC&VW 6/11/2023 13:12:00'!
+number
+	^number!
+
+!methodRemoval: Card #name stamp: 'IC&VW 6/11/2023 13:12:08'!
+name
+	^name!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:12:15'!
+PASSED!
+
+!methodRemoval: Card #expireMonth stamp: 'IC&VW 6/11/2023 13:12:44'!
+expireMonth
+	^expireMonth!
+
+----SNAPSHOT----(11 June 2023 13:14:47) CuisUniversity-5832.image priorSource: 9493896!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutThrowsErrorWhenReceivingAnEmptyCart stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutCanHandleACartWithOneItem stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCanHandleACartWithMultipleItems stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutThrowsErrorWhenReceivenAnExpiredCard stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutThrowsErrorWhenReceivingAnInvalidFormatNumberCard stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test06CheckoutThrowsErrorWhenReceivingACardWithNoCredit stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+!testRun: #CheckoutTest #test07CheckoutThrowsErrorWhenReceivingAStolenCard stamp: 'IC&VW 6/11/2023 13:14:49'!
+PASSED!
+
+----SNAPSHOT----(11 June 2023 13:15:15) CuisUniversity-5832.image priorSource: 9540379!
