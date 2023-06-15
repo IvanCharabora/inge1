@@ -286,6 +286,49 @@ setUp
 ! !
 
 
+!RestInterfaceTest methodsFor: 'tests private' stamp: 'IC & VW 6/15/2023 16:09:47'!
+addABook: aBook toInterface: anInterface toCartWithId: aCartId raisesErrorMessage: anErrorMessage 
+
+	^ self
+		should: [anInterface add: aBook quantity: 1 toCartIdentifiedAs: aCartId]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError | 
+			self assert: anError messageText = anErrorMessage ]! !
+
+!RestInterfaceTest methodsFor: 'tests private' stamp: 'IC & VW 6/15/2023 16:20:56'!
+checkoutCartWithId: aCartId creditCardNumbered: aCreditCardNumber ownedBy: aCardOwner withInterface: anInterface raisesErrorMessage: anErrorMessage 
+
+	^ self
+		should: [anInterface 
+			checkOutCartIdentifiedAs: aCartId  
+			withCreditCardNumbered: aCreditCardNumber 
+			ownedBy: aCardOwner
+			expiringOn: testObjectsFactory notExpiredMonthOfYear ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = anErrorMessage ]! !
+
+!RestInterfaceTest methodsFor: 'tests private' stamp: 'IC & VW 6/15/2023 15:56:47'!
+createACartFor: aUser authenticatedWith: aUserPassword raisesErrorMessage: errorMessage   
+	| interface |
+	interface := self createDefaultInterface.
+	
+	^ self
+		should: [ interface createCartFor: aUser authenticatedWith: aUserPassword ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError | 
+			self assert: anError messageText = errorMessage ]! !
+
+!RestInterfaceTest methodsFor: 'tests private' stamp: 'IC & VW 6/15/2023 16:06:49'!
+listCartWithId: aCartId withInterface: anInterface raisesErrorMessage: anErrorMessage 
+
+	^ self 
+		should: [anInterface listCartIdentifiedAs: aCartId] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError | 
+			self assert: anError messageText = anErrorMessage ]! !
+
+
 !RestInterfaceTest methodsFor: 'tests' stamp: 'ARM 6/11/2023 14:00:14'!
 test01CanCreateCartWithValidUserAndPassword
 
@@ -297,31 +340,19 @@ test01CanCreateCartWithValidUserAndPassword
 	
 	self assert: (interface listCartIdentifiedAs: cartID) isEmpty! !
 
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:46:35'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 15:40:10'!
 test02CanNotCreateCartWithInvalidUser
 
-	| interface |
+	self createACartFor: self invalidUser 
+		authenticatedWith: self validUserPassword 
+		raisesErrorMessage: RestInterface invalidUserAndOrPasswordErrorDescription! !
 
-	interface := self createDefaultInterface.
-
-	self
-		should: [ interface createCartFor: self invalidUser authenticatedWith: self validUserPassword ]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError | 
-			self assert: anError messageText = RestInterface invalidUserAndOrPasswordErrorDescription ]! !
-
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:46:39'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 15:40:17'!
 test03CanNotCreateCartWithInvalidPassword
 
-	| interface |
-
-	interface := self createDefaultInterface.
-
-	self
-		should: [ interface createCartFor: self validUser authenticatedWith: self invalidPassword ]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError | 
-			self assert: anError messageText = RestInterface invalidUserAndOrPasswordErrorDescription ]! !
+	self createACartFor: self validUser 
+		authenticatedWith: self invalidPassword 
+		raisesErrorMessage: RestInterface invalidUserAndOrPasswordErrorDescription! !
 
 !RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:53:47'!
 test04CanAddItemsToACreatedCart
@@ -337,33 +368,27 @@ test04CanAddItemsToACreatedCart
 	self assert: ((interface listCartIdentifiedAs: cartId) includes: testObjectsFactory itemSellByTheStore)
 		! !
 
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:45:11'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 16:10:43'!
 test05CanNotAddItemToNotCreatedCart
-
-	| interface |
-
-	interface := self createDefaultInterface.
-
-	self
-		should: [interface add: self validBook quantity: 1 toCartIdentifiedAs: self invalidCartId]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError | 
-			self assert: anError messageText = RestInterface invalidCartIdErrorDescription ]
+	
+	self addABook: self validBook 
+		toInterface: self createDefaultInterface
+		toCartWithId: self invalidCartId 
+		raisesErrorMessage: RestInterface invalidCartIdErrorDescription. 
 		! !
 
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:46:12'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 16:11:14'!
 test06CanNotAddItemNotSellByTheStore
 
 	| interface cartId |
 
 	interface := self createDefaultInterface.
-
 	cartId := interface createCartFor: self validUser authenticatedWith: self validUserPassword.
-	self
-		should: [interface add: self invalidBook quantity: 1 toCartIdentifiedAs: cartId ]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError | 
-			self assert: anError messageText = RestInterface invalidItemErrorMessage ]
+	
+	self addABook: self invalidBook 
+		toInterface: interface
+		toCartWithId: cartId 
+		raisesErrorMessage: RestInterface invalidItemErrorMessage. 
 		! !
 
 !RestInterfaceTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/22/2013 00:05'!
@@ -377,18 +402,16 @@ test07ListCartOfAnEmptyCartReturnsAnEmptyBag
 	self assert: (interface listCartIdentifiedAs: cartId) isEmpty 
 	! !
 
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:45:31'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 16:08:17'!
 test08CanNotListCartOfInvalidCartId
 
 	| interface |
 
 	interface := self createDefaultInterface.
 
-	self 
-		should: [interface listCartIdentifiedAs: self invalidCartId] 
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError | 
-			self assert: anError messageText = RestInterface invalidCartIdErrorDescription ]
+	self listCartWithId: self invalidCartId 
+		withInterface: interface 
+		raisesErrorMessage: RestInterface invalidCartIdErrorDescription
 	! !
 
 !RestInterfaceTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/22/2013 00:15'!
@@ -426,26 +449,18 @@ test10CanCheckoutACart
 		
 		! !
 
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:45:33'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 16:17:25'!
 test11CanNotCheckoutANotCreatedCart
 
-	| interface |
-
-	interface := self createDefaultInterface.
-
-	self
-		should: [interface 
-			checkOutCartIdentifiedAs: self invalidCartId  
-			withCreditCardNumbered: '1111222233334444' 
-			ownedBy: 'Juan Perez' 
-			expiringOn: testObjectsFactory notExpiredMonthOfYear ]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError |
-			self assert: anError messageText = RestInterface invalidCartIdErrorDescription ]
+	self checkoutCartWithId: self invalidCartId 
+		creditCardNumbered: '1111222233334444' 
+		ownedBy: 'Juan Perez' 
+		withInterface: self createDefaultInterface 
+		raisesErrorMessage: RestInterface invalidCartIdErrorDescription
 		
 		! !
 
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:43:49'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 16:20:55'!
 test12CanNotCheckoutAnEmptyCart
 
 	| interface cartId |
@@ -453,49 +468,48 @@ test12CanNotCheckoutAnEmptyCart
 	interface := self createDefaultInterface.
 
 	cartId := interface createCartFor: self validUser authenticatedWith: self validUserPassword.
-	self
-		should: [interface 
-			checkOutCartIdentifiedAs: cartId 
-			withCreditCardNumbered: '1111222233334444' 
-			ownedBy: 'Juan Perez' 
-			expiringOn: testObjectsFactory notExpiredMonthOfYear ]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError |
-			self assert: anError messageText = RestInterface cartCanNotBeEmptyErrorMessage ]
+	
+	self checkoutCartWithId: cartId 
+		creditCardNumbered: '1111222233334444' 
+		ownedBy: 'Juan Perez' 
+		withInterface: interface 
+		raisesErrorMessage: RestInterface cartCanNotBeEmptyErrorMessage
+		
+		
+	
 		
 		! !
 
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:33:27'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 16:07:49'!
 test13CannotListCartIfIsExpired
 
 	| interface cartId |
 	interface := self createDefaultInterface.
-
+	cartId := interface createCartFor: self validUser authenticatedWith: self validUserPassword.
 	self minutesForward: 30.
 
-	cartId := interface createCartFor: self validUser authenticatedWith: self validUserPassword.
-	self should: [interface listCartIdentifiedAs: cartId] 
-		 raise: Error
-		 withExceptionDo: [:anError | self assert: RestInterface cartExpiredErrorMessage equals: anError messageText ]
+	self listCartWithId: cartId
+		withInterface: interface 
+		raisesErrorMessage: RestInterface cartExpiredErrorMessage
 		
 		! !
 
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:33:43'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 16:11:37'!
 test14CannotAddToCartIfIsExpired
 
 	| interface cartId |
 	interface := self createDefaultInterface.
 	cartId := interface createCartFor: self validUser authenticatedWith: self validUserPassword.
-
 	self minutesForward: 30.
 
-	self should: [interface add: self validBook quantity: 1 toCartIdentifiedAs: cartId] 
-		 raise: Error
-		 withExceptionDo: [:anError | self assert: RestInterface cartExpiredErrorMessage equals: anError messageText ]
+	self addABook: self validBook 
+		toInterface: interface
+		toCartWithId: cartId 
+		raisesErrorMessage: RestInterface cartExpiredErrorMessage. 
 		
 		! !
 
-!RestInterfaceTest methodsFor: 'tests' stamp: 'ic&vw 6/12/2023 21:33:34'!
+!RestInterfaceTest methodsFor: 'tests' stamp: 'IC & VW 6/15/2023 16:21:41'!
 test15CannotCheckoutToCartIfIsExpired
 
 	| interface cartId |
@@ -504,14 +518,12 @@ test15CannotCheckoutToCartIfIsExpired
 	interface add: self validBook quantity: 1 toCartIdentifiedAs: cartId.
 
 	self minutesForward: 30.
-
-	self should: [interface 
-			checkOutCartIdentifiedAs: cartId 
-			withCreditCardNumbered: '1111222233334444' 
-			ownedBy: 'Juan Perez' 
-			expiringOn: testObjectsFactory notExpiredMonthOfYear] 
-		 raise: Error
-		 withExceptionDo: [:anError | self assert: RestInterface cartExpiredErrorMessage equals: anError messageText ]
+		
+	self checkoutCartWithId: cartId 
+		creditCardNumbered: '1111222233334444' 
+		ownedBy: 'Juan Perez' 
+		withInterface: interface 
+		raisesErrorMessage: RestInterface cartExpiredErrorMessage
 		
 		! !
 
@@ -880,7 +892,7 @@ checkOutCartIdentifiedAs: aCartId withCreditCardNumbered: aCreditCartNumber owne
 		registeringOn: salesBook.
 	! !
 
-!RestInterface methodsFor: 'operations' stamp: 'ic&vw 6/12/2023 21:47:52'!
+!RestInterface methodsFor: 'operations' stamp: 'IC & VW 6/15/2023 15:49:47'!
 createCartFor: aUser authenticatedWith: aPassword
 
 	| cartId |
@@ -889,7 +901,7 @@ createCartFor: aUser authenticatedWith: aPassword
 	
 	cartId := self generateCartId.
 	carts at: cartId put: (Cart acceptingItemsOf: catalog).
-	lastTimeCartUsed at: cartId put: (DateAndTime now).
+	lastTimeCartUsed at: cartId put: clock actualTime .
 	
 	^cartId ! !
 
