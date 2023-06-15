@@ -4528,3 +4528,95 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(13 June 2023 13:36:19) CuisUniversity-5832.image priorSource: 9573941!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test01CanCreateCartWithValidUserAndPassword stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test02CanNotCreateCartWithInvalidUser stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test03CanNotCreateCartWithInvalidPassword stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test04CanAddItemsToACreatedCart stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test05CanNotAddItemToNotCreatedCart stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test06CanNotAddItemNotSellByTheStore stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test07ListCartOfAnEmptyCartReturnsAnEmptyBag stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test08CanNotListCartOfInvalidCartId stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test09ListCartReturnsTheRightNumberOfItems stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test10CanCheckoutACart stamp: 'ic&vw 6/15/2023 15:16:53'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test11CanNotCheckoutANotCreatedCart stamp: 'ic&vw 6/15/2023 15:16:54'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test12CanNotCheckoutAnEmptyCart stamp: 'ic&vw 6/15/2023 15:16:54'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test13CannotListCartIfIsExpired stamp: 'ic&vw 6/15/2023 15:16:54'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test14CannotAddToCartIfIsExpired stamp: 'ic&vw 6/15/2023 15:16:54'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test15CannotCheckoutToCartIfIsExpired stamp: 'ic&vw 6/15/2023 15:16:54'!
+PASSED!
+
+!testRun: #RestInterfaceTest #test16CanDoAnActionInTheCartIfThereWasAnActionBeforeExpired stamp: 'ic&vw 6/15/2023 15:16:54'!
+PASSED!
+
+----SNAPSHOT----(15 June 2023 15:17:21) CuisUniversity-5832.image priorSource: 9581387!
