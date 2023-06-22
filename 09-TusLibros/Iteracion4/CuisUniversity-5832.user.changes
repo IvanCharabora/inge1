@@ -4554,3 +4554,136 @@ TusLibrosClientTestWindow open.
 !
 
 ----SNAPSHOT----(22 June 2023 14:24:34) CuisUniversity-5832.image priorSource: 10865922!
+
+----SNAPSHOT----(22 June 2023 14:28:51) CuisUniversity-5832.image priorSource: 10866118!
+Can process chunked data.!
+Exception signaled when authentication is required.!
+WebClient provides a simple yet complete HTTP client implementation.
+
+To retrieve the contents of a web page:
+(WebClient httpGet: 'http://www.cuis-smalltalk.org/') content
+
+INTRO
+-------
+
+The simplest form to use WebClient is by one of its convenience APIs:
+
+	WebClient httpGet: 'http://www.squeak.org/'.
+	WebClient httpPost: 'http://www.squeak.org/' content:'Hello Squeak' type: 'text/plain'.
+
+For more elaborate use of headers and some other options in the request, a client can utilize modified variants:
+
+	WebClient new httpGet: 'http://www.squeak.org/' do: [ :req|
+		"Set an if-modified-since header"
+		req headerAt: 'If-Modified-Since' put: 'Sat, 29 Oct 1994 19:43:31 GMT'.
+		"Add several accept headers"
+		req addHeader: 'Accept' value: 'text/plain'.
+		req addHeader: 'Accept' value: 'application/x-foo-bar'.
+		req addHeader: 'Accept' value: 'image/jpg'.
+	].
+
+The set of utility methods is limited to a few useful ones but it is easy to do the setup on your own:
+
+	| url client request data |
+	data := 'Hello Squeak'.								"POST data"
+	url := 'http://www.squeak.org/'.						"POST url"
+	client := WebClient new initializeFromUrl: url. 		"sets host etc"
+	request := client requestWithUrl: url. 				"sets path etc"
+	request method: 'POST'.							"sets method"
+	request headerAt: 'Content-Length' put: data size.
+	request headerAt: 'Content-Type' put: 'text/plain'.
+	"... any other headers required ..."
+	^client sendRequest: request 
+		content: data readStream
+		size: data size.
+
+The utility methods like httpGet: etc. are similarly simple requests.
+
+RESPONSES
+--------------
+
+The WebClient request methods return a WebResponse that the client can process:
+
+	| resp |
+	resp := WebClient httpGet: 'http://www.squeak.org/'.
+	resp isSuccess ifFalse: [^self error: resp status].
+	"Process the content from the response"
+	^resp content
+
+In addition, content can be streamed from the response so that it does not need to be downloaded all at once:
+
+	| client resp |
+	client := WebClient new.
+	[
+		resp := client httpGet: 'http://www.squeak.org/'.
+		resp isSuccess ifFalse:[^self error: resp status].
+		"Stream the content from the response"
+		'page.html' asFileEntry forceWriteStreamDo: [ :file |
+			resp streamTo: file 
+				size: resp contentLength
+				progress: [ :total :amount ]].
+	] ensure: [ client close].
+
+The progress block in the above can be omitted but has been included in this example to illustrate its usage. The block takes a total length (which can be nil if the length is not known) and the amount that has been loaded.
+
+MULTIPLE REQUESTS
+-------------------------
+
+WebClient can and should be used for multiple requests to the same host. This will ensure persistent connections as well as having cookies processed properly within one session:
+
+	| client resp |
+	client := WebClient new.
+	resp := client httpGet: 'http://www.squeak.org/'.
+	resp := client httpGet: 'http://www.squeak.org/Download'.
+	resp := client httpGet: 'http://www.squeak.org/Features'.
+	client close.
+
+One important issue to keep in mind is that because WebClient is optimized for persistent connections, you need to close it when you are done. That is not true for WebClient's class-side convenience APIs, which prefetch the response and close the socket. Generally speaking, whenever you say 'WebClient new' you need to close the client when you're done (however, you can do so by sending #close to a response you've received). For example:
+
+	"Convenience API. Don't need to close, but prefetches result."
+	WebClient httpGet: 'http://www.squeak.org'.
+
+	| client resp |
+	"Regular use. Create WebClient, return after header is read ..."
+	client := WebClient new.
+	[response := client httpGet: 'http://www.squeak.org/'.
+	"... then fetch (or stream) the content ..."
+	response content.
+	] ensure:[
+		"... and close the client when done."
+		client close.
+	].
+
+AUTHENTICATION
+---------------------
+
+WebClient supports basic and digest authentication by default. WebClient delegates the retrieval of username/password to WebUtils which prompts the user for credentials. 
+
+WebClient can either be supplied with specific credentials to be used or custom credentials handlers, for example:
+
+	| client |
+	client := WebClient new.
+	client username: 'squeak'.
+	client password: 'squeak'.
+	client httpGet: 'http://www.squeak.org/protected'.
+
+Proxy authentication works the same way as authentication but operates on a different authentication context to allow different sets of credentials to work.
+!
+WebCookie represents an http cookie for use by WebClient.!
+A common base class for WebRequest and WebResponse.!
+Represents an HTTP request for WebClient/WebServer.!
+Represents an HTTP response for WebClient/WebServer.!
+WebServer provides a simple yet complete HTTP server implementation.
+
+Example:
+(WebServer new listenOn: 8080) addService: '/hello' action: [ :req | req send200Response: 'Hello World!!']!
+A wrapper object for the WebSocket API.!
+A wrapper object for the WebSocket API.!
+A wrapper object for the WebSocket API.!
+WebUtils contains a number of utility methods used by WebClient/WebServer.!
+A variant on SocketStream supporting SSL/TLS encryption via SqueakSSL.
+!
+SqueakSSL provides an interface to the platforms SSL/TLS facilities.
+!
+
+----SNAPSHOT----(22 June 2023 14:29:27) CuisUniversity-5832.image priorSource: 10866208!
