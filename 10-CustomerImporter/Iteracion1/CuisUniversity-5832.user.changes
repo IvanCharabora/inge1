@@ -1,0 +1,2776 @@
+
+
+----QUIT----(30 May 2023 00:05:32) CuisUniversity-5832.image priorSource: 4928100!
+
+----STARTUP---- (30 May 2023 00:05:33) as /Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/CuisUniversity-5832.image!
+
+
+----QUIT----(30 May 2023 00:05:33) CuisUniversity-5832.image priorSource: 9366537!
+
+----STARTUP---- (30 May 2023 12:47:32) as C:\Users\Ivo\Desktop\uba\inge1\cuises\_imagen nueva\windows64\CuisUniversity-5832.image!
+
+
+----SNAPSHOT----(30 May 2023 12:47:59) CuisUniversity-5832.image priorSource: 9366758!
+
+----STARTUP---- (22 June 2023 17:15:29) as C:\Users\Ivo\Desktop\uba\inge1\cuises\clase22-06\CuisUniversity-5832.image!
+
+
+----End fileIn of C:\Users\Ivo\Desktop\uba\inge1\cuises\clase22-06\CustomerImporter.st----!
+
+----SNAPSHOT----(22 June 2023 19:58:09) CuisUniversity-5832.image priorSource: 9366975!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 19:58:14'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 19:58:18'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 19:58:23'!
+PASSED!
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624423!
+streetNumber: aStreetNumber
+
+	streetNumber := aStreetNumber ! !
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624405!
+province
+
+	^province! !
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624415!
+streetName: aStreetName
+
+	streetName := aStreetName ! !
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624434!
+zipCode
+
+	^zipCode! !
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624437!
+zipCode: aZipCode
+
+	zipCode := aZipCode! !
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624427!
+town
+
+	^town! !
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624408!
+province: aProvince
+
+	province := aProvince
+	! !
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624430!
+town: aTown
+
+	town := aTown! !
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624419!
+streetNumber
+
+	^streetNumber ! !
+!Address methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624412!
+streetName
+
+	^streetName ! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624498 overrides: 16920235!
+initialize
+
+	super initialize.
+	addresses := OrderedCollection new.! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624478!
+identificationNumber
+
+	^identificationNumber ! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624492!
+identificationType: anIdentificationType
+
+	identificationType := anIdentificationType! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624457!
+addAddress: anAddress
+
+	addresses add: anAddress ! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624482!
+identificationNumber: anIdentificationNumber
+
+	identificationNumber := anIdentificationNumber! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624471!
+lastName
+
+	^lastName ! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624474!
+lastName: aLastName
+
+	lastName := aLastName
+! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624467!
+firstName: aName
+
+	firstName := aName! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624464!
+firstName
+
+	^firstName ! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624488!
+identificationType
+
+	^identificationType ! !
+!Customer methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624461!
+addresses
+
+	^ addresses! !
+!Customer class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624511!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream session newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	session beginTransaction.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth ].
+
+		line := inputStream nextLine. ].
+
+	session commit.
+	session close.
+
+	inputStream close.
+	! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624591!
+objectsOfType: aType
+
+	^ tables at: aType ifAbsent: [ #() ]! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624596!
+persistAddressesOf: anObjectWithAddresses
+
+	anObjectWithAddresses addresses do: [ :anAddress | self persist: anAddress ]
+	! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624624!
+select: aCondition ofType: aType
+
+	self delay.
+	^(self objectsOfType: aType) select: aCondition ! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624613!
+persist: anObject
+
+	| table |
+
+	self delay.
+	table := tables at: anObject class ifAbsentPut: [ Set new ].
+
+	self defineIdOf: anObject.
+	table add: anObject.
+
+	(anObject isKindOf: Customer) ifTrue: [ self persistAddressesOf: anObject ].! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624630!
+selectAllOfType: aType
+
+	self delay.
+	^(self objectsOfType: aType) copy ! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624576!
+close
+
+	! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624580!
+defineIdOf: anObject
+
+	anObject instVarNamed: 'id' put: (self newIdFor: anObject).! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624609!
+newIdFor: anObject
+
+	id := id + 1.
+	^id! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624570!
+commit
+
+	(tables at: Customer ifAbsent: [#()]) do: [ :aCustomer | self persistAddressesOf: aCustomer ]
+	! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624603!
+initializeFor: aConfiguration
+
+	configuration := aConfiguration.
+	tables := Dictionary new.
+	id := 0.! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624586!
+delay
+
+	(Delay forMilliseconds: 100) wait! !
+!DataBaseSession methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624566!
+beginTransaction
+
+	! !
+!DataBaseSession class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624644!
+for: aConfiguration
+
+	^self new initializeFor: aConfiguration! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:03:37' prior: 50624387!
+test01Import
+
+	Customer importCustomers ! !
+!Customer methodsFor: 'importing' stamp: 'vw&ic 6/22/2023 20:21:15'!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream session newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	session beginTransaction.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth ].
+
+		line := inputStream nextLine. ].
+
+	session commit.
+	session close.
+
+	inputStream close.
+	! !
+
+!methodRemoval: Customer class #importCustomers stamp: 'vw&ic 6/22/2023 20:21:15'!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream session newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	session beginTransaction.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth ].
+
+		line := inputStream nextLine. ].
+
+	session commit.
+	session close.
+
+	inputStream close.
+	!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:21:34' prior: 50624887!
+test01Import
+
+	Customer new importCustomers ! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:22:21'!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream session newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	session beginTransaction.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth ].
+
+		line := inputStream nextLine. ].
+
+	session commit.
+	session close.
+
+	inputStream close.
+	! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:22:33' prior: 50624971!
+test01Import
+
+	self importCustomers ! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:22:39'!
+PASSED!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:29:32' prior: 50624976!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	session beginTransaction.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth ].
+
+		line := inputStream nextLine. ].
+
+	session commit.
+	session close.
+
+	inputStream close.
+	! !
+
+!classDefinition: #ImportTest category: 'CustomerImporter' stamp: 'vw&ic 6/22/2023 20:29:32'!
+TestCase subclass: #ImportTest
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:32:26' overrides: 16961394!
+setUp
+
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	session beginTransaction! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:32:26' prior: 50625024!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+	self setUp.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth ].
+
+		line := inputStream nextLine. ].
+
+	session commit.
+	session close.
+
+	inputStream close.
+	! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:33:27' prior: 50625079!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth ].
+
+		line := inputStream nextLine. ].
+
+	session commit.
+	session close.
+
+	inputStream close.
+	! !
+
+----SNAPSHOT----(22 June 2023 20:33:30) CuisUniversity-5832.image priorSource: 9376031!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:33:36'!
+PASSED!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:34:15' overrides: 16961402!
+tearDown
+
+	session commit.
+	session close! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:34:15' prior: 50625117!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth ].
+
+		line := inputStream nextLine. ].
+
+	self tearDown.
+
+	inputStream close.
+	! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:34:30' prior: 50625165!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth ].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:34:32'!
+PASSED!
+
+----SNAPSHOT----(22 June 2023 20:39:03) CuisUniversity-5832.image priorSource: 9392092!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:41:38' prior: 50625017!
+test01Import
+
+	self importCustomers 
+	
+	
+	"cuantos customers se importaron"! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:42:01' prior: 50625244!
+test01Import
+
+	self importCustomers 
+	
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:42:44' prior: 50625250!
+test01Import
+
+	self importCustomers.
+	
+	session selectAllOfType: Customer.
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+session selectAllOfType: Customer.!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:44:22' prior: 50625258!
+test01Import
+
+	self importCustomers.
+	
+	self assert: 2 equals: (session selectAllOfType: Customer).
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:44:30'!
+FAILURE!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:44:39' prior: 50625268!
+test01Import
+
+	self importCustomers.
+	
+	self assert: 2 equals: (session selectAllOfType: Customer) size.
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:44:40'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:44:40'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:44:41'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:44:41'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:45:35'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:45:39'!
+PASSED!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:45:54' prior: 50625280!
+test01Import
+
+	self importCustomers.
+	
+	self assert: 2 equals: (session selectAllOfType: Customer) size.
+	self assert: 2 equals: (session selectAllOfType: Address) size.
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/22/2023 20:45:56' prior: 50625305!
+test01Import
+
+	self importCustomers.
+	
+	self assert: 2 equals: (session selectAllOfType: Customer) size.
+	self assert: 4 equals: (session selectAllOfType: Address) size.
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/22/2023 20:45:57'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 13:24:07'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 13:24:08'!
+FAILURE!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:25:08' prior: 50625202!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData fourth .
+			session persist: newAddress].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 13:25:10'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 13:25:11'!
+FAILURE!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:25:26' prior: 50625317!
+test01Import
+
+	self importCustomers.
+	
+	self assert: 2 equals: (session selectAllOfType: Customer) size.
+	self assert: 3 equals: (session selectAllOfType: Address) size.
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 13:25:28'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 13:25:29'!
+PASSED!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:30:39' prior: 50625378!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	customers := session selectAllOfType: Customer.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: (session selectAllOfType: Address) size.
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 13:30:44'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 13:30:45'!
+PASSED!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:31:06'!
+getCustomers
+
+	^ session selectAllOfType: Customer! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:31:06' prior: 50625395!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	customers := self getCustomers.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: (session selectAllOfType: Address) size.
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:31:22'!
+getAddresses
+
+	^ session selectAllOfType: Address! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:31:23' prior: 50625418!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	customers := self getCustomers.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: (self getAddresses) size.
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+self first!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:34:27' prior: 50625435!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	customers := self getCustomers.
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: (self getAddresses) size.
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:34:37' prior: 50625448!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	customers := self getCustomers.
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:35:10' prior: 50625462!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	customers := self getCustomers.
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:36:52' prior: 50625475!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	customers := self getCustomers.
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	
+
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+|newCustomer customerData|
+customerData := OrderedCollection with: 'Juan' with: 'Perez' with: 'C' with: '23-25666777-9'.
+newCustomer := Customer new.
+newCustomer firstName: customerData second.
+newCustomer lastName: customerData third.
+newCustomer identificationType: customerData fourth.
+newCustomer identificationNumber: customerData fourth.
+self includes: newCustomer!
+
+s2.
+cust!
+
+|newCustomer customerData newAddress addressData|
+addressData := OrderedCollection with: 'A'with: 'Alem' with: '1122' with: 'CABA' with: '1001' with: 'CABA'.
+newAddress := Address new.
+newAddress streetName: addressData second.
+newAddress streetNumber: addressData third asNumber .
+newAddress town: addressData fourth.
+newAddress zipCode: addressData fifth asNumber .
+newAddress province: addressData fourth .
+customerData := OrderedCollection with: 'C' with: 'Juan' with: 'Perez' with: 'C' with: '23-25666777-9' with: addresses.
+newCustomer := Customer new.
+newCustomer firstName: customerData second.
+newCustomer lastName: customerData third.
+newCustomer identificationType: customerData fourth.
+newCustomer identificationNumber: customerData fourth.
+newCustomer addAddress: newAddress.
+self = newCustomer.!
+
+|newCustomer customerData newAddress addressData|
+addressData := OrderedCollection with: 'A'with: 'Alem' with: '1122' with: 'CABA' with: '1001' with: 'CABA'.
+newAddress := Address new.
+newAddress streetName: addressData second.
+newAddress streetNumber: addressData third asNumber .
+newAddress town: addressData fourth.
+newAddress zipCode: addressData fifth asNumber .
+newAddress province: addressData fourth .
+customerData := OrderedCollection with: 'C' with: 'Juan' with: 'Perez' with: 'C' with: '23-25666777-9' with: addresses.
+newCustomer := Customer new.
+newCustomer firstName: customerData second.
+newCustomer lastName: customerData third.
+newCustomer identificationType: customerData fourth.
+newCustomer identificationNumber: customerData fourth.
+newCustomer addAddress: newAddress.
+self = newCustomer.!
+
+self keyAt: 1!
+
+self keyAt: 4!
+
+self keyAt: 3!
+
+self keyAt: 4!
+
+self select: [:address | address streetName = 'Alem']!
+
+self select: [:address | address streetName = 'Alem']!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:55:07' prior: 50625488!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	customers := self getCustomers.
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	self assertAllAddressesAreCreated.
+
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 13:55:10'!
+ERROR!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:55:16'!
+assertAllAddressesAreCreated
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:56:36'!
+assertAllAddressesAreCreated: addressesExpected
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:56:36' prior: 50625570!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	customers := self getCustomers.
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	self assertAllAddressesAreCreated: OrderedCollection new.
+
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+!methodRemoval: ImportTest #assertAllAddressesAreCreated stamp: 'vw&ic 6/25/2023 13:56:36'!
+assertAllAddressesAreCreated
+	self shouldBeImplemented.!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:57:41' prior: 50625597!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la bdd de mas"
+	customers := self getCustomers. 
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	self assertAllAddressesAreCreated: OrderedCollection new.
+
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+----SNAPSHOT----(25 June 2023 13:58:11) CuisUniversity-5832.image priorSource: 9394858!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:58:57'!
+assertAllAddressesAreCreated: addressesExpected andExpectedIs: addressesInDb 
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:58:57' prior: 50625617!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la bdd de mas"
+	customers := self getCustomers. 
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	self assertAllAddressesAreCreated: OrderedCollection new andExpectedIs: OrderedCollection new.
+
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+
+!methodRemoval: ImportTest #assertAllAddressesAreCreated: stamp: 'vw&ic 6/25/2023 13:58:57'!
+assertAllAddressesAreCreated: addressesExpected
+	self shouldBeImplemented.!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:59:10' prior: 50625637!
+assertAllAddressesAreCreated: addressesInDb andExpectedIs: addressesExpected
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 13:59:26' prior: 50625644!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la bdd de mas"
+	customers := self getCustomers. 
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	self assertAllAddressesAreCreated: addresses andExpectedIs: OrderedCollection new.
+
+	
+	"cuantos customers se importaron""pepe sanchez se importo bien""la direccion se importo bien"! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 14:00:06' prior: 50625675!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la bdd de mas"
+	customers := self getCustomers. 
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	self assertAllAddressesAreCreated: addresses andExpectedIs: self getExpectedAddresses.
+
+	
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:00:10'!
+ERROR!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 14:00:13'!
+getExpectedAddresses
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 14:00:37' prior: 50625710!
+getExpectedAddresses
+	! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:08:18' prior: 50625715!
+getExpectedAddresses
+
+	^OrderedCollection 
+	with: (self createExpectedAddress: 'San Martin' withNumber: '3322' number: '3322' town: 'Olivos' zipCode: '1636' province: 'BsAs').
+			
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:08:20'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:08:21'!
+ERROR!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:08:27'!
+createExpectedAddress: aRenameMe1 withNumber: aRenameMe2 number: aRenameMe3 town: aRenameMe4 zipCode: aRenameMe5 province: aRenameMe6 
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:10:26' prior: 50625733!
+createExpectedAddress: aStreetName withNumber: aStreetNumber number: aTo town: aTown zipCode: aZipCodeNumber province: aProvince 
+	|newAddress|	
+	newAddress := Address new.
+	newAddress streetName: aStreetName.
+	newAddress streetNumber: aStreetNumber.
+	newAddress town: aTown.
+	newAddress zipCode: aZipCodeNumber.
+	newAddress province: aProvince.
+	
+	^newAddress ! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:10:42'!
+createExpectedAddress: aStreetName withNumber: aStreetNumber town: aTown zipCode: aZipCodeNumber province: aProvince 
+	|newAddress|	
+	newAddress := Address new.
+	newAddress streetName: aStreetName.
+	newAddress streetNumber: aStreetNumber.
+	newAddress town: aTown.
+	newAddress zipCode: aZipCodeNumber.
+	newAddress province: aProvince.
+	
+	^newAddress ! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 14:10:42' prior: 50625719!
+getExpectedAddresses
+
+	^OrderedCollection 
+	with: (self createExpectedAddress: 'San Martin' withNumber: '3322' town: 'Olivos' zipCode: '1636' province: 'BsAs').
+			
+! !
+
+!methodRemoval: ImportTest #createExpectedAddress:withNumber:number:town:zipCode:province: stamp: 'vw&ic 6/25/2023 14:10:42'!
+createExpectedAddress: aStreetName withNumber: aStreetNumber number: aTo town: aTown zipCode: aZipCodeNumber province: aProvince 
+	|newAddress|	
+	newAddress := Address new.
+	newAddress streetName: aStreetName.
+	newAddress streetNumber: aStreetNumber.
+	newAddress town: aTown.
+	newAddress zipCode: aZipCodeNumber.
+	newAddress province: aProvince.
+	
+	^newAddress !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:12:02' prior: 50625771!
+getExpectedAddresses
+
+	^OrderedCollection 
+	with: (self createExpectedAddress: 'San Martin' withNumber: 3322 town: 'Olivos' zipCode: 1636 province: 'BsAs')
+	with: (self createExpectedAddress: 'Maipu' withNumber: 888 town: 'Florida' zipCode: 1122 province: 'Buenos Aires')
+	with: (self createExpectedAddress: 'Alem' withNumber: 1122 town: 'CABA' zipCode: 1001 province: 'CABA')		
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:12:30'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:12:31'!
+ERROR!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 14:14:01' prior: 50625668!
+assertAllAddressesAreCreated: addressesInDb andExpectedIs: addressesExpected
+	
+	addressesExpected do: [:anAddressExpected | self assertIfAddress: anAddressExpected isIn: addressesInDb]! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:14:23'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:14:24'!
+ERROR!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:14:27'!
+assertIfAddress: anAddressExpected isIn: addressesInDb 
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:16:22' prior: 50625829!
+assertIfAddress: anAddressExpected isIn: addressesInDb 
+	
+	self assert: ((addressesInDb count: [:anAddressInDb | self compareAddress: anAddressInDb with: anAddressExpected]) > 0)! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:16:24'!
+ERROR!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:16:28'!
+compareAddress: anAddressInDb with: anAddressExpected 
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:18:35' prior: 50625846!
+compareAddress: anAddressInDb with: anAddressExpected 
+	
+	^ (anAddressInDb streetName = anAddressExpected streetName) &
+	  (anAddressInDb streetNumber = anAddressExpected streetNumber) &
+	  (anAddressInDb town = anAddressExpected town) &
+	  (anAddressInDb zipCode = anAddressExpected zipCode) & 
+	  (anAddressInDb province = anAddressExpected province)! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:18:36'!
+FAILURE!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 14:19:24' prior: 50625336!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fourth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.
+			session persist: newAddress].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 14:19:29'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/25/2023 14:20:12' prior: 50625693!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la bdd de mas"
+	customers := self getCustomers. 
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	self assertAllAddressesAreCreated: addresses andExpectedIs: self getExpectedAddresses.
+	self assertAllCustomersAreCreated: customers andExpectedIs: self getExpectedCustomers.
+
+	
+! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:23:14'!
+createExpectedCustomer: aCustomerName withLastName: aCustomerLastName identificationType: anIdType identificationNumber: anIdNumber
+	|newCustomer|
+	newCustomer := Customer new.
+	newCustomer firstName: aCustomerName.
+	newCustomer lastName: aCustomerLastName.
+	newCustomer identificationType: anIdType.
+	newCustomer identificationNumber: anIdNumber.
+	^newCustomer ! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:24:25'!
+getExpectedCustomers
+
+	^OrderedCollection 
+	with: (self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444')
+	with: (self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9')
+	
+! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:25:03'!
+compareCustomer: aCustomerInDb with: anExpectedCustomer 
+	
+	^ (aCustomerInDb streetName = anExpectedCustomer streetName) &
+	  (aCustomerInDb streetNumber = anExpectedCustomer streetNumber) &
+	  (aCustomerInDb town = anExpectedCustomer town) &
+	  (aCustomerInDb zipCode = anExpectedCustomer zipCode) & 
+	  (aCustomerInDb province = anExpectedCustomer province)! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:25:10' prior: 50625852!
+compareAddress: anAddressInDb with: anExpectedAddress 
+	
+	^ (anAddressInDb streetName = anExpectedAddress streetName) &
+	  (anAddressInDb streetNumber = anExpectedAddress streetNumber) &
+	  (anAddressInDb town = anExpectedAddress town) &
+	  (anAddressInDb zipCode = anExpectedAddress zipCode) & 
+	  (anAddressInDb province = anExpectedAddress province)! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 14:25:51' prior: 50625951!
+compareCustomer: aCustomerInDb with: anExpectedCustomer 
+	
+	^ (aCustomerInDb firstName = anExpectedCustomer firstName) &
+	  (aCustomerInDb lastName = anExpectedCustomer lastName) &
+	  (aCustomerInDb identificationType = anExpectedCustomer identificationType) &
+	  (aCustomerInDb identificationNumber = anExpectedCustomer identificationNumber)
+! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:19:17'!
+assertAllCustomersAreCreated: customersInDb andExpectedIs: customersExpected
+	
+	customersExpected do: [:anAddressExpected | self assertIfCustomer customersExpected isIn: customersInDb]! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:19:25'!
+assertIfCustomer: anAddressExpected isIn: addressesInDb 
+	
+	self assert: ((addressesInDb count: [:anAddressInDb | self compareAddress: anAddressInDb with: anAddressExpected]) > 0)! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:19:39' prior: 50625995!
+assertAllCustomersAreCreated: customersInDb andExpectedIs: customersExpected
+	
+	customersExpected do: [:anAddressExpected | self assertIfCustomer: customersExpected isIn: customersInDb]! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:20:12' prior: 50625815!
+assertAllAddressesAreCreated: addressesInDb andExpectedIs: expectedAddresses
+	
+	expectedAddresses do: [:anAddressExpected | self assertIfAddress: anAddressExpected isIn: addressesInDb]! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:20:23' prior: 50626022!
+assertAllAddressesAreCreated: addressesInDb andExpectedIs: expectedAddresses
+	
+	expectedAddresses do: [:anExpectedAddress | self assertIfAddress: anExpectedAddress isIn: addressesInDb]! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:20:57' prior: 50626013!
+assertAllCustomersAreCreated: customersInDb andExpectedIs: customersExpected
+	
+	customersExpected do: [:anExpectedCustomer | self assertIfCustomer: customersExpected isIn: customersInDb]! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:21:05' prior: 50626040!
+assertAllCustomersAreCreated: customersInDb andExpectedIs: customersExpected
+	
+	customersExpected do: [:anExpectedCustomer | self assertIfCustomer: anExpectedCustomer isIn: customersInDb]! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:21:44' prior: 50625835!
+assertIfAddress: anExpectedAddress isIn: addressesInDb 
+	
+	self assert: ((addressesInDb count: [:anAddressInDb | self compareAddress: anAddressInDb with: anExpectedAddress]) > 0)! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:21:54' prior: 50626004!
+assertIfCustomer: anExpectedCustomer isIn: addressesInDb 
+	
+	self assert: ((addressesInDb count: [:anAddressInDb | self compareAddress: anAddressInDb with: anExpectedCustomer]) > 0)! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:21:59' prior: 50626067!
+assertIfCustomer: anExpectedCustomer isIn: customerInDb 
+	
+	self assert: ((customerInDb count: [:anAddressInDb | self compareAddress: anAddressInDb with: anExpectedCustomer]) > 0)! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 15:23:37' prior: 50626076!
+assertIfCustomer: anExpectedCustomer isIn: customerInDb 
+	
+	self assert: ((customerInDb count: [:aCustomerInDb | self compareCustomer: aCustomerInDb with: anExpectedCustomer]) > 0)! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 15:23:39'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 15:23:40'!
+FAILURE!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:23:55' prior: 50625869!
+importCustomers
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fifth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.
+			session persist: newAddress].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 15:23:58'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/25/2023 15:24:07' prior: 50625908!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la db de mas"
+	customers := self getCustomers. 
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.
+	self assert: 3 equals: addresses size.
+	self assertAllAddressesAreCreated: addresses andExpectedIs: self getExpectedAddresses.
+	self assertAllCustomersAreCreated: customers andExpectedIs: self getExpectedCustomers.
+
+	
+! !
+
+----SNAPSHOT----(25 June 2023 15:24:57) CuisUniversity-5832.image priorSource: 9407449!
+
+----SNAPSHOT----(25 June 2023 15:26:58) CuisUniversity-5832.image priorSource: 9424143!
+!ExtractToMethodObjectForm methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:28:02'!
+shouldAutoHighlight
+	self shouldBeImplemented.! !
+!ExtractToMethodObjectForm methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:28:09' prior: 50626162!
+shouldAutoHighlight
+	^false! !
+
+!classDefinition: #CustomerImportr category: 'CustomerImporter' stamp: 'vw&ic 6/25/2023 15:29:49'!
+Object subclass: #CustomerImportr
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!CustomerImportr class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:29:49'!
+withSession: aSession
+	^self new initializeWithSession: aSession! !
+!CustomerImportr methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:29:49'!
+initializeWithSession: aSession
+	session := aSession.! !
+!CustomerImportr methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:29:49'!
+xxx
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fifth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.
+			session persist: newAddress].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:29:49' prior: 50626099!
+importCustomers
+	(CustomerImportr withSession: session) xxx! !
+
+!classRenamed: #CustomerImportr as: #CustomerImporter stamp: 'vw&ic 6/25/2023 15:30:01'!
+Smalltalk renameClassNamed: #CustomerImportr as: #CustomerImporter!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:30:01' prior: 50626227!
+importCustomers
+	(CustomerImporter withSession: session) xxx! !
+
+----STARTUP---- (25 June 2023 15:30:50) as C:\Users\Ivo\Desktop\uba\inge1\cuises\clase22-06\CuisUniversity-5832.image!
+
+!ExtractToMethodObjectForm methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:31:31'!
+shouldAutoHighlight
+	self shouldBeImplemented.! !
+!ExtractToMethodObjectForm methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:31:36' prior: 50626246!
+shouldAutoHighlight
+	^false! !
+
+!classDefinition: #CustomerImporter category: 'CustomerImporter' stamp: 'vw&ic 6/25/2023 15:32:01'!
+Object subclass: #CustomerImporter
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!CustomerImporter class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:32:01'!
+withSession: aSession
+	^self new initializeWithSession: aSession! !
+!CustomerImporter methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:32:01'!
+initializeWithSession: aSession
+	session := aSession.! !
+!CustomerImporter methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:32:01'!
+import
+
+	"
+	self importCustomers
+	"
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fifth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.
+			session persist: newAddress].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:32:01' prior: 50626099!
+importCustomers
+	(CustomerImporter withSession: session) import! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 15:32:12'!
+PASSED!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'vw&ic 6/25/2023 15:32:33' prior: 50626274!
+import
+
+	| inputStream  newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fifth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.
+			session persist: newAddress].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+
+----SNAPSHOT----(25 June 2023 15:32:45) CuisUniversity-5832.image priorSource: 9424232!
+!CustomerImporter methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:33:22' prior: 50626319!
+import
+
+	|   newCustomer line |
+
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fifth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.
+			session persist: newAddress].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+
+!classDefinition: #CustomerImporter category: 'CustomerImporter' stamp: 'vw&ic 6/25/2023 15:33:22'!
+Object subclass: #CustomerImporter
+	instanceVariableNames: 'session inputStream'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'vw&ic 6/25/2023 15:33:33' prior: 50626358!
+import
+
+	| newCustomer line |
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fifth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.
+			session persist: newAddress].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+!CustomerImporter methodsFor: 'initialization' stamp: 'vw&ic 6/25/2023 15:33:39' prior: 50626269!
+initializeWithSession: aSession
+	session := aSession.
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 15:33:40'!
+PASSED!
+!CustomerImporter methodsFor: 'initialization' stamp: 'vw&ic 6/25/2023 15:33:44' prior: 50626436!
+initializeWithSession: aSession
+
+	session := aSession.
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+! !
+!CustomerImporter methodsFor: 'initialization' stamp: 'vw&ic 6/25/2023 15:34:35'!
+initializeWithSession: aSession andStream: aStream 
+
+	session := aSession.
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+! !
+!CustomerImporter methodsFor: 'initialization' stamp: 'vw&ic 6/25/2023 15:34:42' prior: 50626446!
+initializeWithSession: aSession
+
+	session := aSession.
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+! !
+
+!methodRemoval: CustomerImporter #initializeWithSession: stamp: 'vw&ic 6/25/2023 15:34:47'!
+initializeWithSession: aSession
+
+	session := aSession.
+	inputStream := UniFileStream new open: 'input.txt' forWrite: false.
+!
+!CustomerImporter methodsFor: 'initialization' stamp: 'vw&ic 6/25/2023 15:35:03' prior: 50626453!
+initializeWithSession: aSession andStream: aStream 
+
+	session := aSession.
+	inputStream := aStream.
+! !
+!CustomerImporter class methodsFor: 'instance creation' stamp: 'vw&ic 6/25/2023 15:35:20' prior: 50626264!
+withSession: aSession
+	^self new initializeWithSession: aSession andStream: (UniFileStream new open: 'input.txt' forWrite: false)! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 15:35:21'!
+PASSED!
+
+----SNAPSHOT----(25 June 2023 15:35:27) CuisUniversity-5832.image priorSource: 9430514!
+!CustomerImporter class methodsFor: 'instance creation' stamp: 'vw&ic 6/25/2023 15:35:54'!
+withSession: aSession andStream: aStream 
+	^self new initializeWithSession: aSession andStream: (UniFileStream new open: 'input.txt' forWrite: false)! !
+
+!methodRemoval: CustomerImporter class #withSession: stamp: 'vw&ic 6/25/2023 15:35:54'!
+withSession: aSession
+	^self new initializeWithSession: aSession andStream: (UniFileStream new open: 'input.txt' forWrite: false)!
+!CustomerImporter class methodsFor: 'instance creation' stamp: 'vw&ic 6/25/2023 15:36:00' prior: 50626495!
+withSession: aSession andStream: aStream 
+	^self new initializeWithSession: aSession andStream: aStream! !
+!CustomerImporter class methodsFor: 'instance creation' stamp: 'vw&ic 6/25/2023 15:36:05' prior: 50626510!
+withSession: aSession andStream: aStream 
+	^self new initializeWithSession: aSession andStream: aStream! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 15:36:16' prior: 50626311!
+importCustomers
+	(CustomerImporter withSession: session andStream: (UniFileStream new open: 'input.txt' forWrite: false)) import! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 15:36:18'!
+PASSED!
+
+----SNAPSHOT----(25 June 2023 15:37:10) CuisUniversity-5832.image priorSource: 9434900!
+!ImportTest methodsFor: 'import' stamp: 'vw&ic 6/25/2023 16:09:58'!
+streamToOpenCustomers
+
+	^ UniFileStream new open: 'input.txt' forWrite: false! !
+!ImportTest methodsFor: 'import' stamp: 'vw&ic 6/25/2023 16:09:58' prior: 50626524!
+importCustomers
+	(CustomerImporter withSession: session andStream: (self streamToOpenCustomers)) import! !
+!ImportTest methodsFor: 'import' stamp: 'vw&ic 6/25/2023 16:10:03' prior: 50626542!
+importCustomers
+	(CustomerImporter withSession: session andStream: self streamToOpenCustomers) import! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 16:10:04'!
+PASSED!
+!ImportTest methodsFor: 'streams' stamp: 'vw&ic 6/25/2023 16:12:59'!
+fileStreamToOpenCustomers
+
+	^ UniFileStream new open: 'input.txt' forWrite: false! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 16:12:59' prior: 50626548!
+importCustomers
+	(CustomerImporter withSession: session andStream: self fileStreamToOpenCustomers) import! !
+
+!methodRemoval: ImportTest #streamToOpenCustomers stamp: 'vw&ic 6/25/2023 16:12:59'!
+streamToOpenCustomers
+
+	^ UniFileStream new open: 'input.txt' forWrite: false!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 16:13:23'!
+PASSED!
+
+----SNAPSHOT----(25 June 2023 16:17:09) CuisUniversity-5832.image priorSource: 9436243!
+
+'hola' asStreamResult!
+
+'hola' asStreamResult!
+
+'hola' asStreamResult class!
+
+'hola
+aaa'!
+
+Stream with: 'a'!
+!ImportTest methodsFor: 'streams' stamp: 'vw&ic 6/25/2023 16:25:35'!
+readStreamToOpenCustomers
+
+	^ReadStream on: 'C,Pepe,Sanchez,D,22333444
+A,San Martin,3322,Olivos,1636,BsAs
+A,Maipu,888,Florida,1122,Buenos Aires
+C,Juan,Perez,C,23-25666777-9
+A,Alem,1122,CABA,1001,CABA'! !
+!ImportTest methodsFor: 'streams' stamp: 'vw&ic 6/25/2023 16:27:12' prior: 50626582!
+readStreamToOpenCustomers
+
+	^ReadStream on: 'C,Pepe,Sanchez,D,22333444
+A,San Martin,3322,Olivos,1636,BsAs
+A,Maipu,888,Florida,1122,Buenos Aires
+C,Juan,Perez,C,23-25666777-9
+A,Alem,1122,CABA,1001,CABA'! !
+!ImportTest methodsFor: 'streams' stamp: 'vw&ic 6/25/2023 16:28:21' prior: 50626592!
+readStreamToOpenCustomers
+
+	^ReadStream on: 'C,Pepe,Sanchez,D,22333444
+A,San Martin,3322,Olivos,1636,BsAs
+A,Maipu,888,Florida,1122,Buenos Aires
+C,Juan,Perez,C,23-25666777-9
+A,Alem,1122,CABA,1001,CABA'! !
+!ImportTest methodsFor: 'import' stamp: 'vw&ic 6/25/2023 16:28:34' prior: 50626562!
+importCustomers
+	(CustomerImporter withSession: session andStream: self readStreamToOpenCustomers) import! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 16:28:35'!
+PASSED!
+
+----SNAPSHOT----(25 June 2023 16:31:01) CuisUniversity-5832.image priorSource: 9437601!
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/25/2023 16:31:11' prior: 50626138!
+test01Import
+
+	| customers addresses |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la db de mas"
+	customers := self getCustomers. 
+	addresses := self getAddresses.
+	
+	self assert: 2 equals: customers size.	
+	self assertAllCustomersAreCreated: customers andExpectedIs: self getExpectedCustomers.
+
+	
+! !
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/25/2023 16:31:16' prior: 50626623!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la db de mas"
+	customers := self getCustomers. 
+	
+	self assert: 2 equals: customers size.	
+	self assertAllCustomersAreCreated: customers andExpectedIs: self getExpectedCustomers.
+
+	
+! !
+!CustomerImporter methodsFor: 'evaluating' stamp: 'vw&ic 6/25/2023 16:32:24' prior: 50626402!
+import
+
+	| newCustomer line |
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fifth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.
+			].
+
+		line := inputStream nextLine. ].
+
+	inputStream close.
+	! !
+!CustomerImporter methodsFor: 'evaluating' stamp: 'vw&ic 6/25/2023 16:32:56' prior: 50626650!
+import
+
+	| newCustomer line |
+
+	line := inputStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fifth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.
+			].
+
+		line := inputStream nextLine. ].
+
+	! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 16:33:34'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 16:33:35'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/25/2023 16:34:33'!
+assertNumberOfCustomersImported: customers
+
+	^ self assert: 2 equals: customers size! !
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/25/2023 16:34:34' prior: 50626637!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la db de mas"
+	customers := self getCustomers. 
+	
+	self assertNumberOfCustomersImported: customers.	
+	self assertAllCustomersAreCreated: customers andExpectedIs: self getExpectedCustomers.
+
+	
+! !
+
+----SNAPSHOT----(25 June 2023 16:36:16) CuisUniversity-5832.image priorSource: 9439004!
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/25/2023 16:36:39' prior: 50626719!
+assertNumberOfCustomersImported: customers
+
+	^ self assert: 2 equals: self getCustomers! !
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/25/2023 16:36:46'!
+assertNumberOfCustomersImported
+
+	^ self assert: 2 equals: self getCustomers! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 16:36:46' prior: 50626725!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	"lo hacemos una vez y lo pasamos para no consultar a la db de mas"
+	customers := self getCustomers. 
+	
+	self assertNumberOfCustomersImported.	
+	self assertAllCustomersAreCreated: customers andExpectedIs: self getExpectedCustomers.
+
+	
+! !
+
+!methodRemoval: ImportTest #assertNumberOfCustomersImported: stamp: 'vw&ic 6/25/2023 16:36:46'!
+assertNumberOfCustomersImported: customers
+
+	^ self assert: 2 equals: self getCustomers!
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/25/2023 16:36:58' prior: 50626751!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	self assertNumberOfCustomersImported.	
+	self assertAllCustomersAreCreated: customers andExpectedIs: self getExpectedCustomers.
+
+	
+! !
+
+!methodRemoval: ImportTest #getAddresses stamp: 'vw&ic 6/25/2023 16:37:33'!
+getAddresses
+
+	^ session selectAllOfType: Address!
+!ImportTest methodsFor: 'sessionPetitions' stamp: 'vw&ic 6/25/2023 16:39:49'!
+getCustomerWithIdentificationType: anIdentificationType andIdentificationNumber: anIdentificationNumber
+
+^(session select: [:aCustomer | 
+	aCustomer identificationType = anIdentificationType and: [ aCustomer identificationNumber = anIdentificationNumber ]
+] 
+	ofType: Customer) anyOne! !
+
+!methodRemoval: ImportTest #getExpectedAddresses stamp: 'vw&ic 6/25/2023 16:41:05'!
+getExpectedAddresses
+
+	^OrderedCollection 
+	with: (self createExpectedAddress: 'San Martin' withNumber: 3322 town: 'Olivos' zipCode: 1636 province: 'BsAs')
+	with: (self createExpectedAddress: 'Maipu' withNumber: 888 town: 'Florida' zipCode: 1122 province: 'Buenos Aires')
+	with: (self createExpectedAddress: 'Alem' withNumber: 1122 town: 'CABA' zipCode: 1001 province: 'CABA')		
+!
+
+!methodRemoval: ImportTest #createExpectedAddress:withNumber:town:zipCode:province: stamp: 'vw&ic 6/25/2023 16:41:11'!
+createExpectedAddress: aStreetName withNumber: aStreetNumber town: aTown zipCode: aZipCodeNumber province: aProvince 
+	|newAddress|	
+	newAddress := Address new.
+	newAddress streetName: aStreetName.
+	newAddress streetNumber: aStreetNumber.
+	newAddress town: aTown.
+	newAddress zipCode: aZipCodeNumber.
+	newAddress province: aProvince.
+	
+	^newAddress !
+
+!methodRemoval: ImportTest #assertAllAddressesAreCreated:andExpectedIs: stamp: 'vw&ic 6/25/2023 16:41:25'!
+assertAllAddressesAreCreated: addressesInDb andExpectedIs: expectedAddresses
+	
+	expectedAddresses do: [:anExpectedAddress | self assertIfAddress: anExpectedAddress isIn: addressesInDb]!
+
+!methodRemoval: ImportTest #assertIfAddress:isIn: stamp: 'vw&ic 6/25/2023 16:41:30'!
+assertIfAddress: anExpectedAddress isIn: addressesInDb 
+	
+	self assert: ((addressesInDb count: [:anAddressInDb | self compareAddress: anAddressInDb with: anExpectedAddress]) > 0)!
+
+!methodRemoval: ImportTest #compareAddress:with: stamp: 'vw&ic 6/25/2023 16:41:34'!
+compareAddress: anAddressInDb with: anExpectedAddress 
+	
+	^ (anAddressInDb streetName = anExpectedAddress streetName) &
+	  (anAddressInDb streetNumber = anExpectedAddress streetNumber) &
+	  (anAddressInDb town = anExpectedAddress town) &
+	  (anAddressInDb zipCode = anExpectedAddress zipCode) & 
+	  (anAddressInDb province = anExpectedAddress province)!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 16:41:45'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 16:41:45'!
+FAILURE!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 16:41:59' prior: 50626745!
+assertNumberOfCustomersImported
+
+	^ self assert: 2 equals: self getCustomers size! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 16:42:00'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 16:42:00'!
+ERROR!
+
+----SNAPSHOT----(25 June 2023 16:42:43) CuisUniversity-5832.image priorSource: 9442767!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 16:43:37'!
+expectedCustomers
+
+	^OrderedCollection 
+	with: (self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444')
+	with: (self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9')
+	
+! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 16:43:37' prior: 50626769!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	self assertNumberOfCustomersImported.	
+	self assertAllCustomersAreCreated: customers andExpectedIs: self expectedCustomers.
+
+	
+! !
+
+!methodRemoval: ImportTest #getExpectedCustomers stamp: 'vw&ic 6/25/2023 16:43:37'!
+getExpectedCustomers
+
+	^OrderedCollection 
+	with: (self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444')
+	with: (self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9')
+	
+!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 16:43:49' prior: 50626049!
+assertAllCustomersAreCreated: customersInDb andExpectedIs: customersExpected
+	
+	self expectedCustomers do: [:anExpectedCustomer | self assertIfCustomer: anExpectedCustomer isIn: customersInDb]! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 16:43:57'!
+assertAllCustomersAreCreated: customersInDb 
+	
+	self expectedCustomers do: [:anExpectedCustomer | self assertIfCustomer: anExpectedCustomer isIn: customersInDb]! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 16:43:57' prior: 50626886!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	self assertNumberOfCustomersImported.	
+	self assertAllCustomersAreCreated: customers .
+
+	
+! !
+
+!methodRemoval: ImportTest #assertAllCustomersAreCreated:andExpectedIs: stamp: 'vw&ic 6/25/2023 16:43:57'!
+assertAllCustomersAreCreated: customersInDb andExpectedIs: customersExpected
+	
+	self expectedCustomers do: [:anExpectedCustomer | self assertIfCustomer: anExpectedCustomer isIn: customersInDb]!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 16:54:55'!
+assertIfCustomerIsCreated: anExpectedCustomer isIn: customerInDb 
+	
+	self assert: ((customerInDb count: [:aCustomerInDb | self compareCustomer: aCustomerInDb with: anExpectedCustomer]) > 0)! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 16:54:55' prior: 50626916!
+assertAllCustomersAreCreated: customersInDb 
+	
+	self expectedCustomers do: [:anExpectedCustomer | self assertIfCustomerIsCreated: anExpectedCustomer isIn: customersInDb]! !
+
+!methodRemoval: ImportTest #assertIfCustomer:isIn: stamp: 'vw&ic 6/25/2023 16:54:55'!
+assertIfCustomer: anExpectedCustomer isIn: customerInDb 
+	
+	self assert: ((customerInDb count: [:aCustomerInDb | self compareCustomer: aCustomerInDb with: anExpectedCustomer]) > 0)!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:05:16' prior: 50626942!
+assertIfCustomerIsCreated: anExpectedCustomer isIn: customerInDb 
+	
+	self assert: (
+		self compareCustomer: anExpectedCustomer with: anExpectedCustomer
+	)! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:05:45'!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	self assert: (
+		self compareCustomer: anExpectedCustomer with: anExpectedCustomer
+	)! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 17:05:45' prior: 50626952!
+assertAllCustomersAreCreated: customersInDb 
+	
+	self expectedCustomers do: [:anExpectedCustomer | self assertIfCustomerIsCreated: anExpectedCustomer ]! !
+
+!methodRemoval: ImportTest #assertIfCustomerIsCreated:isIn: stamp: 'vw&ic 6/25/2023 17:05:45'!
+assertIfCustomerIsCreated: anExpectedCustomer isIn: customerInDb 
+	
+	self assert: (
+		self compareCustomer: anExpectedCustomer with: anExpectedCustomer
+	)!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:09:48' prior: 50625981!
+compareCustomer: aCustomer with: anExpectedCustomer 
+	
+	^ (aCustomer firstName = anExpectedCustomer firstName) &
+	  (aCustomer lastName = anExpectedCustomer lastName) &
+	  (aCustomer identificationType = anExpectedCustomer identificationType) &
+	  (aCustomer identificationNumber = anExpectedCustomer identificationNumber)
+! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:11:34' prior: 50627001!
+compareCustomer: aCustomer with: anExpectedCustomer 
+	
+	^ (aCustomer firstName = anExpectedCustomer firstName) &
+	  (aCustomer lastName = anExpectedCustomer lastName) &
+	  (aCustomer identificationType = anExpectedCustomer identificationType) &
+	  (aCustomer identificationNumber = anExpectedCustomer identificationNumber).
+! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:11:36' prior: 50627015!
+compareCustomer: aCustomer with: anExpectedCustomer 
+	
+	^ (aCustomer firstName = anExpectedCustomer firstName) &
+	  (aCustomer lastName = anExpectedCustomer lastName) &
+	  (aCustomer identificationType = anExpectedCustomer identificationType) &
+	  (aCustomer identificationNumber = anExpectedCustomer identificationNumber)
+! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:12:06'!
+assertAllCustomersAreCreated 
+	
+	self expectedCustomers do: [:anExpectedCustomer | self assertIfCustomerIsCreated: anExpectedCustomer ]! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 17:12:06' prior: 50626925!
+test01Import
+
+	| customers |
+	self importCustomers.
+	
+	self assertNumberOfCustomersImported.	
+	self assertAllCustomersAreCreated.
+
+	
+! !
+
+!methodRemoval: ImportTest #assertAllCustomersAreCreated: stamp: 'vw&ic 6/25/2023 17:12:06'!
+assertAllCustomersAreCreated: customersInDb 
+	
+	self expectedCustomers do: [:anExpectedCustomer | self assertIfCustomerIsCreated: anExpectedCustomer ]!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:14:16' prior: 50626977!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	self assert: (
+		self compareCustomer: anExpectedCustomer with: 
+				(self getCustomerWithIdentificationType: anExpectedCustomer 
+		      		identificationType andIdentificationNumber: anExpectedCustomer identificationNumber)
+	)! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:14:35' prior: 50627065!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	self assert: (
+		self compareCustomer: anExpectedCustomer with: 
+				(self getCustomerWithIdentificationType: anExpectedCustomer identificationType 
+					  andIdentificationNumber: anExpectedCustomer identificationNumber)
+	)! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:15:09'!
+PASSED!
+
+----SNAPSHOT----(25 June 2023 17:15:14) CuisUniversity-5832.image priorSource: 9447026!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:16:34' prior: 50627077!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	self assert: (self compareCustomer: anExpectedCustomer with: 
+					(self getCustomerWithIdentificationType: anExpectedCustomer identificationType 
+					 andIdentificationNumber: anExpectedCustomer identificationNumber)
+	)! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:16:58' prior: 50627094!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	self assert: (self compareCustomer: anExpectedCustomer with: 
+					(self getCustomerWithIdentificationType: anExpectedCustomer identificationType 
+					 andIdentificationNumber: anExpectedCustomer identificationNumber)
+	).
+	
+	self assert: true.! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:17:33' prior: 50627106!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	| customerInSession |
+	customerInSession := self getCustomerWithIdentificationType: anExpectedCustomer identificationType 
+					 andIdentificationNumber: anExpectedCustomer identificationNumber.
+					
+	self assert: (self compareCustomer: anExpectedCustomer with: customerInSession).
+	
+	self assert: true.! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:17:43' prior: 50627119!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	| customerInSession |
+	customerInSession := self getCustomerWithIdentificationType: anExpectedCustomer identificationType 
+					 		  andIdentificationNumber: anExpectedCustomer identificationNumber.
+					
+	self assert: (self compareCustomer: anExpectedCustomer with: customerInSession).
+	
+	self assert: true.! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:26:05'!
+createPepeCustomer
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444'! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:26:05' prior: 50626873!
+expectedCustomers
+
+	^OrderedCollection 
+	with: (self createPepeCustomer)
+	with: (self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9')
+	
+! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:26:17' prior: 50627155!
+expectedCustomers
+
+	^OrderedCollection 
+	with: (self createPepeCustomer) with: (self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9')
+	
+! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:26:22'!
+createJuanCustomer
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9'! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:26:22' prior: 50627165!
+expectedCustomers
+
+	^OrderedCollection 
+	with: (self createPepeCustomer) with: (self createJuanCustomer)
+	
+! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:26:32' prior: 50627182!
+expectedCustomers
+
+	^OrderedCollection with: self createPepeCustomer with: self createJuanCustomer
+	
+! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:26:46'!
+createJuanPerezCustomer
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9'! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 17:26:46' prior: 50627189!
+expectedCustomers
+
+	^OrderedCollection with: self createPepeCustomer with: self createJuanPerezCustomer
+	
+! !
+
+!methodRemoval: ImportTest #createJuanCustomer stamp: 'vw&ic 6/25/2023 17:26:46'!
+createJuanCustomer
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9'!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:26:56'!
+createPepeSanchezCustomer
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444'! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 17:26:56' prior: 50627203!
+expectedCustomers
+
+	^OrderedCollection with: self createPepeSanchezCustomer with: self createJuanPerezCustomer
+	
+! !
+
+!methodRemoval: ImportTest #createPepeCustomer stamp: 'vw&ic 6/25/2023 17:26:56'!
+createPepeCustomer
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444'!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:27:22'!
+pepeSanchezCustomer
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444'! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 17:27:22' prior: 50627224!
+expectedCustomers
+
+	^OrderedCollection with: self pepeSanchezCustomer with: self createJuanPerezCustomer
+	
+! !
+
+!methodRemoval: ImportTest #createPepeSanchezCustomer stamp: 'vw&ic 6/25/2023 17:27:22'!
+createPepeSanchezCustomer
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444'!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:27:37'!
+customerPepeSanchez
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444'! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 17:27:37' prior: 50627246!
+expectedCustomers
+
+	^OrderedCollection with: self customerPepeSanchez with: self createJuanPerezCustomer
+	
+! !
+
+!methodRemoval: ImportTest #pepeSanchezCustomer stamp: 'vw&ic 6/25/2023 17:27:37'!
+pepeSanchezCustomer
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444'!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:27:59'!
+customerJuanPerez
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9'! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 17:27:59' prior: 50627268!
+expectedCustomers
+
+	^OrderedCollection with: self customerPepeSanchez with: self customerJuanPerez
+	
+! !
+
+!methodRemoval: ImportTest #createJuanPerezCustomer stamp: 'vw&ic 6/25/2023 17:27:59'!
+createJuanPerezCustomer
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9'!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:28:40' prior: 50627281!
+customerJuanPerez
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9'! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:29:22' prior: 50627260!
+customerPepeSanchez
+
+	
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444'! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:30:33'!
+createExpectedCustomer: aCustomerName withLastName: aCustomerLastName identificationType: anIdType identificationNumber: anIdNumber andAddresses: addresses 
+	|newCustomer|
+	newCustomer := Customer new.
+	newCustomer firstName: aCustomerName.
+	newCustomer lastName: aCustomerLastName.
+	newCustomer identificationType: anIdType.
+	newCustomer identificationNumber: anIdNumber.
+	^newCustomer ! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 17:30:33' prior: 50627311!
+customerPepeSanchez
+
+	
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444' andAddresses: OrderedCollection new! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/25/2023 17:30:33' prior: 50627303!
+customerJuanPerez
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9' andAddresses: OrderedCollection new! !
+
+!methodRemoval: ImportTest #createExpectedCustomer:withLastName:identificationType:identificationNumber: stamp: 'vw&ic 6/25/2023 17:30:33'!
+createExpectedCustomer: aCustomerName withLastName: aCustomerLastName identificationType: anIdType identificationNumber: anIdNumber
+	|newCustomer|
+	newCustomer := Customer new.
+	newCustomer firstName: aCustomerName.
+	newCustomer lastName: aCustomerLastName.
+	newCustomer identificationType: anIdType.
+	newCustomer identificationNumber: anIdNumber.
+	^newCustomer !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:30:37' prior: 50627318!
+createExpectedCustomer: aCustomerName withLastName: aCustomerLastName identificationType: anIdType identificationNumber: anIdNumber andAddresses: addresses 
+
+	|newCustomer|
+	newCustomer := Customer new.
+	newCustomer firstName: aCustomerName.
+	newCustomer lastName: aCustomerLastName.
+	newCustomer identificationType: anIdType.
+	newCustomer identificationNumber: anIdNumber.
+	^newCustomer ! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:31:00' prior: 50627368!
+createExpectedCustomer: aCustomerName withLastName: aCustomerLastName identificationType: anIdType identificationNumber: anIdNumber andAddresses: addresses 
+
+	|newCustomer|
+	newCustomer := Customer new.
+	newCustomer firstName: aCustomerName.
+	newCustomer lastName: aCustomerLastName.
+	newCustomer identificationType: anIdType.
+	newCustomer identificationNumber: anIdNumber.
+	addresses do: [:anAddress | newCustomer addAddress: anAddress].
+	^newCustomer ! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:31:10' prior: 50627334!
+customerPepeSanchez
+
+	
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444' 
+		andAddresses: OrderedCollection new! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:31:58' prior: 50627343!
+customerJuanPerez
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9' 
+		andAddresses: OrderedCollection new! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:32:04' prior: 50627402!
+customerPepeSanchez
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444' 
+		andAddresses: OrderedCollection new! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:32:35' prior: 50627411!
+customerJuanPerez
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9' 
+		andAddresses: self addressesForJuanPerez! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:32:48' prior: 50627420!
+customerPepeSanchez
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444' 
+		andAddresses: self addressesForPepeSanchez! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:33:17'!
+addressesForJuanPerez
+
+	! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:33:25' prior: 50627447!
+addressesForJuanPerez
+
+	^OrderedCollection new.! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:33:34'!
+addressesForPepeSanchez
+
+	^OrderedCollection new.! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:35:11' prior: 50627133!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	| customerInSession |
+	customerInSession := self getCustomerWithIdentificationType: anExpectedCustomer identificationType 
+					 		  andIdentificationNumber: anExpectedCustomer identificationNumber.
+					
+	self assert: (self compareCustomer: anExpectedCustomer with: customerInSession).
+	
+! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:35:37' prior: 50627029!
+compareCustomer: aCustomer with: anExpectedCustomer 
+	
+	^ (aCustomer firstName = anExpectedCustomer firstName) &
+	  (aCustomer lastName = anExpectedCustomer lastName) &
+	  (aCustomer identificationType = anExpectedCustomer identificationType) &
+	  (aCustomer identificationNumber = anExpectedCustomer identificationNumber) &
+	  (aCustomer addresses = anExpectedCustomer addresses)
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:35:38'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:35:39'!
+FAILURE!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:38:20' prior: 50627451!
+addressesForJuanPerez
+|address|
+
+	address := Address new.
+	address streetName: 'Alem'.
+	address streetNumber: 1122.
+	address town: 'CABA'.
+	address zipCode: 1001.
+	address province: 'CABA'.
+
+	^OrderedCollection with: address.! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:38:22' prior: 50627494!
+addressesForJuanPerez
+	|address|
+
+	address := Address new.
+	address streetName: 'Alem'.
+	address streetNumber: 1122.
+	address town: 'CABA'.
+	address zipCode: 1001.
+	address province: 'CABA'.
+
+	^OrderedCollection with: address.! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:38:46' prior: 50627455!
+addressesForPepeSanchez
+	|firstAddress secondAddress|
+
+	firstAddress := Address new.
+	firstAddress streetName: 'Alem'.
+	firstAddress streetNumber: 1122.
+	firstAddress town: 'CABA'.
+	firstAddress zipCode: 1001.
+	firstAddress province: 'CABA'.
+
+	^OrderedCollection with: firstAddress with: secondAddress.! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:39:50' prior: 50627516!
+addressesForPepeSanchez
+	|firstAddress secondAddress|
+
+	firstAddress := Address new.
+	firstAddress streetName: 'San Martin'.
+	firstAddress streetNumber: 3322.
+	firstAddress town: 'Olivos'.
+	firstAddress zipCode: 1636.
+	firstAddress province: 'BsAs'.
+	
+	secondAddress := Address new.
+	secondAddress streetName: 'Maipu'.
+	secondAddress streetNumber: 888.
+	secondAddress town: 'Florida'.
+	secondAddress zipCode: 1122.
+	secondAddress province: 'Buenos Aires'.
+
+	^OrderedCollection with: firstAddress with: secondAddress.! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:39:52'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:39:53'!
+FAILURE!
+
+anExpectedCustomer addresses!
+
+anExpectedCustomer addresses = customerInSession addresses!
+
+anExpectedCustomer addresses first = customerInSession addresses first!
+
+anExpectedCustomer addresses first!
+
+customerInSession addresses first!
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:44:15' prior: 50627505!
+addressesForJuanPerez
+	|address|
+
+	address := Address new.
+	address streetName: 'Alem'.
+	address streetNumber: 1122.
+	address town: 'CABA'.
+	address zipCode: 1001.
+	address province: 'CABA'.
+
+	^OrderedCollection with: ''.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:44:34'!
+addressAlem1122
+
+	|address|
+
+	address := Address new.
+	address streetName: 'Alem'.
+	address streetNumber: 1122.
+	address town: 'CABA'.
+	address zipCode: 1001.
+	address province: 'CABA'! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:44:34' prior: 50627561!
+addressesForJuanPerez
+	self addressAlem1122.
+
+	^OrderedCollection with: ''.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:44:45' prior: 50627580!
+addressesForJuanPerez
+
+	^OrderedCollection with: self addressAlem1122.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:45:01' prior: 50627529!
+addressesForPepeSanchez
+	|firstAddress secondAddress|
+
+	firstAddress := Address new.
+	firstAddress streetName: 'San Martin'.
+	firstAddress streetNumber: 3322.
+	firstAddress town: 'Olivos'.
+	firstAddress zipCode: 1636.
+	firstAddress province: 'BsAs'.
+	
+	secondAddress := Address new.
+	secondAddress streetName: 'Maipu'.
+	secondAddress streetNumber: 888.
+	secondAddress town: 'Florida'.
+	secondAddress zipCode: 1122.
+	secondAddress province: 'Buenos Aires'.
+
+	^OrderedCollection with: '' with: ''.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:45:31' prior: 50627592!
+addressesForPepeSanchez
+	| secondAddress firstAddress|
+	
+	firstAddress := Address new.
+	firstAddress streetName: 'San Martin'.
+	firstAddress streetNumber: 3322.
+	firstAddress town: 'Olivos'.
+	firstAddress zipCode: 1636.
+	firstAddress province: 'BsAs'.
+	
+	secondAddress := Address new.
+	secondAddress streetName: 'Maipu'.
+	secondAddress streetNumber: 888.
+	secondAddress town: 'Florida'.
+	secondAddress zipCode: 1122.
+	secondAddress province: 'Buenos Aires'.
+
+	^OrderedCollection with: '' with: ''.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:46:09'!
+addressSanMartin3322
+	| address|
+	
+	address := Address new.
+	address streetName: 'San Martin'.
+	address streetNumber: 3322.
+	address town: 'Olivos'.
+	address zipCode: 1636.
+	address province: 'BsAs'.
+	
+	^address.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:46:21' prior: 50627611!
+addressesForPepeSanchez
+	| secondAddress |
+	
+	secondAddress := Address new.
+	secondAddress streetName: 'Maipu'.
+	secondAddress streetNumber: 888.
+	secondAddress town: 'Florida'.
+	secondAddress zipCode: 1122.
+	secondAddress province: 'Buenos Aires'.
+
+	^OrderedCollection with: '' with: ''.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:46:34' prior: 50627639!
+addressesForPepeSanchez
+	| secondAddress |
+	
+	secondAddress := Address new.
+	secondAddress streetName: 'Maipu'.
+	secondAddress streetNumber: 888.
+	secondAddress town: 'Florida'.
+	secondAddress zipCode: 1122.
+	secondAddress province: 'Buenos Aires'.
+
+	^OrderedCollection with: self addressSanMartin3322 with: ''.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:46:42'!
+addressMaipu888
+
+	| secondAddress |
+	
+	secondAddress := Address new.
+	secondAddress streetName: 'Maipu'.
+	secondAddress streetNumber: 888.
+	secondAddress town: 'Florida'.
+	secondAddress zipCode: 1122.
+	secondAddress province: 'Buenos Aires'! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:46:42' prior: 50627651!
+addressesForPepeSanchez
+	self addressMaipu888.
+
+	^OrderedCollection with: self addressSanMartin3322 with: ''.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:46:51' prior: 50627675!
+addressesForPepeSanchez
+	
+	^OrderedCollection with: self addressSanMartin3322 with: self addressMaipu888.! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:46:57' prior: 50627664!
+addressMaipu888
+
+	| address |
+	
+	address := Address new.
+	address streetName: 'Maipu'.
+	address streetNumber: 888.
+	address town: 'Florida'.
+	address zipCode: 1122.
+	address province: 'Buenos Aires'! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:47:05' prior: 50627571!
+addressAlem1122
+
+	|address|
+
+	address := Address new.
+	address streetName: 'Alem'.
+	address streetNumber: 1122.
+	address town: 'CABA'.
+	address zipCode: 1001.
+	address province: 'CABA'.
+	^address! !
+!ImportTest methodsFor: 'addresses' stamp: 'vw&ic 6/25/2023 17:47:10' prior: 50627689!
+addressMaipu888
+
+	| address |
+	
+	address := Address new.
+	address streetName: 'Maipu'.
+	address streetNumber: 888.
+	address town: 'Florida'.
+	address zipCode: 1122.
+	address province: 'Buenos Aires'.
+	^address! !
+
+!methodRemoval: ImportTest #addressesForJuanPerez stamp: 'vw&ic 6/25/2023 17:47:23'!
+addressesForJuanPerez
+
+	^OrderedCollection with: self addressAlem1122.!
+!ImportTest methodsFor: 'customers' stamp: 'vw&ic 6/25/2023 17:47:23' prior: 50627429!
+customerJuanPerez
+
+	^ self createExpectedCustomer: 'Juan' withLastName: 'Perez' identificationType: 'C' identificationNumber: '23-25666777-9' 
+		andAddresses: (OrderedCollection with: self addressAlem1122).! !
+
+!methodRemoval: ImportTest #addressesForPepeSanchez stamp: 'vw&ic 6/25/2023 17:47:30'!
+addressesForPepeSanchez
+	
+	^OrderedCollection with: self addressSanMartin3322 with: self addressMaipu888.!
+!ImportTest methodsFor: 'customers' stamp: 'vw&ic 6/25/2023 17:47:30' prior: 50627438!
+customerPepeSanchez
+
+	^ self createExpectedCustomer: 'Pepe' withLastName: 'Sanchez' identificationType: 'D' identificationNumber: '22333444' 
+		andAddresses: (OrderedCollection with: self addressSanMartin3322 with: self addressMaipu888).! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:48:35' prior: 50627474!
+compareCustomer: aCustomer with: anExpectedCustomer 
+	
+	^ (aCustomer firstName = anExpectedCustomer firstName) &
+	  (aCustomer lastName = anExpectedCustomer lastName) &
+	  (aCustomer identificationType = anExpectedCustomer identificationType) &
+	  (aCustomer identificationNumber = anExpectedCustomer identificationNumber)
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:48:37'!
+PASSED!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:49:13' prior: 50627460!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	| customerInSession |
+	customerInSession := self getCustomerWithIdentificationType: anExpectedCustomer identificationType 
+					 		  andIdentificationNumber: anExpectedCustomer identificationNumber.
+					
+	self assert: (self compareCustomer: anExpectedCustomer with: customerInSession).
+	self assert: (self compareAddresses: anExpectedCustomer addresses with: customerInSession addresses)
+	
+! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:49:47' prior: 50627766!
+assertIfCustomerIsCreated: anExpectedCustomer  
+	
+	| customerInSession |
+	customerInSession := self getCustomerWithIdentificationType: anExpectedCustomer identificationType 
+					 		  andIdentificationNumber: anExpectedCustomer identificationNumber.
+					
+	self assert: (self compareCustomer: anExpectedCustomer with: customerInSession).
+	self assertAddresses: anExpectedCustomer addresses with: customerInSession addresses
+	
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:49:53'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:49:54'!
+ERROR!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:50:01'!
+assertAddresses: aRenameMe1 with: aRenameMe2 
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:50:39' prior: 50627804!
+assertAddresses: addresses with: addressesExpected 
+	
+	self assert: (addresses size = addressesExpected size)! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:50:40'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:50:46'!
+PASSED!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 17:54:01' prior: 50627810!
+assertAddresses: addresses with: addressesExpected 
+	
+	self assert: addressesExpected size equals: addresses size.
+	
+	addressesExpected do: [:anAddress | self assert: (self address: anAddress isIn: addressesExpected)]
+	! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:57:32'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 17:57:33'!
+ERROR!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 17:57:39'!
+address: anAddress isIn: addressesExpected 
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 18:03:42' prior: 50627837!
+address: anAddressToFind isIn: addresses 
+	
+	^(addresses count: [:anAddress | 
+			anAddress streetName = anAddressToFind streetName &
+			anAddress streetNumber = anAddressToFind streetNumber &
+			anAddress zipCode = anAddressToFind zipCode &
+			anAddress town = anAddressToFind town &
+			anAddress province = anAddressToFind province
+		]) > 0! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:03:50'!
+PASSED!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 18:04:45' prior: 50627843!
+address: anAddressToFind isIn: addresses 
+	
+	^(addresses includes: [:anAddress | 
+			anAddress streetName = anAddressToFind streetName &
+			anAddress streetNumber = anAddressToFind streetNumber &
+			anAddress zipCode = anAddressToFind zipCode &
+			anAddress town = anAddressToFind town &
+			anAddress province = anAddressToFind province
+		])! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:04:46'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:04:47'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:05:56'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:05:56'!
+FAILURE!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 18:06:14' prior: 50627860!
+address: anAddressToFind isIn: addresses 
+	
+	^(addresses count: [:anAddress | 
+			anAddress streetName = anAddressToFind streetName &
+			anAddress streetNumber = anAddressToFind streetNumber &
+			anAddress zipCode = anAddressToFind zipCode &
+			anAddress town = anAddressToFind town &
+			anAddress province = anAddressToFind province
+		]) > 0! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:06:20'!
+PASSED!
+!ImportTest methodsFor: 'import' stamp: 'vw&ic 6/25/2023 18:07:05' prior: 50626611!
+importCustomers
+	(CustomerImporter withSession: session andStream: self fileStreamToOpenCustomers) import! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:07:06'!
+PASSED!
+!ImportTest methodsFor: 'import' stamp: 'vw&ic 6/25/2023 18:07:16' prior: 50627900!
+importCustomers
+	(CustomerImporter withSession: session andStream: self readStreamToOpenCustomers) import! !
+
+!methodRemoval: ImportTest #getCustomers stamp: 'vw&ic 6/25/2023 18:07:52'!
+getCustomers
+
+	^ session selectAllOfType: Customer!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 18:07:52' prior: 50626860!
+assertNumberOfCustomersImported
+
+	^ self assert: 2 equals: ( session selectAllOfType: Customer) size! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:08:02'!
+PASSED!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/25/2023 18:08:07' prior: 50627920!
+assertNumberOfCustomersImported
+
+	^ self assert: 2 equals: (session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 18:11:00'!
+address: anAddress IsEqualsTo: anAddressToFind
+
+	^ anAddress streetName = anAddressToFind streetName &
+			anAddress streetNumber = anAddressToFind streetNumber &
+			anAddress zipCode = anAddressToFind zipCode &
+			anAddress town = anAddressToFind town &
+			anAddress province = anAddressToFind province! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 18:11:00' prior: 50627884!
+address: anAddressToFind isIn: addresses 
+	
+	^(addresses count: [:anAddress | 
+			self address: anAddress IsEqualsTo: anAddressToFind
+		]) > 0! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 18:11:08' prior: 50627948!
+address: anAddressToFind isIn: addresses 
+	
+	^(addresses count: [:anAddress | self address: anAddress IsEqualsTo: anAddressToFind]) > 0! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:11:24'!
+PASSED!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 18:11:45' prior: 50627935!
+address: anAddress IsEqualsTo: anAddressToFind
+
+	^ anAddress streetName = anAddressToFind streetName &
+	  anAddress streetNumber = anAddressToFind streetNumber &
+	  anAddress zipCode = anAddressToFind zipCode &
+	  anAddress town = anAddressToFind town &
+	  anAddress province = anAddressToFind province! !
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 18:11:59' prior: 50627956!
+address: anAddressToFind isIn: addresses 
+	
+	^(addresses anySatisfy: [:anAddress | self address: anAddress IsEqualsTo: anAddressToFind])! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:12:00'!
+PASSED!
+!ImportTest methodsFor: 'tests - private' stamp: 'vw&ic 6/25/2023 18:12:05' prior: 50627979!
+address: anAddressToFind isIn: addresses 
+	
+	^addresses anySatisfy: [:anAddress | self address: anAddress IsEqualsTo: anAddressToFind]! !
+
+!testRun: #ImportTest #test01Import stamp: 'vw&ic 6/25/2023 18:12:06'!
+PASSED!
+
+----SNAPSHOT----(25 June 2023 18:12:29) CuisUniversity-5832.image priorSource: 9454086!
+
+----SNAPSHOT----(25 June 2023 18:13:31) CuisUniversity-5832.image priorSource: 9483129!
