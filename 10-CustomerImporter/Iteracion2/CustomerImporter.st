@@ -5,72 +5,87 @@ TestCase subclass: #ImportTest
 	poolDictionaries: ''
 	category: 'CustomerImporter'!
 
-!ImportTest methodsFor: 'tests' stamp: 'IC&VW 6/26/2023 20:51:13'!
+!ImportTest methodsFor: 'tests' stamp: 'ic&vw 6/27/2023 22:30:14'!
 test01ImportFromValidStream
 
 	CustomerImporter valueFrom: self validImportData into: session.
 
-	self assertImportedRightNumberOfCustomers.
+	self assertImportedRightNumberOfCustomers: 2.
 	self assertPepeSanchezWasImportedCorrecty.
 	self assertJuanPerezWasImportedCorrectly ! !
 
-!ImportTest methodsFor: 'tests' stamp: 'IC&VW 6/26/2023 21:52:49'!
+!ImportTest methodsFor: 'tests' stamp: 'ic&vw 6/27/2023 22:32:00'!
 test02ImportFromEmptyStream
 	
 	CustomerImporter valueFrom: self emptyImportData into: session.
-	self assert: self assertNoCustomersWasImported
+	self assertNoCustomersWasImported
 	! !
 
-!ImportTest methodsFor: 'tests' stamp: 'IC&VW 6/26/2023 21:03:31'!
+!ImportTest methodsFor: 'tests' stamp: 'ic&vw 6/27/2023 22:32:23'!
 test03ImportFromStreamWithInvalidPrefix
 	
 	self should: [CustomerImporter valueFrom: self invalidPrefixImportData into: session.] 
 		raise: Error 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CustomerImporter streamWithInvalidPrefixErrorMessage ].
+		withExceptionDo: [:anError | 
+			self assert: anError messageText equals: CustomerImporter streamWithInvalidPrefixErrorMessage.
+			self assertImportedRightNumberOfCustomers: 1].
 	! !
 
-!ImportTest methodsFor: 'tests' stamp: 'IC&VW 6/26/2023 21:06:28'!
+!ImportTest methodsFor: 'tests' stamp: 'ic&vw 6/27/2023 22:45:44'!
 test04ImportFromStreamWithDoubleValidPrefix
 	
 	self should: [CustomerImporter valueFrom: self doubleValidPrefixImportData into: session.] 
 		raise: Error 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CustomerImporter streamWithDoubleValidPrefixErrorMessage ].
+		withExceptionDo: [:anError | 
+			self assert: anError messageText equals: CustomerImporter streamWithInvalidPrefixErrorMessage.
+			self assertImportedRightNumberOfCustomers: 1].
 	! !
 
-!ImportTest methodsFor: 'tests' stamp: 'IC&VW 6/26/2023 21:13:35'!
+!ImportTest methodsFor: 'tests' stamp: 'ic&vw 6/27/2023 22:33:01'!
 test05ImportFromStreamWithAddressForNoCustomer
 	
 	self should: [CustomerImporter valueFrom: self addressForNoCustomerImportData into: session.] 
 		raise: Error 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CustomerImporter streamWithAddressForNoCustomerErrorMessage ].
+		withExceptionDo: [:anError | 
+			self assert: anError messageText equals: CustomerImporter streamWithAddressForNoCustomerErrorMessage.
+			self assertNoCustomersWasImported ].
 	! !
 
-!ImportTest methodsFor: 'tests' stamp: 'IC&VW 6/26/2023 21:26:05'!
+!ImportTest methodsFor: 'tests' stamp: 'ic&vw 6/27/2023 22:33:42'!
 test06ImportFromStreamWithCustomerWithLessFields
 	
 	self should: [CustomerImporter valueFrom: self customerWithLessFieldsImportData into: session.] 
 		raise: Error 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CustomerImporter streamWithCustomerWithInvalidAmountOfFieldsErrorMessage ].
+		withExceptionDo: [:anError | 
+			self assert: anError messageText equals: 
+			CustomerImporter streamWithCustomerWithInvalidAmountOfFieldsErrorMessage.
+			self assertNoCustomersWasImported ].
 	! !
 
-!ImportTest methodsFor: 'tests' stamp: 'IC&VW 6/26/2023 21:26:05'!
+!ImportTest methodsFor: 'tests' stamp: 'ic&vw 6/27/2023 22:34:05'!
 test07ImportFromStreamWithCustomerWithMoreFields
 	
 	self should: [CustomerImporter valueFrom: self customerWithMoreFieldsImportData into: session.] 
 		raise: Error 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CustomerImporter streamWithCustomerWithInvalidAmountOfFieldsErrorMessage ].
+		withExceptionDo: [:anError | 
+			self assert: anError messageText equals: 
+			CustomerImporter streamWithCustomerWithInvalidAmountOfFieldsErrorMessage.
+			self assertNoCustomersWasImported ].
 	! !
 
-!ImportTest methodsFor: 'tests' stamp: 'IC&VW 6/26/2023 21:29:38'!
+!ImportTest methodsFor: 'tests' stamp: 'ic&vw 6/27/2023 22:34:27'!
 test08ImportFromStreamWithAddressWithInvalidAmountOfFields
 	
 	self should: [CustomerImporter valueFrom: self addressWithLessFieldsImportData into: session.] 
 		raise: Error 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CustomerImporter streamWithAddressWithInvalidAmountOfFieldsErrorMessage ].
+		withExceptionDo: [:anError | 
+			self assert: anError messageText equals: 
+			CustomerImporter streamWithAddressWithInvalidAmountOfFieldsErrorMessage.
+			 self assertImportedRightNumberOfCustomers: 1].
 	! !
 
 
-!ImportTest methodsFor: 'assertions' stamp: 'HAW 5/22/2022 18:22:05'!
+!ImportTest methodsFor: 'assertions' stamp: 'ic&vw 6/27/2023 22:26:58'!
 assertAddressOf: importedCustomer at: aStreetName hasNumber: aNumber town: aTown zipCode: aZipCode province: aProvince
 
 	| importedAddress |
@@ -84,7 +99,7 @@ assertAddressOf: importedCustomer at: aStreetName hasNumber: aNumber town: aTown
 
 	! !
 
-!ImportTest methodsFor: 'assertions' stamp: 'HAW 5/22/2022 18:27:57'!
+!ImportTest methodsFor: 'assertions' stamp: 'ic&vw 6/27/2023 22:26:58'!
 assertCustomerWithIdentificationType: anIdType number: anIdNumber hasFirstName: aFirstName lastName: aLastName
 
 	| importedCustomer |
@@ -100,12 +115,12 @@ assertCustomerWithIdentificationType: anIdType number: anIdNumber hasFirstName: 
 
 	! !
 
-!ImportTest methodsFor: 'assertions' stamp: 'HAW 5/22/2022 18:12:18'!
-assertImportedRightNumberOfCustomers
+!ImportTest methodsFor: 'assertions' stamp: 'ic&vw 6/27/2023 22:30:28'!
+assertImportedRightNumberOfCustomers: anAmountOfCustomersExpected
 
-	^ self assert: 2 equals: (session selectAllOfType: Customer) size! !
+	^ self assert: anAmountOfCustomersExpected equals: self numberOfCustomers! !
 
-!ImportTest methodsFor: 'assertions' stamp: 'HAW 5/22/2022 18:28:45'!
+!ImportTest methodsFor: 'assertions' stamp: 'ic&vw 6/27/2023 22:26:58'!
 assertJuanPerezWasImportedCorrectly
 
 	| importedCustomer |
@@ -114,12 +129,12 @@ assertJuanPerezWasImportedCorrectly
 	self assertAddressOf: importedCustomer at: 'Alem' hasNumber: 1122 town: 'CABA' zipCode: 1001 province: 'CABA'
 	! !
 
-!ImportTest methodsFor: 'assertions' stamp: 'IC&VW 6/26/2023 21:52:49'!
+!ImportTest methodsFor: 'assertions' stamp: 'ic&vw 6/27/2023 22:29:41'!
 assertNoCustomersWasImported
 	
-	^true! !
+	^self assert: 0 equals: self numberOfCustomers! !
 
-!ImportTest methodsFor: 'assertions' stamp: 'HAW 5/22/2022 18:28:05'!
+!ImportTest methodsFor: 'assertions' stamp: 'ic&vw 6/27/2023 22:26:58'!
 assertPepeSanchezWasImportedCorrecty
 
 	| importedCustomer |
@@ -132,14 +147,14 @@ assertPepeSanchezWasImportedCorrecty
 	! !
 
 
-!ImportTest methodsFor: 'setUp/tearDown' stamp: 'HAW 5/22/2022 00:27:50'!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'ic&vw 6/27/2023 22:26:58'!
 setUp
 
 	session := DataBaseSession for: (Array with: Address with: Customer).
 	session beginTransaction.
 ! !
 
-!ImportTest methodsFor: 'setUp/tearDown' stamp: 'HAW 5/22/2022 00:28:23'!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'ic&vw 6/27/2023 22:26:58'!
 tearDown
 
 	session commit.
@@ -147,15 +162,20 @@ tearDown
 	! !
 
 
-!ImportTest methodsFor: 'customer' stamp: 'HAW 5/22/2022 18:14:22'!
+!ImportTest methodsFor: 'customer' stamp: 'ic&vw 6/27/2023 22:26:58'!
 customerWithIdentificationType: anIdType number: anIdNumber
 
 	^ (session
 		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
 		ofType: Customer) anyOne! !
 
+!ImportTest methodsFor: 'customer' stamp: 'ic&vw 6/27/2023 22:28:42'!
+numberOfCustomers
 
-!ImportTest methodsFor: 'test data' stamp: 'IC&VW 6/26/2023 21:13:11'!
+	^ (session selectAllOfType: Customer)size! !
+
+
+!ImportTest methodsFor: 'test data' stamp: 'ic&vw 6/27/2023 22:26:58'!
 addressForNoCustomerImportData
 
 	^ ReadStream on:
@@ -164,7 +184,7 @@ C,Maipu,888,Florida,1122,Buenos Aires
 C,Juan,Perez,C,23-25666777-9
 A,Alem,1122,CABA,1001,CABA'! !
 
-!ImportTest methodsFor: 'test data' stamp: 'IC&VW 6/26/2023 21:30:11'!
+!ImportTest methodsFor: 'test data' stamp: 'ic&vw 6/27/2023 22:26:58'!
 addressWithLessFieldsImportData
 
 	^ ReadStream on:
@@ -174,7 +194,7 @@ A,Maipu,888,Florida,1122,Buenos Aires
 C,Juan,Perez,C,23-25666777-9
 A,Alem,1122,CABA,1001,CABA'! !
 
-!ImportTest methodsFor: 'test data' stamp: 'IC&VW 6/26/2023 21:17:15'!
+!ImportTest methodsFor: 'test data' stamp: 'ic&vw 6/27/2023 22:26:58'!
 customerWithLessFieldsImportData
 
 	^ ReadStream on:
@@ -184,7 +204,7 @@ A,Maipu,888,Florida,1122,Buenos Aires
 C,Juan,Perez,C,23-25666777-9
 A,Alem,1122,CABA,1001,CABA'! !
 
-!ImportTest methodsFor: 'test data' stamp: 'IC&VW 6/26/2023 21:22:13'!
+!ImportTest methodsFor: 'test data' stamp: 'ic&vw 6/27/2023 22:26:58'!
 customerWithMoreFieldsImportData
 
 	^ ReadStream on:
@@ -194,7 +214,7 @@ A,Maipu,888,Florida,1122,Buenos Aires
 C,Juan,Perez,C,23-25666777-9
 A,Alem,1122,CABA,1001,CABA'! !
 
-!ImportTest methodsFor: 'test data' stamp: 'IC&VW 6/26/2023 21:07:21'!
+!ImportTest methodsFor: 'test data' stamp: 'ic&vw 6/27/2023 22:26:58'!
 doubleValidPrefixImportData
 
 	^ ReadStream on:
@@ -204,12 +224,12 @@ A,Maipu,888,Florida,1122,Buenos Aires
 C,Juan,Perez,C,23-25666777-9
 A,Alem,1122,CABA,1001,CABA'! !
 
-!ImportTest methodsFor: 'test data' stamp: 'IC&VW 6/26/2023 20:36:17'!
+!ImportTest methodsFor: 'test data' stamp: 'ic&vw 6/27/2023 22:26:58'!
 emptyImportData
 
 	^ ReadStream on: ''! !
 
-!ImportTest methodsFor: 'test data' stamp: 'IC&VW 6/26/2023 21:02:49'!
+!ImportTest methodsFor: 'test data' stamp: 'ic&vw 6/27/2023 22:26:58'!
 invalidPrefixImportData
 
 	^ ReadStream on:
@@ -219,7 +239,7 @@ V,Maipu,888,Florida,1122,Buenos Aires
 C,Juan,Perez,C,23-25666777-9
 A,Alem,1122,CABA,1001,CABA'! !
 
-!ImportTest methodsFor: 'test data' stamp: 'HAW 5/22/2022 18:08:08'!
+!ImportTest methodsFor: 'test data' stamp: 'ic&vw 6/27/2023 22:26:58'!
 validImportData
 
 	^ ReadStream on:
@@ -237,61 +257,61 @@ Object subclass: #Address
 	poolDictionaries: ''
 	category: 'CustomerImporter'!
 
-!Address methodsFor: 'province' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'province' stamp: 'ic&vw 6/27/2023 22:26:57'!
 province
 
 	^province! !
 
-!Address methodsFor: 'province' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'province' stamp: 'ic&vw 6/27/2023 22:26:57'!
 province: aProvince
 
 	province := aProvince
 	! !
 
 
-!Address methodsFor: 'street' stamp: 'HAW 5/22/2022 17:55:46'!
+!Address methodsFor: 'street' stamp: 'ic&vw 6/27/2023 22:26:57'!
 isAt: aStreetName
 
 	^streetName = aStreetName ! !
 
-!Address methodsFor: 'street' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'street' stamp: 'ic&vw 6/27/2023 22:26:57'!
 streetName
 
 	^streetName ! !
 
-!Address methodsFor: 'street' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'street' stamp: 'ic&vw 6/27/2023 22:26:57'!
 streetName: aStreetName
 
 	streetName := aStreetName ! !
 
-!Address methodsFor: 'street' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'street' stamp: 'ic&vw 6/27/2023 22:26:57'!
 streetNumber
 
 	^streetNumber ! !
 
-!Address methodsFor: 'street' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'street' stamp: 'ic&vw 6/27/2023 22:26:57'!
 streetNumber: aStreetNumber
 
 	streetNumber := aStreetNumber ! !
 
 
-!Address methodsFor: 'twon' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'twon' stamp: 'ic&vw 6/27/2023 22:26:57'!
 town
 
 	^town! !
 
-!Address methodsFor: 'twon' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'twon' stamp: 'ic&vw 6/27/2023 22:26:57'!
 town: aTown
 
 	town := aTown! !
 
 
-!Address methodsFor: 'zip code' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'zip code' stamp: 'ic&vw 6/27/2023 22:26:57'!
 zipCode
 
 	^zipCode! !
 
-!Address methodsFor: 'zip code' stamp: 'HAW 5/22/2022 00:19:29'!
+!Address methodsFor: 'zip code' stamp: 'ic&vw 6/27/2023 22:26:57'!
 zipCode: aZipCode
 
 	zipCode := aZipCode! !
@@ -304,66 +324,66 @@ Object subclass: #Customer
 	poolDictionaries: ''
 	category: 'CustomerImporter'!
 
-!Customer methodsFor: 'addresses' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'addresses' stamp: 'ic&vw 6/27/2023 22:26:57'!
 addAddress: anAddress
 
 	addresses add: anAddress ! !
 
-!Customer methodsFor: 'addresses' stamp: 'HAW 5/22/2022 17:55:17'!
+!Customer methodsFor: 'addresses' stamp: 'ic&vw 6/27/2023 22:26:57'!
 addressAt: aStreetName ifNone: aNoneBlock
 
 	^addresses detect: [ :address | address isAt: aStreetName ] ifNone: aNoneBlock ! !
 
-!Customer methodsFor: 'addresses' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'addresses' stamp: 'ic&vw 6/27/2023 22:26:57'!
 addresses
 
 	^ addresses! !
 
 
-!Customer methodsFor: 'name' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'name' stamp: 'ic&vw 6/27/2023 22:26:57'!
 firstName
 
 	^firstName ! !
 
-!Customer methodsFor: 'name' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'name' stamp: 'ic&vw 6/27/2023 22:26:57'!
 firstName: aName
 
 	firstName := aName! !
 
-!Customer methodsFor: 'name' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'name' stamp: 'ic&vw 6/27/2023 22:26:57'!
 lastName
 
 	^lastName ! !
 
-!Customer methodsFor: 'name' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'name' stamp: 'ic&vw 6/27/2023 22:26:57'!
 lastName: aLastName
 
 	lastName := aLastName
 ! !
 
 
-!Customer methodsFor: 'identification' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'identification' stamp: 'ic&vw 6/27/2023 22:26:57'!
 identificationNumber
 
 	^identificationNumber ! !
 
-!Customer methodsFor: 'identification' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'identification' stamp: 'ic&vw 6/27/2023 22:26:57'!
 identificationNumber: anIdentificationNumber
 
 	identificationNumber := anIdentificationNumber! !
 
-!Customer methodsFor: 'identification' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'identification' stamp: 'ic&vw 6/27/2023 22:26:57'!
 identificationType
 
 	^identificationType ! !
 
-!Customer methodsFor: 'identification' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'identification' stamp: 'ic&vw 6/27/2023 22:26:57'!
 identificationType: anIdentificationType
 
 	identificationType := anIdentificationType! !
 
 
-!Customer methodsFor: 'initialization' stamp: 'HAW 5/22/2022 00:19:29'!
+!Customer methodsFor: 'initialization' stamp: 'ic&vw 6/27/2023 22:26:57'!
 initialize
 
 	super initialize.
@@ -377,18 +397,18 @@ Object subclass: #CustomerImporter
 	poolDictionaries: ''
 	category: 'CustomerImporter'!
 
-!CustomerImporter methodsFor: 'initialization' stamp: 'HAW 5/22/2022 18:06:47'!
+!CustomerImporter methodsFor: 'initialization' stamp: 'ic&vw 6/27/2023 22:26:57'!
 initializeFrom: aReadStream into: aSession
 	session := aSession.
 	readStream := aReadStream.! !
 
 
-!CustomerImporter methodsFor: 'evaluating' stamp: 'IC&VW 6/26/2023 21:29:03'!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'ic&vw 6/27/2023 22:38:23'!
 addAddress
 
 	| newAddress |
-	(data size = 6) ifFalse: [self class streamWithAddressWithInvalidAmountOfFieldsError ].
-	newCustomer ifNil: [self class streamWithAddressForNoCustomerError ].
+	self validateAmountOfAddressFields.
+	self validateCustomerNotNil.
 	newAddress := Address new.
 	newCustomer addAddress: newAddress.
 	newAddress streetName: data second.
@@ -397,10 +417,10 @@ addAddress
 	newAddress zipCode: data fifth asNumber .
 	newAddress province: data sixth! !
 
-!CustomerImporter methodsFor: 'evaluating' stamp: 'IC&VW 6/26/2023 21:26:34'!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'ic&vw 6/27/2023 22:39:10'!
 addAndPersistCustomer 
 
-	(data size = 5) ifFalse: [self class streamWithCustomerWithInvalidAmountOfFieldsError].
+	self validateAmountOfCustomerFields.
 	newCustomer  := Customer new.
 	newCustomer firstName: data second.
 	newCustomer lastName: data third.
@@ -409,43 +429,37 @@ addAndPersistCustomer
 	
 	session persist: newCustomer.! !
 
-!CustomerImporter methodsFor: 'evaluating' stamp: 'IC&VW 6/26/2023 21:45:07'!
-checkStreamIsEmpty
-
-	^ [readStream isEmpty] ifTrue: [self error: 'a']! !
-
-!CustomerImporter methodsFor: 'evaluating' stamp: 'IC&VW 6/26/2023 20:15:44'!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'ic&vw 6/27/2023 22:26:57'!
 createRecord
 
 	^ data := line findTokens: $,! !
 
-!CustomerImporter methodsFor: 'evaluating' stamp: 'IC&VW 6/26/2023 21:46:58'!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'ic&vw 6/27/2023 22:26:57'!
 getNextLineAndHasLinesLeft
 
 	line := readStream nextLine.
 	^ line notNil.! !
 
-!CustomerImporter methodsFor: 'evaluating' stamp: 'IC&VW 6/26/2023 21:18:57'!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'ic&vw 6/27/2023 22:26:57'!
 importRecord
 
 	(self isCustomerData) ifTrue: [ ^	self addAndPersistCustomer.].
 	(self isAddressData) ifTrue: [ ^self addAddress].
 	self class streamWithInvalidPrefixError.! !
 
-!CustomerImporter methodsFor: 'evaluating' stamp: 'IC&VW 6/26/2023 21:18:50'!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'ic&vw 6/27/2023 22:26:57'!
 isAddressData
 
 	^ data first = 'A'! !
 
-!CustomerImporter methodsFor: 'evaluating' stamp: 'IC&VW 6/26/2023 21:18:57'!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'ic&vw 6/27/2023 22:26:57'!
 isCustomerData
 
 	^ data first =  'C'! !
 
-!CustomerImporter methodsFor: 'evaluating' stamp: 'IC&VW 6/26/2023 21:50:09'!
+!CustomerImporter methodsFor: 'evaluating' stamp: 'ic&vw 6/27/2023 22:41:53'!
 value
 	
-	"self checkStreamIsEmpty."
 	[ self getNextLineAndHasLinesLeft ] whileTrue: [
 		self createRecord.
 		self importRecord.
@@ -453,69 +467,79 @@ value
 
 	! !
 
+
+!CustomerImporter methodsFor: 'validations' stamp: 'ic&vw 6/27/2023 22:38:00'!
+validateAmountOfAddressFields
+
+	^ (data size = 6) ifFalse: [self class streamWithAddressWithInvalidAmountOfFieldsError ]! !
+
+!CustomerImporter methodsFor: 'validations' stamp: 'ic&vw 6/27/2023 22:39:10'!
+validateAmountOfCustomerFields
+
+	^ (data size = 5) ifFalse: [self class streamWithCustomerWithInvalidAmountOfFieldsError]! !
+
+!CustomerImporter methodsFor: 'validations' stamp: 'ic&vw 6/27/2023 22:38:23'!
+validateCustomerNotNil
+
+	^ newCustomer ifNil: [self class streamWithAddressForNoCustomerError ]! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'CustomerImporter class' category: 'CustomerImporter'!
 CustomerImporter class
 	instanceVariableNames: ''!
 
-!CustomerImporter class methodsFor: 'instance creation' stamp: 'HAW 5/22/2022 18:06:47'!
+!CustomerImporter class methodsFor: 'instance creation' stamp: 'ic&vw 6/27/2023 22:26:58'!
 from: aReadStream into: aSession
 	^self new initializeFrom: aReadStream into: aSession! !
 
 
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 20:41:40'!
-emptyStreamError
-	self error: self emptyStreamErrorMessage.! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 20:41:55'!
-emptyStreamErrorMessage
-	'No se importo nada crack'! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:13:58'!
-streamWithAddressForNoCustomerError
-	self error: self streamWithAddressForNoCustomerErrorMessage.! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:13:51'!
-streamWithAddressForNoCustomerErrorMessage
-	'No podes arrancar con una direcc capo'! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:27:55'!
-streamWithAddressWithInvalidAmountOfFieldsError
-	self error: self streamWithAddressWithInvalidAmountOfFieldsErrorMessage.! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:27:44'!
-streamWithAddressWithInvalidAmountOfFieldsErrorMessage
-	'No podes importar a una direcc con otra cantidad de fields'! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:26:34'!
-streamWithCustomerWithInvalidAmountOfFieldsError
-	self error: self streamWithCustomerWithInvalidAmountOfFieldsErrorMessage.! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:26:19'!
-streamWithCustomerWithInvalidAmountOfFieldsErrorMessage
-	'No podes importar a un chabon con otra cantidad de fields'! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:06:58'!
-streamWithDoubleValidPrefixError
-	self error: self streamWithDoubleValidPrefixErrorMessage.! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:06:45'!
-streamWithDoubleValidPrefixErrorMessage
-	'No podes arrancar con AAAAAAAAAAA'! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:04:03'!
-streamWithInvalidPrefixError
-	self error: self streamWithInvalidPrefixErrorMessage.! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'IC&VW 6/26/2023 21:04:21'!
-streamWithInvalidPrefixErrorMessage
-	'No podes arrancar con el pie izquierdo'! !
-
-!CustomerImporter class methodsFor: 'importing' stamp: 'HAW 5/22/2022 18:11:27'!
+!CustomerImporter class methodsFor: 'importing' stamp: 'ic&vw 6/27/2023 22:26:58'!
 valueFrom: aReadStream into: aSession
 
 	^(self from: aReadStream into: aSession) value! !
+
+
+!CustomerImporter class methodsFor: 'error handling' stamp: 'ic&vw 6/27/2023 22:26:58'!
+emptyStreamError
+	self error: self emptyStreamErrorMessage.! !
+
+!CustomerImporter class methodsFor: 'error handling' stamp: 'ic&vw 6/27/2023 22:26:58'!
+streamWithAddressForNoCustomerError
+	self error: self streamWithAddressForNoCustomerErrorMessage.! !
+
+!CustomerImporter class methodsFor: 'error handling' stamp: 'ic&vw 6/27/2023 22:26:58'!
+streamWithAddressWithInvalidAmountOfFieldsError
+	self error: self streamWithAddressWithInvalidAmountOfFieldsErrorMessage.! !
+
+!CustomerImporter class methodsFor: 'error handling' stamp: 'ic&vw 6/27/2023 22:26:58'!
+streamWithCustomerWithInvalidAmountOfFieldsError
+	self error: self streamWithCustomerWithInvalidAmountOfFieldsErrorMessage.! !
+
+!CustomerImporter class methodsFor: 'error handling' stamp: 'ic&vw 6/27/2023 22:26:58'!
+streamWithInvalidPrefixError
+	self error: self streamWithInvalidPrefixErrorMessage.! !
+
+
+!CustomerImporter class methodsFor: 'error messages' stamp: 'ic&vw 6/27/2023 22:43:07'!
+emptyStreamErrorMessage
+	'No hay nada para importar'! !
+
+!CustomerImporter class methodsFor: 'error messages' stamp: 'ic&vw 6/27/2023 22:43:27'!
+streamWithAddressForNoCustomerErrorMessage
+	'No se puede cargar direccion sin previamente haber asignado un cliente'! !
+
+!CustomerImporter class methodsFor: 'error messages' stamp: 'ic&vw 6/27/2023 22:44:03'!
+streamWithAddressWithInvalidAmountOfFieldsErrorMessage
+	'Invalida cantidad de campos en la direccion'! !
+
+!CustomerImporter class methodsFor: 'error messages' stamp: 'ic&vw 6/27/2023 22:44:09'!
+streamWithCustomerWithInvalidAmountOfFieldsErrorMessage
+	'Invalida cantidad de campos en el cliente'! !
+
+!CustomerImporter class methodsFor: 'error messages' stamp: 'ic&vw 6/27/2023 22:44:47'!
+streamWithInvalidPrefixErrorMessage
+	'Invalido identificador de direccion o cliente'! !
 
 
 !classDefinition: #DataBaseSession category: 'CustomerImporter'!
@@ -525,47 +549,47 @@ Object subclass: #DataBaseSession
 	poolDictionaries: ''
 	category: 'CustomerImporter'!
 
-!DataBaseSession methodsFor: 'transaction management' stamp: 'HAW 5/22/2022 00:19:29'!
+!DataBaseSession methodsFor: 'transaction management' stamp: 'ic&vw 6/27/2023 22:26:58'!
 beginTransaction
 
 	! !
 
-!DataBaseSession methodsFor: 'transaction management' stamp: 'HAW 5/22/2022 19:17:36'!
+!DataBaseSession methodsFor: 'transaction management' stamp: 'ic&vw 6/27/2023 22:26:58'!
 commit
 
 	(tables at: Customer ifAbsent: [#()]) do: [ :aCustomer | self persistAddressesOf: aCustomer ]
 	! !
 
 
-!DataBaseSession methodsFor: 'closing' stamp: 'HAW 5/22/2022 00:19:29'!
+!DataBaseSession methodsFor: 'closing' stamp: 'ic&vw 6/27/2023 22:26:58'!
 close
 
 	! !
 
 
-!DataBaseSession methodsFor: 'persistence - private' stamp: 'HAW 5/22/2022 00:19:29'!
+!DataBaseSession methodsFor: 'persistence - private' stamp: 'ic&vw 6/27/2023 22:26:58'!
 defineIdOf: anObject
 
 	anObject instVarNamed: 'id' put: (self newIdFor: anObject).! !
 
-!DataBaseSession methodsFor: 'persistence - private' stamp: 'HAW 5/22/2022 00:19:29'!
+!DataBaseSession methodsFor: 'persistence - private' stamp: 'ic&vw 6/27/2023 22:26:58'!
 delay
 
 	(Delay forMilliseconds: 100) wait! !
 
-!DataBaseSession methodsFor: 'persistence - private' stamp: 'HAW 5/22/2022 19:29:06'!
+!DataBaseSession methodsFor: 'persistence - private' stamp: 'ic&vw 6/27/2023 22:26:58'!
 objectsOfType: aType
 
 	^ tables at: aType ifAbsent: [ #() ]! !
 
-!DataBaseSession methodsFor: 'persistence - private' stamp: 'HAW 5/22/2022 00:19:29'!
+!DataBaseSession methodsFor: 'persistence - private' stamp: 'ic&vw 6/27/2023 22:26:58'!
 persistAddressesOf: anObjectWithAddresses
 
 	anObjectWithAddresses addresses do: [ :anAddress | self persist: anAddress ]
 	! !
 
 
-!DataBaseSession methodsFor: 'initialization' stamp: 'HAW 5/22/2022 00:19:29'!
+!DataBaseSession methodsFor: 'initialization' stamp: 'ic&vw 6/27/2023 22:26:58'!
 initializeFor: aConfiguration
 
 	configuration := aConfiguration.
@@ -573,14 +597,14 @@ initializeFor: aConfiguration
 	id := 0.! !
 
 
-!DataBaseSession methodsFor: 'id' stamp: 'HAW 5/22/2022 00:19:29'!
+!DataBaseSession methodsFor: 'id' stamp: 'ic&vw 6/27/2023 22:26:58'!
 newIdFor: anObject
 
 	id := id + 1.
 	^id! !
 
 
-!DataBaseSession methodsFor: 'persistance' stamp: 'HAW 5/22/2022 00:19:29'!
+!DataBaseSession methodsFor: 'persistance' stamp: 'ic&vw 6/27/2023 22:26:58'!
 persist: anObject
 
 	| table |
@@ -594,13 +618,13 @@ persist: anObject
 	(anObject isKindOf: Customer) ifTrue: [ self persistAddressesOf: anObject ].! !
 
 
-!DataBaseSession methodsFor: 'selecting' stamp: 'HAW 5/22/2022 19:29:06'!
+!DataBaseSession methodsFor: 'selecting' stamp: 'ic&vw 6/27/2023 22:26:58'!
 select: aCondition ofType: aType
 
 	self delay.
 	^(self objectsOfType: aType) select: aCondition ! !
 
-!DataBaseSession methodsFor: 'selecting' stamp: 'HAW 5/22/2022 19:29:06'!
+!DataBaseSession methodsFor: 'selecting' stamp: 'ic&vw 6/27/2023 22:26:58'!
 selectAllOfType: aType
 
 	self delay.
@@ -612,7 +636,7 @@ selectAllOfType: aType
 DataBaseSession class
 	instanceVariableNames: ''!
 
-!DataBaseSession class methodsFor: 'instance creation' stamp: 'HAW 5/22/2022 00:19:29'!
+!DataBaseSession class methodsFor: 'instance creation' stamp: 'ic&vw 6/27/2023 22:26:58'!
 for: aConfiguration
 
 	^self new initializeFor: aConfiguration! !
