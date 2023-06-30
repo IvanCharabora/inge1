@@ -1,0 +1,1349 @@
+
+
+----QUIT----(30 May 2023 00:05:32) CuisUniversity-5832.image priorSource: 4928100!
+
+----STARTUP---- (30 May 2023 00:05:33) as /Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/CuisUniversity-5832.image!
+
+
+----QUIT----(30 May 2023 00:05:33) CuisUniversity-5832.image priorSource: 9366537!
+
+----STARTUP---- (29 June 2023 17:05:16) as C:\Users\Ivo\Desktop\uba\inge1\cuises\windows64\CuisUniversity-5832.image!
+
+
+----End fileIn of C:\Users\Ivo\Desktop\uba\inge1\2023-1c\10-CustomerImporter\Step2\SoluStep2\Step2\CustomerImporter-60.st----!
+
+!classDefinition: #PersistentCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:16:23'!
+Object subclass: #PersistentCustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:16:20' prior: 50624573 overrides: 16961394!
+setUp
+
+	session := PersistentCustomerSystem new.
+	session beginTransaction.
+! !
+
+!classDefinition: #PersistentCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:16:41'!
+Object subclass: #PersistentCustomerSystem
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!PersistentCustomerSystem methodsFor: 'nil' stamp: 'vw&ic 6/29/2023 20:16:40'!
+start 
+
+	session := DataBaseSession for: (Array with: Address with: Customer).! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:16:56' prior: 50625033 overrides: 16961394!
+setUp
+
+	session := PersistentCustomerSystem new start. 
+	session beginTransaction.
+! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:17:16' prior: 50625047!
+start 
+
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	^session! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:17:18'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 20:17:19'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:17:19'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 20:17:19'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 20:17:19'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 20:17:20'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 20:17:20'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 20:17:20'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 20:17:20'!
+PASSED!
+!PersistentCustomerSystem methodsFor: 'nil' stamp: 'vw&ic 6/29/2023 20:17:51'!
+session 
+
+	^session! !
+!ImportTest methodsFor: 'session' stamp: 'vw&ic 6/29/2023 20:18:49'!
+session
+	^session! !
+!ImportTest methodsFor: 'customer' stamp: 'vw&ic 6/29/2023 20:20:07' prior: 50624584!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ (self session
+		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
+		ofType: Customer) anyOne! !
+!ImportTest methodsFor: 'customer' stamp: 'vw&ic 6/29/2023 20:20:17' prior: 50624594!
+numberOfCustomers
+
+	^ (self session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/29/2023 20:20:24' prior: 50624559!
+shouldFailImporting: aReadStream messageText: anErrorMessageText asserting: anAssertionBlock
+
+	self
+		should: [ CustomerImporter valueFrom: aReadStream into: self session. ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anErrorMessageText equals: anError messageText.
+			anAssertionBlock value ]
+
+	! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:20:38' prior: 50624580 overrides: 16961402!
+tearDown
+
+	self session commit.
+	self session close.
+	! !
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/29/2023 20:20:47' prior: 50624380!
+test01ValidDataIsImportedCorrectly
+
+	CustomerImporter valueFrom: self validImportData into: self session.
+
+	self assertImportedRightNumberOfCustomers.
+	self assertPepeSanchezWasImportedCorrecty.
+	self assertJuanPerezWasImportedCorrectly ! !
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/29/2023 20:20:53' prior: 50624390!
+test02CanNotImportAddressWithoutCustomer
+
+	self
+		should: [ CustomerImporter valueFrom: self addressWithoutCustomerData into: self session. ]
+		raise: Error - MessageNotUnderstood
+		withMessageText: CustomerImporter canNotImportAddressWithoutCustomerErrorDescription
+
+	! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:21:33' prior: 50625054 overrides: 16961394!
+setUp
+
+	session := PersistentCustomerSystem new start. 
+	session beginTransaction.
+! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:21:45'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 20:21:46'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:21:46'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 20:21:46'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 20:21:46'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 20:21:47'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 20:21:47'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 20:21:47'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 20:21:47'!
+PASSED!
+!ImportTest methodsFor: 'session' stamp: 'vw&ic 6/29/2023 20:24:14' prior: 50625102!
+session
+	^PersistentCustomerSystem session! !
+
+Object subclass: #PersistentCustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #PersistentCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:24:27'!
+Object subclass: #PersistentCustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #ImportTest category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:24:52'!
+TestCase subclass: #ImportTest
+	instanceVariableNames: 'session customerSystem'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:24:47' prior: 50625165 overrides: 16961394!
+setUp
+
+	customerSystem := PersistentCustomerSystem new start. 
+	session beginTransaction.
+! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:24:56' prior: 50625229 overrides: 16961394!
+setUp
+
+	customerSystem := PersistentCustomerSystem new start. 
+	self session beginTransaction.
+! !
+!ImportTest methodsFor: 'session' stamp: 'vw&ic 6/29/2023 20:25:05' prior: 50625203!
+session
+	^customerSystem session! !
+
+----STARTUP---- (29 June 2023 20:27:34) as C:\Users\Ivo\Desktop\uba\inge1\cuises\windows64\CuisUniversity-5832.image!
+
+
+----End fileIn of C:\Users\Ivo\Desktop\uba\inge1\2023-1c\10-CustomerImporter\Step2\SoluStep2\Step2\CustomerImporter-60.st----!
+
+!classDefinition: #PersistentCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:28:44'!
+Object subclass: #PersistentCustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:28:42' prior: 50625454 overrides: 16961394!
+setUp
+
+	session := PersistentCustomerSystem new start.
+	session beginTransaction.
+! !
+!PersistentCustomerSystem methodsFor: 'no messages' stamp: 'vw&ic 6/29/2023 20:29:00'!
+start
+
+	^DataBaseSession for: (Array with: Address with: Customer).! !
+
+!classDefinition: #PersistentCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:29:35'!
+Object subclass: #PersistentCustomerSystem
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:29:33'!
+session
+
+	^session! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:29:45' prior: 50625920!
+start
+
+	^session := DataBaseSession for: (Array with: Address with: Customer).! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:30:07' prior: 50625939!
+start
+
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	^session! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:30:36'!
+session
+
+	^session! !
+!ImportTest methodsFor: 'customer' stamp: 'vw&ic 6/29/2023 20:30:58' prior: 50625465!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ (self session
+		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
+		ofType: Customer) anyOne! !
+!ImportTest methodsFor: 'customer' stamp: 'vw&ic 6/29/2023 20:31:01' prior: 50625475!
+numberOfCustomers
+
+	^ (self session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/29/2023 20:31:04' prior: 50625440!
+shouldFailImporting: aReadStream messageText: anErrorMessageText asserting: anAssertionBlock
+
+	self
+		should: [ CustomerImporter valueFrom: aReadStream into: self session. ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anErrorMessageText equals: anError messageText.
+			anAssertionBlock value ]
+
+	! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:31:07' prior: 50625461 overrides: 16961402!
+tearDown
+
+	self session commit.
+	self session close.
+	! !
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/29/2023 20:31:10' prior: 50625261!
+test01ValidDataIsImportedCorrectly
+
+	CustomerImporter valueFrom: self validImportData into: self session..
+
+	self assertImportedRightNumberOfCustomers.
+	self assertPepeSanchezWasImportedCorrecty.
+	self assertJuanPerezWasImportedCorrectly ! !
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/29/2023 20:31:13' prior: 50625991!
+test01ValidDataIsImportedCorrectly
+
+	CustomerImporter valueFrom: self validImportData into: self session.
+
+	self assertImportedRightNumberOfCustomers.
+	self assertPepeSanchezWasImportedCorrecty.
+	self assertJuanPerezWasImportedCorrectly ! !
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/29/2023 20:31:17' prior: 50625271!
+test02CanNotImportAddressWithoutCustomer
+
+	self
+		should: [ CustomerImporter valueFrom: self addressWithoutCustomerData into: self session. ]
+		raise: Error - MessageNotUnderstood
+		withMessageText: CustomerImporter canNotImportAddressWithoutCustomerErrorDescription
+
+	! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:31:24' prior: 50625914 overrides: 16961394!
+setUp
+
+	session := PersistentCustomerSystem new start.
+	self session beginTransaction.
+! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:31:29'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 20:31:30'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:31:30'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 20:31:30'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 20:31:30'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 20:31:31'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 20:31:31'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 20:31:31'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 20:31:31'!
+PASSED!
+
+----SNAPSHOT----(29 June 2023 20:31:34) CuisUniversity-5832.image priorSource: 9366758!
+
+!classDefinition: #ImportTest category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:31:55'!
+TestCase subclass: #ImportTest
+	instanceVariableNames: 'customerSystem'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:31:55' prior: 50625952!
+session
+
+	^customerSystem! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:31:55' prior: 50626026 overrides: 16961394!
+setUp
+
+	customerSystem := PersistentCustomerSystem new start.
+	self session beginTransaction.
+! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:32:03' prior: 50626075!
+session
+
+	^customerSystem session! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:32:17' prior: 50625946!
+start
+
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:32:19'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 20:32:19'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:32:20'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 20:32:20'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 20:32:20'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 20:32:20'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 20:32:21'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 20:32:21'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 20:32:21'!
+PASSED!
+
+----SNAPSHOT----(29 June 2023 20:32:24) CuisUniversity-5832.image priorSource: 9421223!
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:33:55'!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ (self session
+		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
+		ofType: Customer) anyOne! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:34:03' prior: 50626132!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ (session
+		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
+		ofType: Customer) anyOne! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:34:21'!
+numberOfCustomers
+
+	^ (session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'customer' stamp: 'vw&ic 6/29/2023 20:34:56' prior: 50625966!
+numberOfCustomers
+
+	^ customerSystem numberOfCustomers.! !
+!ImportTest methodsFor: 'customer' stamp: 'vw&ic 6/29/2023 20:35:23' prior: 50625956!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ customerSystem customerWithIdentificationType: anIdType number: anIdNumber.! !
+
+!methodRemoval: ImportTest #customerWithIdentificationType:number: stamp: 'vw&ic 6/29/2023 20:35:46'!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ customerSystem customerWithIdentificationType: anIdType number: anIdNumber.!
+
+!methodRemoval: ImportTest #numberOfCustomers stamp: 'vw&ic 6/29/2023 20:36:36'!
+numberOfCustomers
+
+	^ customerSystem numberOfCustomers.!
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:37:04'!
+ERROR!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 20:37:04'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:37:04'!
+ERROR!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 20:37:04'!
+ERROR!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 20:37:04'!
+ERROR!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 20:37:04'!
+ERROR!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 20:37:04'!
+ERROR!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 20:37:04'!
+ERROR!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 20:37:04'!
+ERROR!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:37:23'!
+ERROR!
+
+----STARTUP---- (29 June 2023 20:38:16) as C:\Users\Ivo\Desktop\uba\inge1\cuises\windows64\CuisUniversity-5832.image!
+
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:38:48'!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ (self session
+		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
+		ofType: Customer) anyOne! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:39:03'!
+numberOfCustomers
+
+	^ (self session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'customer' stamp: 'vw&ic 6/29/2023 20:39:33' prior: 50625956!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ customerSystem customerWithIdentificationType: anIdType number: anIdNumber! !
+!ImportTest methodsFor: 'customer' stamp: 'vw&ic 6/29/2023 20:39:42' prior: 50625966!
+numberOfCustomers
+
+	^ customerSystem numberOfCustomers! !
+
+----SNAPSHOT----(29 June 2023 20:39:49) CuisUniversity-5832.image priorSource: 9423295!
+
+!methodRemoval: ImportTest #numberOfCustomers stamp: 'vw&ic 6/29/2023 20:40:37'!
+numberOfCustomers
+
+	^ customerSystem numberOfCustomers!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/29/2023 20:40:37' prior: 50625419!
+assertNoCustomerWasImported
+
+	^ self assert: 0 equals: ( customerSystem numberOfCustomers)! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/29/2023 20:40:37' prior: 50625402!
+assertImportedRightNumberOfCustomers
+
+	^ self assert: 2 equals: ( customerSystem numberOfCustomers)! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/29/2023 20:40:37' prior: 50625392!
+assertImportedOneCustomerWithoutAddress
+
+	| importedCustomer |
+
+	self assert: 1 equals: ( customerSystem numberOfCustomers).
+	importedCustomer := self customerWithIdentificationType: 'D' number: '22333444'.
+	self assert: importedCustomer isAddressesEmpty
+	! !
+
+!methodRemoval: ImportTest #customerWithIdentificationType:number: stamp: 'vw&ic 6/29/2023 20:41:02'!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ customerSystem customerWithIdentificationType: anIdType number: anIdNumber!
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/29/2023 20:41:02' prior: 50626271!
+assertImportedOneCustomerWithoutAddress
+
+	| importedCustomer |
+
+	self assert: 1 equals: ( customerSystem numberOfCustomers).
+	importedCustomer :=  customerSystem customerWithIdentificationType: 'D' number: '22333444'.
+	self assert: importedCustomer isAddressesEmpty
+	! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/29/2023 20:41:02' prior: 50625373!
+assertCustomerWithIdentificationType: anIdType number: anIdNumber hasFirstName: aFirstName lastName: aLastName
+
+	| importedCustomer |
+
+	importedCustomer :=  customerSystem customerWithIdentificationType: anIdType number: anIdNumber.
+
+	self assert: aFirstName equals: importedCustomer firstName.
+	self assert: aLastName equals: importedCustomer lastName.
+	self assert: anIdType equals: importedCustomer identificationType.
+	self assert: anIdNumber equals: importedCustomer identificationNumber.
+
+	^importedCustomer
+
+	! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:43:14'!
+beginTransaction
+
+	session beginTransaction ! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:43:22'!
+commit
+
+	session commit ! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:43:35'!
+close
+
+	session close! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:44:03' prior: 50626080 overrides: 16961394!
+setUp
+
+	customerSystem := PersistentCustomerSystem new start.
+	customerSystem beginTransaction.
+! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 20:44:14' prior: 50625986 overrides: 16961402!
+tearDown
+
+	customerSystem commit.
+	customerSystem close.
+	! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:44:42' prior: 50626223!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ (session
+		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
+		ofType: Customer) anyOne! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:44:46' prior: 50626234!
+numberOfCustomers
+
+	^ (session selectAllOfType: Customer) size! !
+
+----SNAPSHOT----(29 June 2023 20:45:09) CuisUniversity-5832.image priorSource: 9427225!
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:45:12'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 20:45:12'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:45:12'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 20:45:12'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 20:45:13'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 20:45:13'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 20:45:13'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 20:45:13'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 20:45:13'!
+PASSED!
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:47:14'!
+persist: renameme1
+
+	session persist: renameme1 ! !
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/29/2023 20:48:56' prior: 50626002!
+test01ValidDataIsImportedCorrectly
+
+	CustomerImporter valueFrom: self validImportData into: customerSystem.
+
+	self assertImportedRightNumberOfCustomers.
+	self assertPepeSanchezWasImportedCorrecty.
+	self assertJuanPerezWasImportedCorrectly ! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:50:18'!
+PASSED!
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:50:19'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 20:50:19'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:50:19'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 20:50:19'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 20:50:20'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 20:50:20'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 20:50:20'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 20:50:20'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 20:50:20'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'vw&ic 6/29/2023 20:50:57' prior: 50626013!
+test02CanNotImportAddressWithoutCustomer
+
+	self
+		should: [ CustomerImporter valueFrom: self addressWithoutCustomerData into: customerSystem. ]
+		raise: Error - MessageNotUnderstood
+		withMessageText: CustomerImporter canNotImportAddressWithoutCustomerErrorDescription
+
+	! !
+!ImportTest methodsFor: 'assertions' stamp: 'vw&ic 6/29/2023 20:51:04' prior: 50625971!
+shouldFailImporting: aReadStream messageText: anErrorMessageText asserting: anAssertionBlock
+
+	self
+		should: [ CustomerImporter valueFrom: aReadStream into: customerSystem. ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anErrorMessageText equals: anError messageText.
+			anAssertionBlock value ]
+
+	! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:51:12'!
+PASSED!
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:51:18'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 20:51:18'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:51:18'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 20:51:18'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 20:51:19'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 20:51:19'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 20:51:19'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 20:51:19'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 20:51:19'!
+PASSED!
+
+!methodRemoval: ImportTest #session stamp: 'vw&ic 6/29/2023 20:53:42'!
+session
+
+	^customerSystem session!
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 20:53:46'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 20:53:47'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 20:53:47'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 20:53:47'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 20:53:47'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 20:53:48'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 20:53:48'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 20:53:48'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 20:53:48'!
+PASSED!
+
+----SNAPSHOT----(29 June 2023 20:53:51) CuisUniversity-5832.image priorSource: 9430849!
+
+Object subclass: #CustomerSystem
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #CustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:54:14'!
+Object subclass: #CustomerSystem
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+CustomerSystem subclass: #PersistentCustomerSystem
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+Object subclass: #CustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #CustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:54:31'!
+Object subclass: #CustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+CustomerSystem subclass: #PersistentCustomerSystem
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #PersistentCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:54:35'!
+CustomerSystem subclass: #PersistentCustomerSystem
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+----SNAPSHOT----(29 June 2023 20:54:39) CuisUniversity-5832.image priorSource: 9436738!
+
+CustomerSystem subclass: #TransientCustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #TransientCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:56:02'!
+CustomerSystem subclass: #TransientCustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!TransientCustomerSystem methodsFor: 'no messages' stamp: 'vw&ic 6/29/2023 20:56:11'!
+start
+
+! !
+
+!classDefinition: #TransientCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 20:56:22'!
+CustomerSystem subclass: #TransientCustomerSystem
+	instanceVariableNames: 'customers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:56:21' prior: 50626610!
+start
+
+	customers := OrderedCollection new.! !
+
+!methodRemoval: PersistentCustomerSystem #session stamp: 'vw&ic 6/29/2023 20:56:37'!
+session
+
+	^session!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:56:48'!
+beginTransaction! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:57:18'!
+close! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:57:52' prior: 50626401!
+persist: anObjectToPersist
+
+	session persist: anObjectToPersist ! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:58:19'!
+numberOfCustomers
+
+	^customers size! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 20:58:53'!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ (customers
+		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
+		ofType: Customer) anyOne! !
+
+----SNAPSHOT----(29 June 2023 21:03:29) CuisUniversity-5832.image priorSource: 9438186!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:04:38'!
+persist: anObject
+! !
+
+!classDefinition: #TransientCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 21:04:50'!
+CustomerSystem subclass: #TransientCustomerSystem
+	instanceVariableNames: 'customers addresses'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:04:49' prior: 50626623!
+start
+
+	customers := OrderedCollection new.
+	addresses := OrderedCollection new.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:08:34' prior: 50626663!
+persist: anObject
+	
+	(anObject isKindOf: Customer) ifTrue: [ customers add: anObject.
+									self persistAddressesOf: anObject ].
+	
+	(anObject isKindOf: Address) ifTrue: [ addresses add: anObject].
+! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:08:36'!
+persistAddressesOf: anObjectWithAddresses
+
+	anObjectWithAddresses addresses do: [ :anAddress | self persist: anAddress ]
+	! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:09:55'!
+commit
+
+	
+	customers do: [:aCustomer | self persistAddressesOf: aCustomer]! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:10:23' prior: 50626683!
+persist: anObject
+	
+	(anObject isKindOf: Customer) ifTrue: [ customers add: anObject.
+									self persistAddressesOf: anObject ].
+	
+	"(anObject isKindOf: Address) ifTrue: [ addresses add: anObject]."
+! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:10:45' prior: 50626706!
+persist: anObject
+	
+	(anObject isKindOf: Customer) ifTrue: [ customers add: anObject.
+									self persistAddressesOf: anObject ].
+	
+	(anObject isKindOf: Address) ifTrue: [ addresses add: anObject].
+! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 21:11:02' prior: 50626336 overrides: 16961394!
+setUp
+
+	customerSystem := TransientCustomerSystem new start.
+	customerSystem beginTransaction.
+! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:11:03'!
+ERROR!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 21:11:03'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 21:11:03'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 21:11:03'!
+ERROR!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 21:11:03'!
+ERROR!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 21:11:03'!
+ERROR!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 21:11:03'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 21:11:03'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 21:11:03'!
+PASSED!
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:11:05'!
+ERROR!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:13:23' prior: 50626716!
+persist: anObject
+	
+	(anObject isKindOf: Customer) ifTrue: [ customers add: anObject.
+									"self persistAddressesOf: anObject "].
+	
+	"(anObject isKindOf: Address) ifTrue: [ addresses add: anObject]."
+! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:13:41' prior: 50626650!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^ (customers
+		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]) anyOne! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:13:42'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 21:13:42'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 21:13:42'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 21:13:42'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 21:13:42'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 21:13:42'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 21:13:42'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 21:13:42'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 21:13:42'!
+PASSED!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:13:53' prior: 50626700!
+commit
+
+	customers do: [:aCustomer | self persistAddressesOf: aCustomer]! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:14:07' prior: 50626676!
+start
+
+	customers := OrderedCollection new.
+	"addresses := OrderedCollection new."! !
+
+!methodRemoval: TransientCustomerSystem #persistAddressesOf: stamp: 'vw&ic 6/29/2023 21:14:17'!
+persistAddressesOf: anObjectWithAddresses
+
+	anObjectWithAddresses addresses do: [ :anAddress | self persist: anAddress ]
+	!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:14:36' prior: 50626768!
+persist: anObject
+	
+	customers add: anObject
+	"(anObject isKindOf: Customer) ifTrue: [ customers add: anObject.
+									self persistAddressesOf: anObject ].
+	
+	(anObject isKindOf: Address) ifTrue: [ addresses add: anObject]."
+! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:14:45'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 21:14:45'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 21:14:45'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 21:14:45'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 21:14:45'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 21:14:45'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 21:14:45'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 21:14:45'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 21:14:45'!
+PASSED!
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:14:47'!
+PASSED!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:15:29' prior: 50626821!
+commit
+
+	! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:15:30'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 21:15:30'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 21:15:30'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 21:15:30'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 21:15:30'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 21:15:30'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 21:15:30'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 21:15:30'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 21:15:30'!
+PASSED!
+
+----SNAPSHOT----(29 June 2023 21:15:37) CuisUniversity-5832.image priorSource: 9440287!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:15:59' prior: 50626841!
+persist: anObject
+	
+	customers add: anObject.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:16:06' prior: 50626827!
+start
+
+	customers := OrderedCollection new.! !
+
+CustomerSystem subclass: #TransientCustomerSystem
+	instanceVariableNames: 'customers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #TransientCustomerSystem category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 21:16:16'!
+CustomerSystem subclass: #TransientCustomerSystem
+	instanceVariableNames: 'customers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:16:18'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 21:16:18'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 21:16:18'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 21:16:18'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 21:16:18'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 21:16:18'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 21:16:18'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 21:16:18'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 21:16:18'!
+PASSED!
+
+----SNAPSHOT----(29 June 2023 21:18:31) CuisUniversity-5832.image priorSource: 9448729!
+
+Object subclass: #Enviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #Enviroment category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 21:18:39'!
+Object subclass: #Enviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+Enviroment subclass: #DeveloperEnviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #DeveloperEnviroment category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 21:18:54'!
+Enviroment subclass: #DeveloperEnviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+Enviroment subclass: #IntegratorEnviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #IntegratorEnviroment category: 'CustomerImporter' stamp: 'vw&ic 6/29/2023 21:19:07'!
+Enviroment subclass: #IntegratorEnviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!Enviroment methodsFor: 'no messages' stamp: 'vw&ic 6/29/2023 21:19:35'!
+createSystem! !
+!Enviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:19:43'!
+current! !
+!Enviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:19:52'!
+isCurrent! !
+!Enviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:20:14' prior: 50627029!
+isCurrent
+	self subclassResponsibility.! !
+!Enviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:20:23' prior: 50627022!
+createSystem
+	
+	self subclassResponsibility.! !
+!DeveloperEnviroment methodsFor: 'no messages' stamp: 'vw&ic 6/29/2023 21:20:33' overrides: 50627033!
+isCurrent! !
+!DeveloperEnviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:20:41' overrides: 50627038!
+createSystem! !
+!IntegratorEnviroment methodsFor: 'no messages' stamp: 'vw&ic 6/29/2023 21:20:50' overrides: 50627033!
+isCurrent! !
+!IntegratorEnviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:20:54' overrides: 50627038!
+createSystem! !
+!DeveloperEnviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:21:18' prior: 50627043 overrides: 50627033!
+isCurrent
+	^false.! !
+!IntegratorEnviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:21:29' prior: 50627051 overrides: 50627033!
+isCurrent
+	^true.! !
+!Enviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:23:24' prior: 50627026!
+current
+	self subclassesDo: [:subclass | subclass ifTrue: [^subclass.].].! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:23:34'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 21:23:34'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 21:23:34'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 21:23:34'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 21:23:34'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 21:23:34'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 21:23:34'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 21:23:34'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 21:23:35'!
+PASSED!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 21:23:56' prior: 50626726 overrides: 16961394!
+setUp
+
+	customerSystem := CustomerSystem new start.
+	customerSystem beginTransaction.
+! !
+!DeveloperEnviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:24:45' prior: 50627047 overrides: 50627038!
+createSystem
+	
+	^TransientCustomerSystem new start.! !
+!IntegratorEnviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:25:13' prior: 50627055 overrides: 50627038!
+createSystem
+	
+	^PersistentCustomerSystem new start.! !
+!IntegratorEnviroment class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:25:19'!
+isCurrent
+	^true.! !
+
+!methodRemoval: IntegratorEnviroment #isCurrent stamp: 'vw&ic 6/29/2023 21:25:19'!
+isCurrent
+	^true.!
+!DeveloperEnviroment class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:25:26'!
+isCurrent
+	^false.! !
+
+!methodRemoval: DeveloperEnviroment #isCurrent stamp: 'vw&ic 6/29/2023 21:25:26'!
+isCurrent
+	^false.!
+!Enviroment methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:26:34' prior: 50627069!
+current
+	self subclassesDo: [:subclass | (subclass isCurrent) ifTrue: [^subclass.].].! !
+!Enviroment class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:26:39'!
+current
+	self subclassesDo: [:subclass | (subclass isCurrent) ifTrue: [^subclass.].].! !
+
+!methodRemoval: Enviroment #current stamp: 'vw&ic 6/29/2023 21:26:39'!
+current
+	self subclassesDo: [:subclass | (subclass isCurrent) ifTrue: [^subclass.].].!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'vw&ic 6/29/2023 21:27:15' prior: 50627108 overrides: 16961394!
+setUp
+
+	customerSystem := Enviroment current createSystem.
+	customerSystem beginTransaction.
+! !
+!Enviroment class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:28:22' prior: 50627146!
+current
+	self subclassesDo: [:subclass | (subclass isCurrent) ifTrue: [^subclass new.].].! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:28:48'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 21:28:48'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 21:28:48'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 21:28:48'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 21:28:49'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 21:28:49'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 21:28:49'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 21:28:49'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 21:28:49'!
+PASSED!
+!DeveloperEnviroment class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:28:59' prior: 50627133!
+isCurrent
+	^true.! !
+!IntegratorEnviroment class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:29:04' prior: 50627126!
+isCurrent
+	^false.! !
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:29:08'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 21:29:08'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 21:29:08'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 21:29:08'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 21:29:08'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 21:29:08'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 21:29:08'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 21:29:08'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 21:29:08'!
+PASSED!
+
+----SNAPSHOT----(29 June 2023 21:29:12) CuisUniversity-5832.image priorSource: 9450638!
+
+!testRun: #ImportTest #test01ValidDataIsImportedCorrectly stamp: 'vw&ic 6/29/2023 21:29:19'!
+PASSED!
+
+!testRun: #ImportTest #test02CanNotImportAddressWithoutCustomer stamp: 'vw&ic 6/29/2023 21:29:19'!
+PASSED!
+
+!testRun: #ImportTest #test03DoesNotImportRecordsStartingWithCButMoreCharacters stamp: 'vw&ic 6/29/2023 21:29:19'!
+PASSED!
+
+!testRun: #ImportTest #test04DoesNotImportRecordsStartingWithAButMoreCharacters stamp: 'vw&ic 6/29/2023 21:29:19'!
+PASSED!
+
+!testRun: #ImportTest #test05CanNotImportAddressRecordWithLessThanSixFields stamp: 'vw&ic 6/29/2023 21:29:19'!
+PASSED!
+
+!testRun: #ImportTest #test06CanNotImportAddressRecordWithMoreThanSixFields stamp: 'vw&ic 6/29/2023 21:29:19'!
+PASSED!
+
+!testRun: #ImportTest #test07CanNotImportCustomerRecordWithLessThanFiveFields stamp: 'vw&ic 6/29/2023 21:29:19'!
+PASSED!
+
+!testRun: #ImportTest #test08CanNotImportCustomerRecordWithMoreThanFiveFields stamp: 'vw&ic 6/29/2023 21:29:19'!
+PASSED!
+
+!testRun: #ImportTest #test09CannotImportEmptyLine stamp: 'vw&ic 6/29/2023 21:29:19'!
+PASSED!
+
+----SNAPSHOT----(29 June 2023 21:30:18) CuisUniversity-5832.image priorSource: 9459010!
+!Enviroment class methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:32:01'!
+isCurrent
+	self subclassResponsibility.! !
+
+!methodRemoval: Enviroment #isCurrent stamp: 'vw&ic 6/29/2023 21:32:01'!
+isCurrent
+	self subclassResponsibility.!
+!CustomerSystem methodsFor: 'no messages' stamp: 'vw&ic 6/29/2023 21:34:00'!
+beginTransaction
+
+	self subclassResponsibility ! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:34:08'!
+close
+
+	self subclassResponsibility ! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:34:11'!
+commit
+
+	self subclassResponsibility ! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:34:19'!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	self subclassResponsibility ! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:34:30'!
+numberOfCustomers
+
+	self subclassResponsibility ! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:34:36' prior: 50627310!
+numberOfCustomers
+
+	self subclassResponsibility ! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:34:43'!
+persist: anObjectToPersist
+
+	self subclassResponsibility ! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'vw&ic 6/29/2023 21:34:48'!
+start
+
+	self subclassResponsibility ! !
+
+----SNAPSHOT----(29 June 2023 21:37:16) CuisUniversity-5832.image priorSource: 9460136!
